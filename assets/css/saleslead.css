@@ -1,0 +1,450 @@
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+
+a {
+	color: #8cbf26;
+	text-decoration: none;
+}
+a:hover {
+	color: #8cbf26;
+	text-decoration: none;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+	background-color: #FFF;
+	color: #222;
+}
+
+.navbar-inverse {
+	background-color: #333;
+	border-color: #FFF;
+}
+
+.page-header-button {
+	margin-bottom: 20px;
+}
+
+.page-header{
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+
+.sub-header {
+    border-bottom: 1px solid #eee;
+    margin: 0 0 20px;
+    padding-bottom: 9px;
+}
+.sub-menu {
+	border: 0 none;
+    box-shadow: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    width: auto;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+.sub-menu .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+.sub-menu-left {
+	float: left !important;
+}
+
+.sub-menu-right {
+	float: right !important;
+}
+
+.sub-menu-links .pagination{
+	margin-bottom: 5px;
+}
+.btn-primary {
+	background-color: #8cbf26;
+	border-color:  #7caa22;
+	color: #fff;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
+	background-color: #7caa22;
+	border-color: #6d941e;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+  	background-color: #7caa22;
+	border-color: #6d941e;
+    color: #fff;
+}
+.form-signin {
+    margin: 0 auto;
+    max-width: 330px;
+    padding: 15px;
+}
+
+.form-show{
+	 padding-left: -15px;
+}
+/*project details*/
+.sidebar-contacts{
+	border-color: #e7e7e7;
+	border-image: none;
+	border-radius: 4px;
+	border-style: solid;
+	border-width: 1px 1px 3px;
+	padding: 8px;
+}
+.sidebar-section {
+	margin-bottom: 20px;
+}
+.sidebar-contacts ul {
+	list-style: none outside none;
+}
+.sidebar-contacts ul .contact-detail{
+	float: right;
+	width: 100%;
+	
+}
+.sidebar-contacts ul li .contact-detail {
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #eee;
+}
+
+.sidebar-contacts ul li:last-child .contact-detail {
+	border-bottom: none;
+}
+
+.sidebar-heading{
+	display: table;
+	padding-bottom: 0px;
+	position: relative;
+	width: 100%;
+}
+.sidebar-heading:after {
+	clear: both;
+}
+.sidebar-heading h6 {
+	float: left;
+	width: auto;
+	line-height: 1.4;
+	margin-top: 0px;
+	font-weight: bold;
+}
+
+.add-contact-sidebar{
+	color: #aaaaaa;
+	float: right;
+	font-size: 12px;
+	font-weight: normal;
+	padding-left: 10px;
+	padding-right: 5px;
+	text-transform: none;
+}
+.sidebar-box-list {
+	display: table;
+	margin: 0;
+	width: 100%;
+	padding-left: 0px;
+}
+
+.sidebar-box-list .sidebar-title-link {
+	/*color: #333333;*/
+	color: #8cbf26;
+}
+
+.sidebar-box-list .for-approval {
+	color: #dd4b39;
+}
+
+.sidebar-box-list .sidebar-title-link:hover {
+	color: #8cbf26;
+}
+
+
+
+
+.sidebar-box-list .contact-list{
+}
+
+.sidebar-box-list p{
+	margin-bottom: 0px;
+} 
+.sidebar-contact-company{
+	font-size: 12px;
+	font-style: italic;
+}
+
+
+.sidebar-contact-address {
+	font-size: 12px;
+}
+.sidebar-contact-address-2 {
+	font-size: 12px;
+}
+
+.sidebar-box-list li {
+	display: table-row;
+	/*line-height: 18px;*/
+	/*padding: 10px;*/
+	
+}
+
+.sidebar-box-list li .contact-group{
+	border-bottom: 1px solid #BBB;
+	padding-top: 5px;
+}
+
+.sidebar-box-list li:first-child .contact-group{
+	padding-top: 0px;
+  
+}
+.sidebar-box-list li:last-child .contact-group{
+	border-bottom: none;
+  
+}
+
+
+
+.sidebar-box-list li div {
+	display: table-cell;
+	padding: 1px;
+	vertical-align: middle;
+}
+
+
+.sidebar-box-list li div.check-input {
+	color: #999999;
+	text-align: center;
+	vertical-align: top;
+	float: left;
+	margin-right: 5px;
+	
+}
+.contact-detail {
+	margin-left: 10px;
+}
+.call-btn {
+	font-weight: normal;
+}
+.call-btn span {
+	color: #8cbf26;
+/*    color: #428bca;*/
+}
+.contact-btn {
+	background-color: #f0f0f0;
+	background-image: -moz-linear-gradient(center top , #f0f0f0, #f0f0f0);
+	background-repeat: repeat-x;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	color: #333333;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 13px;
+	line-height: 18px;
+	margin-bottom: 0;
+	padding: 4px 10px;
+	text-align: center;
+	transition: box-shadow 0.05s linear 0s;
+	vertical-align: middle;
+}
+
+.btn-mini {
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: normal;
+	line-height: 14px;
+	padding: 2px 6px;
+}
+p small {
+	color: #888888;
+	font-size: 11px;
+}
+
+.emptyRepository {
+	padding: 10px 10%;
+	text-align: left;
+	color: #333333;
+	margin-bottom: 10px;
+}
+.emptyRepository .empty-info {
+	background-position: left center;
+	background-repeat: no-repeat;
+	line-height: 36px;
+	opacity: 0.4;
+	text-align: center;
+}
+
+/*project details*/
+.info-label {
+	color: #888888;
+	font-size: 11px;
+	font-weight: normal;
+}
+.sub-details{
+	font-weight: bold;
+	line-height: 18px;
+	color: #333;
+}
+/*history*/
+.history-list {
+	border: 0 none !important;
+	margin: 0;
+	padding: 0 !important;
+}
+.history-list ul {
+   list-style: none outside none;
+   margin-left: 0px;
+}
+
+.history-items {
+	display: table;
+	margin: 0;
+	padding-left: 0;
+	width: 100%;
+}
+
+.timestamp {
+	color: #888888;
+	font-size: 11px;
+	text-align: right;
+}
+.item-heading .timestamp {
+	float: right;
+	margin: 0;
+}
+.item-heading:after {
+	content: "";
+	display: table;
+}
+
+li.item:before {
+	color: #666666;
+	content: "";
+	font-family: "Base Icons";
+	font-size: 15px;
+	left: 12px;
+	position: absolute;
+}
+li.item.activity:before {
+	content: "";
+	font-family: "FontAwesome";
+}
+.history-list ul li.item {
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+	border-color: -moz-use-text-color -moz-use-text-color #e5e5e5;
+	border-image: none;
+	border-style: none none dotted;
+	border-width: medium medium 1px;
+	margin: 0;
+	overflow: visible;
+	padding: 20px 20px 20px 40px;
+	position: relative;
+	transition: all 0.2s ease 0s;
+}
+
+/*comment*/
+.tabbed-action-content {
+	/*background: none repeat scroll 0 0 #f5f5f5;
+	border: 1px solid #dddddd;
+	border-radius: 0 6px 6px;
+	margin-bottom: 20px;*/
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+	background: none repeat scroll 0 0 #f5f5f5;
+}
+.nav-tabs {
+	border-bottom: 0px;
+}
+.nav-tabs > li > a:hover {
+	border: 1px solid #dddddd;
+	border-radius: 6px 6px 0 0;
+	border-bottom: 0px;
+}
+.form-container {
+	/*padding: 10px 10px 0 10px;*/
+	padding: 10px;
+}
+
+.error-container {
+    margin-bottom: 4em;
+    margin-top: 4em;
+    text-align: center;
+}
+.error-container h1 {
+    font-size: 120px;
+    line-height: 1em;
+    margin-bottom: 0.5em;
+}
+.error-container h2 {
+    font-size: 28px;
+    margin-bottom: 0.75em;
+}
+.error-container .error-details {
+    font-size: 16px;
+    margin-bottom: 1.5em;
+}
+
+/*override select2 css*/
+.select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-selection-limit {
+    background-color: #FFFFFF;
+    color: #8cbf26;
+}
+.select2-results li {
+    background-image: none;
+    color: #333;
+}
+.select2-results .select2-highlighted {
+    background-color: #8cbf26;
+    color: #FFFFFF;
+}
+/*end*/
+
+/*error css*/
+.error{
+	font-style: italic;
+	color: #a94442;
+}
+/*end*/
+
+/*pagination hack*/
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #8cbf26;
+    border-color: #7caa22;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: #8cbf26;
+}
+
+.pagination > li > a:hover, .pagination > li > span {
+    color: #8cbf26;
+}
+/*end*/
+
+/*project	*/
+.project {
+	
+}
+
+.project ul {
+	list-style: none;
+	padding-left: 0px;
+}
+
+.project ul li{
+	margin-bottom: 5px;
+}
+
+.project .info {
+	font-size: 16px;
+	font-weight: bold;
+}
+/*end*/
