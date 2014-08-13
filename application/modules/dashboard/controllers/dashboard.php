@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Dashboard extends MY_Controller {
 
 	public function index()
 	{
-		$this->load->view('layouts/default_layout');
+		$this->layout->view('dashboard/index');
 	}
 
 }
 
 /* End of file dashboard.php */
-/* Location: ./application/modules/dashboard/controllers/dashboard.php */
+/* Location: ./application/controllers/dashboard.php */
