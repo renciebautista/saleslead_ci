@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Departments</h1>	
+		<h1 class="page-header">Roles</h1>	
 		<?php echo $this->session->flashdata('message');?>			
 	</div>
 	<!-- /.col-lg-12 -->						
@@ -10,7 +10,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<?php echo form_open('',array('class' => 'navbar-form', 'role' => 'search', 'method' => 'get')); ?>
-			<a href="<?php echo base_url('department/create'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Department</a>		
+			<a href="<?php echo base_url('role/create'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Role</a>		
 			<div class="input-group custom-search-form">
 				<input type="text" name="q" class="form-control" placeholder="Search..." value="<?php echo $filter; ?>">
 					<span class="input-group-btn">
@@ -33,22 +33,24 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Department</th>
+						<th>Role</th>
+						<th>Role Permission</th>
 						<th style="width:100px;text-align: center;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-				<?php if(count($departments) < 1): ?>
+				<?php if(count($roles) < 1): ?>
 					<tr>
-						<td colspan="2">Record not found.</td>
+						<td colspan="3">Record not found.</td>
 					</tr>
 				<?php else: ?>
-				<?php foreach ($departments as $department):?>
+				<?php foreach ($roles as $role):?>
 					<tr>
-						<td><?php echo $department['department']; ?></td>
+						<td><?php echo $role['ugrp_name']; ?></td>
+						<td><a href="<?php echo base_url('role/permissions/'.$role['ugrp_id']); ?>" >Manage Permissions</a></td>
 						<td style="width:100px;text-align: center;">
-							<a href="<?php echo base_url('department/edit/'.$department['id']); ?>" >Edit</a>
-							<a href="<?php echo base_url('department/delete/'.$department['id']); ?>" >Delete</a>
+							<a href="<?php echo base_url('role/edit/'.$role['ugrp_id']); ?>" >Edit</a>
+							<a href="<?php echo base_url('role/delete/'.$role['ugrp_id']); ?>" >Delete</a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

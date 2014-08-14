@@ -1,177 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>DevOOPS</title>
-		<meta name="description" content="description">
-		<meta name="author" content="DevOOPS">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<?php echo link_tag('assets/plugins/bootstrap/bootstrap.css'); ?>
-		<?php echo link_tag('assets/plugins/jquery-ui/jquery-ui.min.css'); ?>
-		<?php echo link_tag('assets/plugins/font-awesome-4.1.0/css/font-awesome.min.css'); ?>
 
-		<!-- <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'> -->
+<head>
 
-		<?php echo link_tag('assets/plugins/fancybox/jquery.fancybox.css'); ?>
-		<?php echo link_tag('assets/plugins/fullcalendar/fullcalendar.css'); ?>
-		<?php echo link_tag('assets/plugins/xcharts/xcharts.min.css'); ?>
-		<?php echo link_tag('assets/plugins/select2/select2.css'); ?>
-		<?php echo link_tag('assets/css/style.css'); ?>
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-				<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
-				<script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
-		<![endif]-->
-	</head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Sales Lead</title>
+
+	<!-- Bootstrap Core CSS -->
+	<?php echo link_tag('assets/plugins/bootstrap/css/bootstrap.min.css') ?>
+
+	<!-- MetisMenu CSS -->
+	<?php echo link_tag('assets/plugins/metisMenu/css/metisMenu.min.css') ?>
+
+	<!-- Chosen CSS -->
+	<?php echo link_tag('assets/plugins/chosen-1.1.0/css/chosen.css') ?>
+
+	<!-- Custom Fonts -->
+	 <?php echo link_tag('assets/plugins/font-awesome-4.1.0/css/font-awesome.min.css') ?>
+
+	<!-- Custom CSS -->
+	<?php echo link_tag('assets/css/sb-admin-2.css') ?>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+
 <body>
-<header class="navbar">
-	<div class="container-fluid expanded-panel">
-		<div class="row">
-			<div id="logo" class="col-xs-12 col-sm-2">
-				<a href="index.html">Sales Leads</a>
+
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation" style="margin-bottom: 0">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Sales Lead</a>
 			</div>
-			<div id="top-panel" class="col-xs-12 col-sm-10">
-				<div class="row">
-					<div class="col-xs-8 col-sm-4">
-						<a href="#" class="show-sidebar">
-						  <i class="fa fa-bars"></i>
-						</a>
-					</div>
-					<div class="col-xs-4 col-sm-8 top-panel-right">
-						<ul class="nav navbar-nav pull-right panel-menu">
-							<li class="hidden-xs">
-								<a href="index.html" class="modal-link">
-									<i class="fa fa-bell"></i>
-									<span class="badge">7</span>
-								</a>
-							</li>
-							<li class="hidden-xs">
-								<a class="ajax-link" href="ajax/calendar.html">
-									<i class="fa fa-calendar"></i>
-									<span class="badge">7</span>
-								</a>
-							</li>
-							<li class="hidden-xs">
-								<a href="ajax/page_messages.html" class="ajax-link">
-									<i class="fa fa-envelope"></i>
-									<span class="badge">7</span>
-								</a>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
-									<div class="avatar">
-										<img src="assets/img/avatar.jpg" class="img-rounded" alt="avatar" />
+			<!-- /.navbar-header -->
+
+			<ul class="nav navbar-top-links navbar-right">
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+					</a>
+					<ul class="dropdown-menu dropdown-messages">
+						<li>
+							<a href="#">
+								<div>
+									<strong>John Smith</strong>
+									<span class="pull-right text-muted">
+										<em>Yesterday</em>
+									</span>
+								</div>
+								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<strong>John Smith</strong>
+									<span class="pull-right text-muted">
+										<em>Yesterday</em>
+									</span>
+								</div>
+								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<strong>John Smith</strong>
+									<span class="pull-right text-muted">
+										<em>Yesterday</em>
+									</span>
+								</div>
+								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a class="text-center" href="#">
+								<strong>Read All Messages</strong>
+								<i class="fa fa-angle-right"></i>
+							</a>
+						</li>
+					</ul>
+					<!-- /.dropdown-messages -->
+				</li>
+				<!-- /.dropdown -->
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+					</a>
+					<ul class="dropdown-menu dropdown-tasks">
+						<li>
+							<a href="#">
+								<div>
+									<p>
+										<strong>Task 1</strong>
+										<span class="pull-right text-muted">40% Complete</span>
+									</p>
+									<div class="progress progress-striped active">
+										<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+											<span class="sr-only">40% Complete (success)</span>
+										</div>
 									</div>
-									<i class="fa fa-angle-down pull-right"></i>
-									<div class="user-mini pull-right">
-										<span class="welcome">Welcome,</span>
-										<span>Jane Devoops</span>
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<p>
+										<strong>Task 2</strong>
+										<span class="pull-right text-muted">20% Complete</span>
+									</p>
+									<div class="progress progress-striped active">
+										<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+											<span class="sr-only">20% Complete</span>
+										</div>
 									</div>
-								</a>
-								<ul class="dropdown-menu">
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<p>
+										<strong>Task 3</strong>
+										<span class="pull-right text-muted">60% Complete</span>
+									</p>
+									<div class="progress progress-striped active">
+										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+											<span class="sr-only">60% Complete (warning)</span>
+										</div>
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<p>
+										<strong>Task 4</strong>
+										<span class="pull-right text-muted">80% Complete</span>
+									</p>
+									<div class="progress progress-striped active">
+										<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+											<span class="sr-only">80% Complete (danger)</span>
+										</div>
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a class="text-center" href="#">
+								<strong>See All Tasks</strong>
+								<i class="fa fa-angle-right"></i>
+							</a>
+						</li>
+					</ul>
+					<!-- /.dropdown-tasks -->
+				</li>
+				<!-- /.dropdown -->
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+					</a>
+					<ul class="dropdown-menu dropdown-alerts">
+						<li>
+							<a href="#">
+								<div>
+									<i class="fa fa-comment fa-fw"></i> New Comment
+									<span class="pull-right text-muted small">4 minutes ago</span>
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<i class="fa fa-twitter fa-fw"></i> 3 New Followers
+									<span class="pull-right text-muted small">12 minutes ago</span>
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<i class="fa fa-envelope fa-fw"></i> Message Sent
+									<span class="pull-right text-muted small">4 minutes ago</span>
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<i class="fa fa-tasks fa-fw"></i> New Task
+									<span class="pull-right text-muted small">4 minutes ago</span>
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#">
+								<div>
+									<i class="fa fa-upload fa-fw"></i> Server Rebooted
+									<span class="pull-right text-muted small">4 minutes ago</span>
+								</div>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a class="text-center" href="#">
+								<strong>See All Alerts</strong>
+								<i class="fa fa-angle-right"></i>
+							</a>
+						</li>
+					</ul>
+					<!-- /.dropdown-alerts -->
+				</li>
+				<!-- /.dropdown -->
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+					</a>
+					<ul class="dropdown-menu dropdown-user">
+						<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+						</li>
+						<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+						</li>
+						<li class="divider"></li>
+						<li><a href="<?php echo base_url('auth/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+						</li>
+					</ul>
+					<!-- /.dropdown-user -->
+				</li>
+				<!-- /.dropdown -->
+			</ul>
+			<!-- /.navbar-top-links -->
+
+			<div class="navbar-default sidebar" role="navigation">
+				<div class="sidebar-nav navbar-collapse">
+					<ul class="nav" id="side-menu">
+						
+						<li>
+							<a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+						</li>
+
+						<li>
+							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> User Maintenance<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="<?php echo base_url('department'); ?>">Department Maintenance</a>
+								</li>
+								<li>
+									<a href="<?php echo base_url('role'); ?>">Role Maintenance</a>
+								</li>
+								<li>
+									<a href="<?php echo base_url('user'); ?>">User Maintenance</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+
+						<li>
+							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="flot.html">Flot Charts</a>
+								</li>
+								<li>
+									<a href="morris.html">Morris.js Charts</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+						<li>
+							<a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+						</li>
+						<li>
+							<a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="panels-wells.html">Panels and Wells</a>
+								</li>
+								<li>
+									<a href="buttons.html">Buttons</a>
+								</li>
+								<li>
+									<a href="notifications.html">Notifications</a>
+								</li>
+								<li>
+									<a href="typography.html">Typography</a>
+								</li>
+								<li>
+									<a href="grid.html">Grid</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+							<li>
+								<a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
 									<li>
-										<a href="#">
-											<i class="fa fa-user"></i>
-											<span class="hidden-sm text">Profile</span>
-										</a>
+										<a href="#">Second Level Item</a>
 									</li>
 									<li>
-										<a href="ajax/page_messages.html" class="ajax-link">
-											<i class="fa fa-envelope"></i>
-											<span class="hidden-sm text">Messages</span>
-										</a>
+										<a href="#">Second Level Item</a>
 									</li>
 									<li>
-										<a href="ajax/gallery_simple.html" class="ajax-link">
-											<i class="fa fa-picture-o"></i>
-											<span class="hidden-sm text">Albums</span>
-										</a>
-									</li>
-									<li>
-										<a href="ajax/calendar.html" class="ajax-link">
-											<i class="fa fa-tasks"></i>
-											<span class="hidden-sm text">Tasks</span>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fa fa-cog"></i>
-											<span class="hidden-sm text">Settings</span>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fa fa-power-off"></i>
-											<span class="hidden-sm text">Logout</span>
-										</a>
+										<a href="#">Third Level <span class="fa arrow"></span></a>
+										<ul class="nav nav-third-level">
+											<li>
+												<a href="#">Third Level Item</a>
+											</li>
+											<li>
+												<a href="#">Third Level Item</a>
+											</li>
+											<li>
+												<a href="#">Third Level Item</a>
+											</li>
+											<li>
+												<a href="#">Third Level Item</a>
+											</li>
+										</ul>
+										<!-- /.nav-third-level -->
 									</li>
 								</ul>
+								<!-- /.nav-second-level -->
 							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</header>
-<!--End Header-->
-<!--Start Container-->
-<div id="main" class="container-fluid">
-	<div class="row">
-		<div id="sidebar-left" class="col-xs-2 col-sm-2">
-			<ul class="nav main-menu">
-				
-				<li>
-					<a id="dashboard" href="<?php echo base_url('dashboard'); ?>">
-						<i class="fa fa-dashboard"></i>
-						<span class="hidden-xs">Dashboard</span>
-					</a>
-				</li>
-
-
-
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
-						 <span class="hidden-xs">User Maintenance</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a id="department" href="<?php echo base_url('department'); ?>">Department Maintenance</a></li>
-						<li><a id="user" href="<?php echo base_url('user'); ?>">User Maintenance</a></li>
-						<li><a id="role" href="<?php echo base_url('role'); ?>">Role Maintenance</a></li>
+						<li class="active">
+							<a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="active" href="blank.html">Blank Page</a>
+								</li>
+								<li>
+									<a href="login.html">Login Page</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
 					</ul>
-				</li>
-
-				
-			</ul>
-		</div>
-		<!--Start Content-->
-		<div id="content" class="col-xs-12 col-sm-10">
-			<!-- <div class="preloader">
-				<img src="assets/img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
-			</div> -->
-			<div id="ajax-content">
-				<?php echo $content_for_layout ?>
+				</div>
+				<!-- /.sidebar-collapse -->
 			</div>
+			<!-- /.navbar-static-side -->
+		</nav>
+
+		<!-- Page Content -->
+		<div id="page-wrapper">
+			<?php echo $content_for_layout ?>
+			
 		</div>
-		<!--End Content-->
+		<!-- /#page-wrapper -->
+
 	</div>
-</div>
-<!--End Container-->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<!--<script src="http://code.jquery.com/jquery.js"></script>-->
-<script src="<?php echo base_url().'assets/plugins/jquery/jquery-2.1.0.min.js'; ?>"></script>
-<script src="<?php echo base_url().'assets/plugins/jquery-ui/jquery-ui.min.js'; ?>"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="<?php echo base_url().'assets/plugins/bootstrap/bootstrap.min.js'; ?>"></script>
-<script src="<?php echo base_url().'assets/plugins/justified-gallery/jquery.justifiedgallery.min.js'; ?>"></script>
-<script src="<?php echo base_url().'assets/plugins/tinymce/tinymce.min.js'; ?>"></script>
-<script src="<?php echo base_url().'assets/plugins/tinymce/jquery.tinymce.min.js'; ?>"></script>
-<!-- All functions for this theme + document.ready processing -->
-<script src="<?php echo base_url().'assets/js/devoops.js'; ?>"></script>
+	<!-- /#wrapper -->
 
+	<!-- jQuery Version 1.11.0 -->
+	<script src="<?php echo base_url('assets/js/jquery-1.11.0.js'); ?>"></script>
 
+	<!-- Bootstrap Core JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
 
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/metisMenu/js/metisMenu.min.js'); ?>"></script>
+
+	<!-- Chosen Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/chosen-1.1.0/js/chosen.jquery.js'); ?>"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="<?php echo base_url('assets/js/sb-admin-2.js'); ?>"></script>
 
 </body>
+
 </html>
+

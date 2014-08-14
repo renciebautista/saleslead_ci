@@ -172,6 +172,22 @@
 	 * Note: No custom tables are required to use flexi auth, see the demo config file for examples of including custom tables.
 	*/
 	
+	/**
+	 * Custom User Profile Table
+	 * Example table used to hold profile data on each user.
+	 *
+	 * Note: This table and all included fields can be expanded upon or removed completely.
+	*/ 
+	$config['database']['custom']['user_detail']['table'] = 'user_details';
+	$config['database']['custom']['user_detail']['primary_key'] = 'id';
+	$config['database']['custom']['user_detail']['foreign_key'] = 'uacc_id';
+	$config['database']['custom']['user_detail']['join'] = 'user_details.uacc_id';
+	$config['database']['custom']['user_detail']['custom_columns'] = array(
+		'first_name','middle_name','last_name','emp_id','department_id',
+		'created_by','created_at','updated_at'
+	);
+
+
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###	
 	// DATABASE SETTINGS
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###	
@@ -422,7 +438,7 @@
 	 * Set the minimum required characters for the users password.
 	 * @param int
 	*/
-	$config['security']['min_password_length'] = 8;
+	$config['security']['min_password_length'] = 6;
 	
 	/**
 	 * Set which characters are valid for user passwords.
