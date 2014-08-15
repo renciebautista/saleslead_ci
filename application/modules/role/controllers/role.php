@@ -19,6 +19,7 @@ class Role extends MY_Controller {
 		$this->form_validation->set_rules('role', 'Role', 'required|is_unique[user_groups.ugrp_name]');
 
 		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_unique', 'Value already exist.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){

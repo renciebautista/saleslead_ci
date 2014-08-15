@@ -200,8 +200,6 @@
 	 * Example: Change $config['database']['settings']['example'] = 'example_value_1' to $config['database']['settings']['example'] = 'example_value_2'
 	*/ 
 
-	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
-
 	/**
 	 * Primary User Identity Column
 	 * Set the column to be used to primarily identify users.
@@ -438,7 +436,7 @@
 	 * Set the minimum required characters for the users password.
 	 * @param int
 	*/
-	$config['security']['min_password_length'] = 6;
+	$config['security']['min_password_length'] = 8;
 	
 	/**
 	 * Set which characters are valid for user passwords.

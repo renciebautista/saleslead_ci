@@ -6,6 +6,7 @@ class Department_model extends MY_Model {
 
 	public function search($filter){
 		$this->db->like('department',$filter);
+		$this->db->order_by('department');
 		return $this->db->get($this->_table)->result_array();
 	}
 

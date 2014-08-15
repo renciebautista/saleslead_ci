@@ -19,6 +19,7 @@ class Department extends MY_Controller {
 		$this->form_validation->set_rules('department', 'Department', 'required|is_unique[departments.department]');
 
 		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_unique', 'Value already exist.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
@@ -42,11 +43,12 @@ class Department extends MY_Controller {
 		$this->form_validation->set_rules('department', 'Department', 'required|is_unique[departments.department]');
 
 		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_unique', 'Value already exist.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$data['department'] = $this->Department_model->get($id);
-			$this->layout->view('department/edit',$data);
+			$this->data['department'] = $this->Department_model->get($id);
+			$this->layout->view('department/edit',$this->data);
 		}else{
 			$_id = $this->input->post('_id');
 			$department = strtoupper(trim($this->input->post('department')));
@@ -69,13 +71,13 @@ class Department extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$data['department'] = $this->Department_model->get($id);
-			$this->layout->view('department/delete',$data);
+			$this->data['department'] = $this->Department_model->get($id);
+			$this->layout->view('department/delete',$this->data);
 		}else{
 			$_id = $this->input->post('_id');
 			$department = $this->Department_model->get($_id);
 			$this->Department_model->delete($_id);
-			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$department->department.' department!');
+			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$department['department'].' department!');
 			redirect('department');
 		}
 	}

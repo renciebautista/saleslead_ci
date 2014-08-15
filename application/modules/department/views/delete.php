@@ -15,7 +15,7 @@
 				<?php echo form_error('department'); ?>
 				<input id="department" class="form-control" type="text" value="<?php echo set_value('department',$department['department'] ); ?>" name="department" placeholder="Department" readonly="">
 			</div>
-			<input class="btn btn-danger" type="submit" value="Delete">
+			<input onclick="if(!confirm('Are you sure to delete this record?')){return false;};" class="btn btn-danger" type="submit" value="Delete">
 			<a class="btn btn-default" href="<?php echo base_url('department'); ?>">Back</a>
 		<?php echo form_close(); ?>
 	</div>
