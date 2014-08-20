@@ -59,7 +59,7 @@ class Auth_model extends CI_Model {
 			$this->session->set_flashdata('message', $this->flexi_auth->get_messages());
 
 			// Reload page, if login was successful, sessions will have been created that will then further redirect verified users.
-			redirect('dashboard');
+			redirect('');
 		}
 		else
 		{	

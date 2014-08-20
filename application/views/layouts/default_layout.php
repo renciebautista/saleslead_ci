@@ -267,59 +267,76 @@
 					<ul class="nav" id="side-menu">
 						
 						<li>
-							<a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+							<a id="dashboard" href="<?php echo base_url('dashboard'); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 						</li>
 
-						<li>
+						<li class="dropdown">
 							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> User Maintenance<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li>
-									<a href="<?php echo base_url('department'); ?>">Department</a>
+								<li >
+									<a id="department"  href="<?php echo base_url('department'); ?>">Department</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url('role'); ?>">Role</a>
+									<a id="role" href="<?php echo base_url('role'); ?>">Role</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url('user'); ?>">User</a>
+									<a id="user" href="<?php echo base_url('user'); ?>">User</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
 
-						<li>
+						<li class="dropdown">
 							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> File Maintenance<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a href="<?php echo base_url('prjclassification'); ?>">Project Classification</a>
+									<a id="prjclassification" href="<?php echo base_url('prjclassification'); ?>">Project Classification</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url('prjcategory'); ?>">Project Category</a>
+									<a id="prjcategory" href="<?php echo base_url('prjcategory'); ?>">Project Category</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url('prjstage'); ?>">Project Stage</a>
+									<a id="prjstage" href="<?php echo base_url('prjstage'); ?>">Project Stage</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url('prjstatus'); ?>">Project Status</a>
+									<a id="prjstatus" href="<?php echo base_url('prjstatus'); ?>">Project Status</a>
+								</li>
+								<li>
+									<a id="grouptype" href="<?php echo base_url('grouptype'); ?>">Group Type</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
 
-						<li>
+						<li class="dropdown">
 							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a href="<?php echo base_url('project'); ?>">Projects</a>
+									<a id="project" href="<?php echo base_url('project'); ?>">Projects</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url('role'); ?>">Role Maintenance</a>
+									<a id="role" href="<?php echo base_url('role'); ?>">Role Maintenance</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url('user'); ?>">User Maintenance</a>
+									<a id="user" href="<?php echo base_url('user'); ?>">User Maintenance</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
+
+						<li class="dropdown">
+							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Contact<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a id="contact" href="<?php echo base_url('contact'); ?>">Contact</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+
+						
+
+						
 					</ul>
 				</div>
 				<!-- /.sidebar-collapse -->

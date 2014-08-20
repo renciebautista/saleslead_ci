@@ -5,7 +5,7 @@ class MY_Controller extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 
-		$this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(FALSE);
 
 		// IMPORTANT! This global must be defined BEFORE the flexi auth library is loaded! 
  		// It is used as a global that is accessible via both models and both libraries, without it, flexi auth will not work.

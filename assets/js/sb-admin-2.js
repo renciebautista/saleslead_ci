@@ -22,10 +22,24 @@ $(function() {
 	})
 })
 
-$(document).ready(function () {
-	$('#side-menu').metisMenu();
+function SetMenu(menu){
+	var link = $('#'+menu);
+	var li = link.closest('li.dropdown');
 
+	link.addClass('active');
+	li.addClass('active');
+}
+
+$(document).ready(function () {
 	
+
+	var pathArray = window.location.pathname.split( '/' );
+	if (pathArray[1].length < 1) {
+	pathArray[1] = 'dashboard';
+	}
+	SetMenu(pathArray[1]);
+
+	$('#side-menu').metisMenu();
 
 	// lazy loading
 	var

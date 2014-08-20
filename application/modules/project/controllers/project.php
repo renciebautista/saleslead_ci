@@ -21,6 +21,7 @@ class Project extends MY_Controller {
 		$this->data['prjcategories'] = $this->Prjcategory_model->order_by('prjcategory_desc')->get_all();
 		$this->data['prjstages'] = $this->Prjstage_model->order_by('prjstage_desc')->get_all();
 		$this->data['prjstatuses'] = $this->Prjstatus_model->order_by('prjstatus_desc')->get_all();
+
 		$this->layout->view('project/create',$this->data);
 	}
 

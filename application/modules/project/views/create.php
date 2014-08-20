@@ -143,7 +143,7 @@
 				<input id="project_name" class="form-control" type="text" value="" name="project_name" placeholder="Project Name">
 			</div>
 	</div>
-	<div class="col-lg-6">
+	<div class="col-lg-12">
 		<div class="form-group">
 				<input class="btn btn-success" type="submit" value="Submit">
 			<a class="btn btn-default" href="<?php echo base_url('project'); ?>">Back</a>
