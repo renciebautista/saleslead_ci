@@ -22,7 +22,12 @@ class Auth extends CI_Controller {
 	}
 
 	public function index(){
-		$this->login();
+		if(!$this->flexi_auth->is_logged_in()){
+			$this->login();
+		}else{
+			redirect('dashboard');
+		}
+		
 	}
 
 	public function login(){

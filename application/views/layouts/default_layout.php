@@ -290,19 +290,22 @@
 							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> File Maintenance<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a id="prjclassification" href="<?php echo base_url('prjclassification'); ?>">Project Classification</a>
+									<a id="prjclassification" href="<?php echo base_url('prjclassification'); ?>">Project Classifications</a>
 								</li>
 								<li>
-									<a id="prjcategory" href="<?php echo base_url('prjcategory'); ?>">Project Category</a>
+									<a id="prjcategory" href="<?php echo base_url('prjcategory'); ?>">Project Categories</a>
 								</li>
 								<li>
-									<a id="prjstage" href="<?php echo base_url('prjstage'); ?>">Project Stage</a>
+									<a id="prjstage" href="<?php echo base_url('prjstage'); ?>">Project Stages</a>
 								</li>
 								<li>
-									<a id="prjstatus" href="<?php echo base_url('prjstatus'); ?>">Project Status</a>
+									<a id="prjstatus" href="<?php echo base_url('prjstatus'); ?>">Project Statuses</a>
 								</li>
 								<li>
-									<a id="grouptype" href="<?php echo base_url('grouptype'); ?>">Group Type</a>
+									<a id="grouptype" href="<?php echo base_url('grouptype'); ?>">Group Types</a>
+								</li>
+								<li>
+									<a id="state" href="<?php echo base_url('state'); ?>">States</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->
@@ -325,10 +328,13 @@
 						</li>
 
 						<li class="dropdown">
-							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Contact<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Contacts<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a id="contact" href="<?php echo base_url('contact'); ?>">Contact</a>
+									<a id="contact" href="<?php echo base_url('contact'); ?>">Contacts</a>
+								</li>
+								<li>
+									<a id="contact" href="<?php echo base_url('company'); ?>">Companies</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->

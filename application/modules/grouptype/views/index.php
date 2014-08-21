@@ -40,7 +40,7 @@
 				<tbody>
 				<?php if(count($grouptypes) < 1): ?>
 					<tr>
-						<td colspan="2">Record not found.</td>
+						<td colspan="2">No record found.</td>
 					</tr>
 				<?php else: ?>
 				<?php foreach ($grouptypes as $grouptype):?>

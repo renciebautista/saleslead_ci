@@ -41,7 +41,7 @@
 				<tbody>
 				<?php if(count($roles) < 1): ?>
 					<tr>
-						<td colspan="3">Record not found.</td>
+						<td colspan="3">No record found.</td>
 					</tr>
 				<?php else: ?>
 				<?php foreach ($roles as $role):?>
