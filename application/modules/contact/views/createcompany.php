@@ -81,7 +81,7 @@
 	<div class="col-lg-12">
 		<div class="form-group">
 			<input class="btn btn-success" type="submit" value="Submit">
-			<a class="btn btn-default" href="<?php echo base_url('company'); ?>">Back</a>
+			<a class="btn btn-default" href="<?php echo base_url('contact/create'); ?>">Back</a>
 		</div>
 	</div>
 	

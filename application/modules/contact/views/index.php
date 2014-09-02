@@ -33,22 +33,33 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Department</th>
+						<th>Name</th>
+						<th>Company</th>
+						<th>Phones</th>
+						<th>Emails</th>
+						<th>Projects</th>
 						<th style="width:100px;text-align: center;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-				<?php if(count($departments) < 1): ?>
+				<?php if(count($contacts) < 1): ?>
 					<tr>
 						<td colspan="2">No record found.</td>
 					</tr>
 				<?php else: ?>
-				<?php foreach ($departments as $department):?>
+				<?php foreach ($contacts as $contact):?>
 					<tr>
-						<td><?php echo $department['department']; ?></td>
+						<td><?php echo $contact['last_name'].', '.$contact['first_name'].' '.$contact['middle_name']; ?></td>
+						<td>
+							<?php echo $contact['company']; ?><br>
+							<i>	<?php echo ucwords(strtolower($contact['lot'].' '.$contact['street'].' '.$contact['brgy'].' '.$contact['city'].' '.$contact['province'])); ?></i><br>
+						</td>
+						<td><a href="">Manage Phones</a></td>
+						<td><a href="">Manage Emails</a></td>
+						<td><a href="">View Projects</a></td>
 						<td style="width:100px;text-align: center;">
-							<a href="<?php echo base_url('department/edit/'.$department['id']); ?>" >Edit</a>
-							<a href="<?php echo base_url('department/delete/'.$department['id']); ?>" >Delete</a>
+							<a href="<?php echo base_url('contact/edit/'.$contact['id']); ?>" >Edit</a>
+							<a href="<?php echo base_url('contact/delete/'.$contact['id']); ?>" >Delete</a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

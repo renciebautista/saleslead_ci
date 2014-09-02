@@ -7,10 +7,31 @@ class Company_model extends MY_Model {
 
 	protected $return_type = 'array';
 
-	public function search($filter){
+	public function my_companies($filter=null,$id,$limit=null){
+		$this->db->select('companies.id,company,lot,street,brgy,city,province');
+		$this->db->join('cities','cities.id = companies.city_id');
+		$this->db->join('provinces','provinces.id = cities.province_id');
 		$this->db->like('company',$filter);
+		$this->db->where('created_by',$id);
 		$this->db->order_by('company');
+		if(!is_null($limit)){
+			$this->db->limit($limit);
+		}
 		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function company_exist($company,$id){
+		$this->db->where('company',$company);
+		$this->db->where('created_by',$id);
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
+
+	public function details($id){
+		$this->db->select('companies.id,company,lot,street,brgy,city,province');
+		$this->db->join('cities','cities.id = companies.city_id');
+		$this->db->join('provinces','provinces.id = cities.province_id');
+		$this->db->where('companies.id',$id);
+		return $this->db->get($this->_table)->row_array();
 	}
 
 }

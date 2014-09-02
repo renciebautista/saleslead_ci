@@ -12,19 +12,19 @@
 	<title>Sales Lead</title>
 
 	<!-- Bootstrap Core CSS -->
-	<?php echo link_tag('assets/plugins/bootstrap/css/bootstrap.min.css') ?>
-
+	<?php echo link_tag('assets/plugins/bootstrap/css/bootstrap.min.css'); ?>
 	<!-- MetisMenu CSS -->
-	<?php echo link_tag('assets/plugins/metisMenu/css/metisMenu.min.css') ?>
-
+	<?php echo link_tag('assets/plugins/metisMenu/css/metisMenu.min.css'); ?>
 	<!-- Chosen CSS -->
-	<?php echo link_tag('assets/plugins/chosen-1.1.0/css/chosen.css') ?>
-
+	<?php echo link_tag('assets/plugins/chosen-1.1.0/css/chosen.css'); ?>
 	<!-- Custom Fonts -->
-	 <?php echo link_tag('assets/plugins/font-awesome-4.1.0/css/font-awesome.min.css') ?>
-
+	 <?php echo link_tag('assets/plugins/font-awesome-4.1.0/css/font-awesome.min.css'); ?>
+	<!-- Select2 CSS -->
+	<?php echo link_tag('assets/plugins/select2-3.5.1/css/select2.css'); ?>
+	<?php echo link_tag('assets/plugins/select2-3.5.1/css/select2-bootstrap.css'); ?>
+	
 	<!-- Custom CSS -->
-	<?php echo link_tag('assets/css/sb-admin-2.css') ?>
+	<?php echo link_tag('assets/css/sb-admin-2.css'); ?>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,6 +32,9 @@
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<script type="text/javascript">
+		var domain ="http://"+document.domain;
+	</script>
 
 </head>
 
@@ -271,6 +274,34 @@
 						</li>
 
 						<li class="dropdown">
+							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a id="project" href="<?php echo base_url('project'); ?>">Projects</a>
+								</li>
+								<li>
+									<a id="project" href="<?php echo base_url('project'); ?>">Assigned Projects</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+
+						<li class="dropdown">
+							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Contacts<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a id="contact" href="<?php echo base_url('contact'); ?>">Contacts</a>
+								</li>
+								<li>
+									<a id="company" href="<?php echo base_url('company'); ?>">Companies</a>
+								</li>
+								
+								
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+
+						<li class="dropdown">
 							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> User Maintenance<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li >
@@ -304,43 +335,9 @@
 								<li>
 									<a id="grouptype" href="<?php echo base_url('grouptype'); ?>">Group Types</a>
 								</li>
-								<li>
-									<a id="state" href="<?php echo base_url('state'); ?>">States</a>
-								</li>
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
-
-						<li class="dropdown">
-							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a id="project" href="<?php echo base_url('project'); ?>">Projects</a>
-								</li>
-								<li>
-									<a id="role" href="<?php echo base_url('role'); ?>">Role Maintenance</a>
-								</li>
-								<li>
-									<a id="user" href="<?php echo base_url('user'); ?>">User Maintenance</a>
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
-
-						<li class="dropdown">
-							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Contacts<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a id="contact" href="<?php echo base_url('contact'); ?>">Contacts</a>
-								</li>
-								<li>
-									<a id="contact" href="<?php echo base_url('company'); ?>">Companies</a>
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
-
-						
 
 						
 					</ul>
@@ -352,8 +349,7 @@
 
 		<!-- Page Content -->
 		<div id="page-wrapper">
-			<?php echo $content_for_layout ?>
-			
+			<?php echo $content_for_layout ?>	
 		</div>
 		<!-- /#page-wrapper -->
 
@@ -362,17 +358,17 @@
 
 	<!-- jQuery Version 1.11.0 -->
 	<script src="<?php echo base_url('assets/js/jquery-1.11.0.js'); ?>"></script>
-
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
-
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/metisMenu/js/metisMenu.min.js'); ?>"></script>
-
 	<!-- Chosen Plugin JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/chosen-1.1.0/js/chosen.jquery.js'); ?>"></script>
+	<!-- Select2 Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/select2-3.5.1/js/select2.min.js'); ?>"></script>
 
 	<!-- Custom Theme JavaScript -->
+	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/sb-admin-2.js'); ?>"></script>
 
 </body>

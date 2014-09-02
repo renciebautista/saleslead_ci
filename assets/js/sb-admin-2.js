@@ -30,6 +30,18 @@ function SetMenu(menu){
 	li.addClass('active');
 }
 
+function formatSelection(contact) {
+	var markup = '<div style="padding: 5px; overflow:hidden;">';
+		markup += '<div style="float: left; margin-left: 5px">';
+		markup += '<div style="padding-bottom: 4px; font-weight: bold; font-size: 14px; line-height: 14px">'+contact.text+'</div>';
+		markup += '<div style=" font-size: 12px">'+contact.company+'</div>';
+		markup += '</div>';
+		markup += '</div>';
+		markup += '<div style="clear:both;"></div>';
+		markup += '</div>';
+	return markup;
+}
+
 $(document).ready(function () {
 	
 

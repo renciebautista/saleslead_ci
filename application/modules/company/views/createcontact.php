@@ -9,19 +9,17 @@
 <div class="row">
 	<?php echo form_open('',array('role' => 'form')); ?>
 	<div class="col-lg-6">
-			<div class="form-group">
-				<a href="<?php echo base_url('contact/createcompany'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Company</a>
-			</div>
+			
 			<div class="form-group">
 				<label for="company_id">Company Name</label>
 				<?php echo form_error('company_id'); ?>
-				<input value="<?php echo set_value('company_id'); ?>" id="company_id" class="form-control" type="text" value="" name="company_id" placeholder="Company Name">
+				<input value="<?php echo set_value('company_id'); ?>" id="company_id" class="form-control" type="text" value="" name="company_id" readonly="">
 			</div>
 
 			<div class="form-group">
 				<label for="address">Company Address</label>
 				<?php echo form_error('address'); ?>
-				<input value="<?php echo set_value('address'); ?>" id="address" class="form-control" type="text" value="" name="address" placeholder="Company Address" readonly="">
+				<input value="<?php echo set_value('address'); ?>" id="address" class="form-control" type="text" value="" name="address" readonly="">
 			</div>
 
 			<div class="form-group">
@@ -41,9 +39,9 @@
 			</div>
 
 			<div class="form-group">
-				<label for="title">Title / Position</label>
-				<?php echo form_error('title'); ?>
-				<input value="<?php echo set_value('title'); ?>" id="title" class="form-control" type="text" value="" name="title" placeholder="Title / Position">
+				<label for="middle_name">Title / Position</label>
+				<?php echo form_error('middle_name'); ?>
+				<input value="<?php echo set_value('middle_name'); ?>" id="middle_name" class="form-control" type="text" value="" name="middle_name" placeholder="Midlle Name">
 			</div>
 			
 	</div>
@@ -60,34 +58,3 @@
 <!-- /.row -->
 
 
-<script type="text/delayscript">
-$(document).ready(function() {	
-	$('#address').val('');
-	$('#company_id').select2({
-			placeholder: "Company Name",
-			allowClear: true,
-			minimumInputLength: 3,
-			ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-				url: domain + '/company/lists', 
-				dataType: 'json',
-				data: function (term, page) {
-					return {
-						q: term, // search term
-						page_limit: 10,
-					};
-				},
-				results: function (data, page) { // parse the results into the format expected by Select2.
-					//console.log(data);
-					// since we are using custom formatting functions we do not need to alter remote JSON data
-					return {results: data.contacts};
-				}
-			},
-			formatResult: formatSelection,
-			escapeMarkup: function(m) { return m; }
-		}).on("select2-selecting", function(e) {
-			$('#address').val(e.object.company);
-        }).on("select2-removed", function(e) {
-        	$('#address').val('');
-        });
-});
-</script>

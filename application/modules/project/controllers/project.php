@@ -8,6 +8,7 @@ class Project extends MY_Controller {
 		$this->load->model('prjcategory/Prjcategory_model');
 		$this->load->model('prjstage/Prjstage_model');
 		$this->load->model('prjstatus/Prjstatus_model');
+		$this->load->model('city/City_model');
 	}
 
 	public function index()
@@ -21,6 +22,7 @@ class Project extends MY_Controller {
 		$this->data['prjcategories'] = $this->Prjcategory_model->order_by('prjcategory_desc')->get_all();
 		$this->data['prjstages'] = $this->Prjstage_model->order_by('prjstage_desc')->get_all();
 		$this->data['prjstatuses'] = $this->Prjstatus_model->order_by('prjstatus_desc')->get_all();
+		$this->data['cities'] = $this->City_model->get_all_cities();
 
 		$this->layout->view('project/create',$this->data);
 	}

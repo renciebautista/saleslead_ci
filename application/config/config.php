@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://saleslead/';
+$config['base_url']	= 'http://192.168.20.21/';
 
 /*
 |--------------------------------------------------------------------------

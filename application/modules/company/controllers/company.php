@@ -6,22 +6,22 @@ class Company extends MY_Controller {
 		parent::__construct();
 		$this->load->model('Company_model');
 		$this->load->model('grouptype/Grouptype_model');
-		$this->load->model('state/State_model');
 		$this->load->model('city/City_model');
-		$this->load->model('Company_address_model');
 		$this->load->model('Address_grouptype_model');
 	}
 
+
+
 	public function index(){
 		$this->data['filter'] = trim($this->input->get('q'));
-		$this->data['comapanies'] = $this->Company_model->search($this->data['filter']);
+		$this->data['comapanies'] = $this->Company_model->my_companies($this->data['filter'],$this->flexi_auth->get_user_id());
 		$this->layout->view('company/index',$this->data);
 	}
 
 	public function create(){
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('company_name', 'Company Name', 'required|is_unique[companies.company]');
+		$this->form_validation->set_rules('company_name', 'Company Name', 'required');
 		$this->form_validation->set_rules('lot', 'Lot', 'trim');
 		$this->form_validation->set_rules('street', 'Street', 'trim');
 		$this->form_validation->set_rules('brgy', 'Bgry', 'trim|required');
@@ -30,7 +30,6 @@ class Company extends MY_Controller {
 
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
-		$this->form_validation->set_message('is_unique', 'Value already exist.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
@@ -41,17 +40,13 @@ class Company extends MY_Controller {
 			$this->db->trans_start();
 				$company = strtoupper(trim($this->input->post('company_name')));
 				$groups = $this->input->post('grouptype');
-				$company_id = $this->Company_model->insert(array('company' => $company, 'created_by' => $this->flexi_auth->get_user_id()));
-
-				$address_id = $this->Company_address_model->insert(array(
-					'company_id' => $company_id,
+				$company_id = $this->Company_model->insert(array(
+					'company' => $company, 
 					'lot' => strtoupper(trim($this->input->post('lot'))),
 					'street' => strtoupper(trim($this->input->post('street'))),
-					'bgry' => strtoupper(trim($this->input->post('brgy'))),
+					'brgy' => strtoupper(trim($this->input->post('brgy'))),
 					'city_id' => strtoupper(trim($this->input->post('city_id'))),
 					'created_by' => $this->flexi_auth->get_user_id()));
-
-				$this->Address_grouptype_model->insert_group($address_id,$groups);
 			$this->db->trans_complete();
 			
 			if ($this->db->trans_status() === FALSE){
@@ -63,6 +58,42 @@ class Company extends MY_Controller {
 		}
 	}
 
+	public function contacts($id = null){
+		$this->data['filter'] = trim($this->input->get('q'));
+		$this->data['company'] = $this->Company_model->details($id);
+		$this->data['contacts'] = array();
+		$this->layout->view('company/contacts',$this->data);
+	}
+
+	public function createcontact($id = null){
+		$this->data['filter'] = trim($this->input->get('q'));
+		$this->data['company'] = $this->Company_model->details($id);
+		$this->data['contacts'] = array();
+		$this->layout->view('company/createcontact',$this->data);
+	}
+//-----------------------------------------------------
+	// Ajax request
+	public function lists(){
+		if($this->input->is_ajax_request()){
+			$filter = $this->input->get('q');
+			$page_limit = $this->input->get('page_limit');
+			$companies = $this->Company_model->my_companies($filter,$this->flexi_auth->get_user_id(),$page_limit);
+
+			$data = array();
+			if(!empty($companies)){
+				foreach ($companies as $company) {
+					$row_array['id'] = $company['id'];
+					$row_array['text'] = $company['company'];
+					$row_array['company'] = ucwords(strtolower($company['lot'].' '.$company['street'].' '.$company['brgy'].', '.$company['city'].' '.$company['province']));
+					$data[] = $row_array;
+				}
+			}
+			echo json_encode(array(
+				'status' => 'success',
+				'contacts' => $data
+				));
+		}
+	}
 }
 
 /* End of file company.php */
