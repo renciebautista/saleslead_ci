@@ -72,28 +72,45 @@ class Company extends MY_Controller {
 		$this->layout->view('company/createcontact',$this->data);
 	}
 //-----------------------------------------------------
-	// Ajax request
-	public function lists(){
-		if($this->input->is_ajax_request()){
-			$filter = $this->input->get('q');
-			$page_limit = $this->input->get('page_limit');
-			$companies = $this->Company_model->my_companies($filter,$this->flexi_auth->get_user_id(),$page_limit);
+	// // Ajax request
+	// public function lists(){
+	// 	if($this->input->is_ajax_request()){
+	// 		$filter = $this->input->get('q');
+	// 		$page_limit = $this->input->get('page_limit');
+	// 		$companies = $this->Company_model->my_companies($filter,$this->flexi_auth->get_user_id(),$page_limit);
 
-			$data = array();
-			if(!empty($companies)){
-				foreach ($companies as $company) {
-					$row_array['id'] = $company['id'];
-					$row_array['text'] = $company['company'];
-					$row_array['company'] = ucwords(strtolower($company['lot'].' '.$company['street'].' '.$company['brgy'].', '.$company['city'].' '.$company['province']));
-					$data[] = $row_array;
-				}
-			}
-			echo json_encode(array(
-				'status' => 'success',
-				'contacts' => $data
-				));
-		}
-	}
+	// 		$data = array();
+	// 		if(!empty($companies)){
+	// 			foreach ($companies as $company) {
+	// 				$row_array['id'] = $company['id'];
+	// 				$row_array['text'] = $company['company'];
+	// 				$row_array['company'] = ucwords(strtolower($company['lot'].' '.$company['street'].' '.$company['brgy'].', '.$company['city'].' '.$company['province']));
+	// 				$data[] = $row_array;
+	// 			}
+	// 		}
+	// 		echo json_encode(array(
+	// 			'status' => 'success',
+	// 			'contacts' => $data
+	// 			));
+	// 	}
+	// }
+	// public function info(){
+	// 	if($this->input->is_ajax_request()){
+	// 		$id = $this->input->get('id');
+	// 		$company = $this->Company_model->details($id);
+
+	// 		$data = array();
+	// 		if(!empty($company)){
+	// 			$data['id'] = $company['id'];
+	// 			$data['text'] = $company['company'];
+	// 			$data['company'] = ucwords(strtolower($company['lot'].' '.$company['street'].' '.$company['brgy'].', '.$company['city'].' '.$company['province']));
+	// 		}
+	// 		echo json_encode(array(
+	// 			'status' => 'success',
+	// 			'contacts' => $data
+	// 			));
+	// 	}
+	// }
 }
 
 /* End of file company.php */

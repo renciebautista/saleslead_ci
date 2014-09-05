@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="address">Project Address</label>
+			<label for="project_address">Project Address</label>
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="form-group">
@@ -62,83 +62,46 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="form-group">
-						<label for="project_name">Project Details</label>
-						<?php echo form_error('project_name'); ?>
-						<textarea class="form-control" rows="7"></textarea>
+						<label for="type_id">Contact Type</label>
+						<?php echo form_error('type_id'); ?>
+						<select class="form-control" data-placeholder="SELECT CONTACT TYPE" id="type_id" name="type_id" class="medium" >
+							<option value="0"></option>
+							<?php foreach($types as $type){?>
+								<option value="<?php echo $type['id'];?>" <?php echo set_select('type_id',$type['id']); ?> ><?php echo strtoupper($type['grouptype_desc']);?></option>
+							<?}?>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="form-group">
+						<label for="contact_id">Contact Name</label>
+						<?php echo form_error('contact_id'); ?>
+						<input value="<?php echo set_value('contact_id'); ?>" id="contact_id" class="form-control" type="text" value="" name="contact_id" placeholder="Contact Name">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="form-group">
+						<label for="company_name">Company Name</label>
+						<?php echo form_error('company_name'); ?>
+						<input value="<?php echo set_value('company_name'); ?>" id="company_name" class="form-control" type="text" value="" name="company_name" placeholder="Company Name" readonly="">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="form-group">
+						<label for="address">Company Address</label>
+						<?php echo form_error('address'); ?>
+						<input value="<?php echo set_value('address'); ?>" id="address" class="form-control" type="text" value="" name="address" placeholder="Company Address" readonly="">
 					</div>
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label for="project_name">Project Owner</label>
-				<?php echo form_error('project_name'); ?>
-				<input id="project_name" class="form-control" type="text" value="" name="project_name" placeholder="Project Name">
-			</div>
-
-		
-			<div class="form-group">
-				<label for="prjclassification_id">Project Classification</label>
-				<?php echo form_error('prjclassification_id'); ?>
-				<select class="form-control" data-placeholder="SELECT PROJECT CLASSIFICATION" id="prjclassification_id" name="prjclassification_id" class="medium" >
-					<option value="0"></option>
-					<?php foreach($prjclassifications as $prjclassification){?>
-						<option value="<?php echo $prjclassification['id'];?>" <?php echo set_select('prjclassification_id',$prjclassification['id']); ?> ><?php echo $prjclassification['prjclassification_desc'];?></option>
-					<?}?>
-				</select>
-			</div>
-
-			<div class="form-group">
-				<label for="prjcategory_id">Project Category</label>
-				<?php echo form_error('prjcategory_id'); ?>
-				<select class="form-control" data-placeholder="SELECT PROJECT CATEGORY" id="prjcategory_id" name="prjcategory_id" class="medium" >
-					<option value="0"></option>
-					<?php foreach($prjcategories as $prjcategory){?>
-						<option value="<?php echo $prjcategory['id'];?>" <?php echo set_select('prjcategory_id',$prjcategory['id']); ?> ><?php echo $prjcategory['prjcategory_desc'];?></option>
-					<?}?>
-				</select>
-			</div>
-
-			<div class="form-group">
-				<label for="project_name">Project Sub Category</label>
-				<?php echo form_error('project_name'); ?>
-				<select class="form-control" data-placeholder="SELECT prjstatus" id="prjstatus_id" name="prjstatus_id" class="medium" >
-					<option value="0"></option>
-					<?php foreach($prjstatuss as $prjstatus){?>
-						<option value="<?php echo $prjstatus['id'];?>" <?php echo set_select('prjstatus_id',$prjstatus['id']); ?> ><?php echo $prjstatus['prjstatus'];?></option>
-					<?}?>
-				</select>
-			</div>
-
-			<div class="form-group">
-				<label for="prjstage_id">Project Stage</label>
-				<?php echo form_error('prjstage_id'); ?>
-				<select class="form-control" data-placeholder="SELECT PROJECT STAGE" id="prjstage_id" name="prjstage_id" class="medium" >
-					<option value="0"></option>
-					<?php foreach($prjstages as $prjstage){?>
-						<option value="<?php echo $prjstage['id'];?>" <?php echo set_select('prjstage_id',$prjstage['id']); ?> ><?php echo $prjstage['prjstage_desc'];?></option>
-					<?}?>
-				</select>
-			</div>
-
-			<div class="form-group">
-				<label for="prjstatus_id">Project Status</label>
-				<?php echo form_error('project_name'); ?>
-				<select class="form-control" data-placeholder="SELECT PROJECT STATUS" id="prjstatus_id" name="prjstatus_id" class="medium" >
-					<option value="0"></option>
-					<?php foreach($prjstatuses as $prjstatus){?>
-						<option value="<?php echo $prjstatus['id'];?>" <?php echo set_select('prjstatus_id',$prjstatus['id']); ?> ><?php echo $prjstatus['prjstatus_desc'];?></option>
-					<?}?>
-				</select>
-			</div>
-
-			<div class="form-group">
-				<label for="project_name">Project Estimated Amount</label>
-				<?php echo form_error('project_name'); ?>
-				<input id="project_name" class="form-control" type="text" value="" name="project_name" placeholder="Project Name">
-			</div>
-
 		</div>
-
 	</div>
 
 	<div class="col-lg-12">
@@ -156,6 +119,55 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {
-	$("#city_id,#prjclassification_id,#prjcategory_id,#prjstage_id,#prjstatus_id").chosen({allow_single_deselect: true});
+	$("#city_id,#type_id").chosen({allow_single_deselect: true});
+
+	$('#company_name').val('');
+	$('#address').val('');
+	$('#contact_id').select2({
+		initSelection: function(element, callback) {
+		    var id;
+		    id = $(element).val();
+		    if (id !== "") {
+		      	return $.ajax({
+		        	url: domain + '/contact/info', 
+		        	dataType: "json",
+		        	data: {
+		          		id: id
+		        	}
+		      	}).done(function(data) {
+		        callback(data.contacts);
+		        $('#company_name').val(data.contacts.company);
+		        $('#address').val(data.contacts.address);
+		      	});
+		    }
+		 },
+		placeholder: "Contact Name",
+		allowClear: true,
+		minimumInputLength: 3,
+		ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+			url: domain + '/contact/lists', 
+			dataType: 'json',
+			data: function (term, page) {
+				return {
+					q: term, // search term
+					page_limit: 10,
+				};
+			},
+			results: function (data, page) { // parse the results into the format expected by Select2.
+				//console.log(data);
+				// since we are using custom formatting functions we do not need to alter remote JSON data
+				return {results: data.contacts};
+			}
+		},
+		formatResult: contactformatSelection,
+		escapeMarkup: function(m) { return m; }
+	}).on("select2-selecting", function(e) {
+		$('#company_name').val(e.object.company);
+		$('#address').val(e.object.address);
+    }).on("select2-removed", function(e) {
+    	$('#company_name').val('');
+    	$('#address').val('');
+    });
+
 });
 </script>

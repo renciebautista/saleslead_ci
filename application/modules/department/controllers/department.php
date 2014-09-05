@@ -23,7 +23,7 @@ class Department extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->layout->view('department/create');
+			$this->layout->view('department/create',$this->data);
 		}else{
 			$department = strtoupper(trim($this->input->post('department')));
 			$this->Department_model->insert(array('department' => $department));

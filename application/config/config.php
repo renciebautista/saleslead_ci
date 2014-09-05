@@ -14,7 +14,26 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://192.168.20.21/';
+if (defined('ENVIRONMENT'))
+{
+	switch (ENVIRONMENT)
+	{
+		case 'development':
+			$config['base_url']	= 'http://192.168.20.21/';
+		break;
+
+		case 'testing':
+			$config['base_url']	= 'http://leads.chasetech.com/';
+			break;
+		case 'production':
+			$config['base_url']	= 'http://helpdesktwo.chasetech.com/';
+		break;
+
+		default:
+			exit('The application environment is not set correctly.');
+	}
+}
+
 
 /*
 |--------------------------------------------------------------------------

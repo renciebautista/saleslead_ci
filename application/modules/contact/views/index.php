@@ -56,7 +56,7 @@
 						</td>
 						<td><a href="">Manage Phones</a></td>
 						<td><a href="">Manage Emails</a></td>
-						<td><a href="">View Projects</a></td>
+						<td><a href="<?php echo base_url('contact/project/'.$contact['id']) ?>">View Projects</a></td>
 						<td style="width:100px;text-align: center;">
 							<a href="<?php echo base_url('contact/edit/'.$contact['id']); ?>" >Edit</a>
 							<a href="<?php echo base_url('contact/delete/'.$contact['id']); ?>" >Delete</a>

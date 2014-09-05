@@ -23,11 +23,11 @@ class Grouptype extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->layout->view('grouptype/create');
+			$this->layout->view('grouptype/create',$this->data);
 		}else{
 			$grouptype = strtoupper(trim($this->input->post('grouptype')));
 			$this->Grouptype_model->insert(array('grouptype_desc' => $grouptype));
-			$this->flash_message->set('message','alert alert-success','Successfully created '.$grouptype.' group type!');
+			$this->flash_message->set('message','alert alert-success','Successfully created '.$grouptype.' contact type!');
 			redirect('grouptype');
 		}
 	}
@@ -53,7 +53,7 @@ class Grouptype extends MY_Controller {
 			$_id = $this->input->post('_id');
 			$grouptype = strtoupper(trim($this->input->post('grouptype')));
 			$this->Grouptype_model->update($_id,array('grouptype_desc' => $grouptype));
-			$this->flash_message->set('message','alert alert-success','Successfully updated '.$grouptype.' group type!');
+			$this->flash_message->set('message','alert alert-success','Successfully updated '.$grouptype.' contact type!');
 			redirect('grouptype');
 		}
 	}
@@ -77,7 +77,7 @@ class Grouptype extends MY_Controller {
 			$_id = $this->input->post('_id');
 			$grouptype = $this->Grouptype_model->get($_id);
 			$this->Grouptype_model->delete($_id);
-			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$grouptype['grouptype_desc'].' group type!');
+			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$grouptype['grouptype_desc'].' contact type!');
 			redirect('grouptype');
 		}
 	}

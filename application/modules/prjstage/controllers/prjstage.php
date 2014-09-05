@@ -24,7 +24,7 @@ class Prjstage extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->layout->view('prjstage/create');
+			$this->layout->view('prjstage/create',$this->data);
 		}else{
 			$prjstage = strtoupper(trim($this->input->post('prjstage')));
 			$this->Prjstage_model->insert(array('prjstage_desc' => $prjstage));

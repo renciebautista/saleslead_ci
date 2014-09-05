@@ -2,9 +2,13 @@
 
 class Dashboard extends MY_Controller {
 
+	function __construct(){
+		parent::__construct();
+	}
+
 	public function index()
 	{
-		$this->layout->view('dashboard/index');
+		$this->layout->view('dashboard/index',$this->data);
 	}
 
 }

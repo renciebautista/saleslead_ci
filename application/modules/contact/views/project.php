@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Projects</h1>	
+		<h1 class="page-header">Contact Projects</h1>	
 		<?php echo $this->session->flashdata('message');?>			
 	</div>
 	<!-- /.col-lg-12 -->						
@@ -8,9 +8,22 @@
 <!-- /.row -->
 
 <div class="row">
+	<div id="contact-details" class="col-lg-12">
+		<address>
+		  	<span><strong><?php echo strtoupper($contact['last_name'].', '.$contact['first_name'].' '.$contact['middle_name']); ?></strong></span><br>
+		  	<span><?php echo ucwords(strtolower($contact['lot'].' '.$contact['street'].' '.$contact['brgy'].', '.$contact['city'])); ?></span><br>
+		  	<span><?php echo ucwords(strtolower($contact['province'])); ?></span><br>
+		</address>
+	</div>
+	<!-- /.col-lg-12 -->						
+</div>
+<!-- /.row -->
+
+
+<div class="row">
 	<div class="col-lg-12">
 		<?php echo form_open('',array('class' => 'navbar-form', 'role' => 'search', 'method' => 'get')); ?>
-			<a href="<?php echo base_url('project/create'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Project</a>		
+			<a href="<?php echo base_url('contact'); ?>" class="btn btn-default"><i class="fa fa-reply"></i>  Back</a>		
 			<div class="input-group custom-search-form">
 				<input type="text" name="q" class="form-control" placeholder="Search..." value="<?php echo $filter; ?>">
 					<span class="input-group-btn">
@@ -34,7 +47,7 @@
 				<thead>
 					<tr>
 						<th>Project Name</th>
-						<th>Created By</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -50,7 +63,7 @@
 							<i>	<?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].' '.$project['city'].' '.$project['province'])); ?></i><br>
 						</td>
 						<td>
-							<?php echo strtoupper($project['last_name'].', '.$project['first_name'].' '.$project['middle_name']); ?>
+							<a href="<?php echo base_url('contact/updateproject/'.$project['project_contact_id']); ?>">Update Project</a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

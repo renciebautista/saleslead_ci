@@ -48,10 +48,36 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = '1234';
-$db['default']['database'] = 'saleslead';
+if (defined('ENVIRONMENT'))
+{
+	switch (ENVIRONMENT)
+	{
+		case 'development':
+			$db['default']['hostname'] = 'localhost';
+			$db['default']['username'] = 'root';
+			$db['default']['password'] = '1234';
+			$db['default']['database'] = 'saleslead';
+		break;
+
+		case 'testing':
+			$db['default']['hostname'] = 'localhost';
+            $db['default']['username'] = 'chaset7_leaduser';
+            $db['default']['password'] = 'leaduser';
+            $db['default']['database'] = 'chaset7_leads';
+			break;
+		case 'production':
+			$db['default']['hostname'] = 'localhost';
+            $db['default']['username'] = 'chaset7_hdtwouse';
+            $db['default']['password'] = 'hdtwouse';
+            $db['default']['database'] = 'chaset7_hd2';
+		break;
+
+		default:
+			exit('The application environment is not set correctly.');
+	}
+}
+
+
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

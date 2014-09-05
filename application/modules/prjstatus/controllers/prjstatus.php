@@ -23,7 +23,7 @@ class Prjstatus extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->layout->view('prjstatus/create');
+			$this->layout->view('prjstatus/create',$this->data);
 		}else{
 			$prjstatus = strtoupper(trim($this->input->post('prjstatus')));
 			$this->Prjstatus_model->insert(array('prjstatus_desc' => $prjstatus));

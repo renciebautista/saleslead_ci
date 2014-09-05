@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Sales Lead</title>
+	<title>Project Reference System</title>
 
 	<!-- Bootstrap Core CSS -->
 	<?php echo link_tag('assets/plugins/bootstrap/css/bootstrap.min.css'); ?>
@@ -25,7 +25,7 @@
 	
 	<!-- Custom CSS -->
 	<?php echo link_tag('assets/css/sb-admin-2.css'); ?>
-
+	<?php echo link_tag('assets/css/sl.css'); ?>
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -43,7 +43,7 @@
 	<div id="wrapper">
 
 		<!-- Navigation -->
-		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation" style="margin-bottom: 0">
+		<nav class="navbar navbar-default navbar-static-top	 navbar-inverse" role="navigation" style="margin-bottom: 0">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
@@ -51,7 +51,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html">Sales Lead</a>
+				<a class="navbar-brand" href="index.html">Project Reference System</a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -268,26 +268,46 @@
 			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
+						<li class="sidebar-profile">
+							<div class="text-center">
+								<img class="img-circle" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+">
+							</div>
+							<span><?php echo $user_full_name; ?></span>
+						</li>
 						
 						<li>
 							<a id="dashboard" href="<?php echo base_url('dashboard'); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 						</li>
 
 						<li class="dropdown">
-							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-file-text-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
 									<a id="project" href="<?php echo base_url('project'); ?>">Projects</a>
 								</li>
 								<li>
-									<a id="project" href="<?php echo base_url('project'); ?>">Assigned Projects</a>
+									<a id="project" href="<?php echo base_url('project/forassigning'); ?>">New Projects</a>
+								</li>
+								<li>
+									<a id="project" href="<?php echo base_url('project/assigned'); ?>">Assigned Projects</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
 
 						<li class="dropdown">
-							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Contacts<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a id="project" href="<?php echo base_url('project'); ?>">Sample Report</a>
+								</li>
+								
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+
+						<li class="dropdown">
+							<a href="#"><i class="fa fa-users fa-fw"></i> Contacts<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
 									<a id="contact" href="<?php echo base_url('contact'); ?>">Contacts</a>
@@ -302,7 +322,7 @@
 						</li>
 
 						<li class="dropdown">
-							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> User Maintenance<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-user fa-fw"></i> User Maintenance<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li >
 									<a id="department"  href="<?php echo base_url('department'); ?>">Department</a>
@@ -318,7 +338,7 @@
 						</li>
 
 						<li class="dropdown">
-							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> File Maintenance<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-gear fa-fw"></i> File Maintenance<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
 									<a id="prjclassification" href="<?php echo base_url('prjclassification'); ?>">Project Classifications</a>
@@ -333,7 +353,7 @@
 									<a id="prjstatus" href="<?php echo base_url('prjstatus'); ?>">Project Statuses</a>
 								</li>
 								<li>
-									<a id="grouptype" href="<?php echo base_url('grouptype'); ?>">Group Types</a>
+									<a id="grouptype" href="<?php echo base_url('grouptype'); ?>">Contact Types</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->

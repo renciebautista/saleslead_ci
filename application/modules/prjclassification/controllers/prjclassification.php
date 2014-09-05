@@ -24,7 +24,7 @@ class Prjclassification extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->layout->view('prjclassification/create');
+			$this->layout->view('prjclassification/create',$this->data);
 		}else{
 			$prjclassification = strtoupper(trim($this->input->post('prjclassification')));
 			$this->Prjclassification_model->insert(array('prjclassification_desc' => $prjclassification));

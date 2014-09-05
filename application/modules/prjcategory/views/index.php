@@ -34,18 +34,20 @@
 				<thead>
 					<tr>
 						<th>Project Category</th>
+						<th>Sub Category</th>
 						<th style="width:100px;text-align: center;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php if(count($prjcategorys) < 1): ?>
 					<tr>
-						<td colspan="2">No record found.</td>
+						<td colspan="3">No record found.</td>
 					</tr>
 				<?php else: ?>
 				<?php foreach ($prjcategorys as $prjcategory):?>
 					<tr>
 						<td><?php echo $prjcategory['prjcategory_desc']; ?></td>
+						<td><a href="<?php echo base_url('prjcategory/subcategory/'.$prjcategory['id']); ?>">Manage Sub Category</a></td>
 						<td style="width:100px;text-align: center;">
 							<a href="<?php echo base_url('prjcategory/edit/'.$prjcategory['id']); ?>" >Edit</a>
 							<a href="<?php echo base_url('prjcategory/delete/'.$prjcategory['id']); ?>" >Delete</a>

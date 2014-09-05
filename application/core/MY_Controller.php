@@ -26,8 +26,12 @@ class MY_Controller extends CI_Controller {
 			redirect('auth');
 		}
 
+
 		// Define a global variable to store data that is then used by the end view page.
 		$this->data = null;
+
+		$user = $this->flexi_auth->get_user_by_id_row_array();
+		$this->data['user_full_name'] = (! empty($user)) ? ucwords(strtolower($user['last_name'].', '.$user['first_name'].' '.$user['middle_name'])) : null;
 
 		$this->layout->setLayout('layouts/default_layout');
 	

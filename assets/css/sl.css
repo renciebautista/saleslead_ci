@@ -1,0 +1,40 @@
+#page-wrapper{
+	padding-bottom: 200px;
+}
+#project-details table tr td:first-child { 
+	width: 15%;
+	font-weight: bold;
+	text-align: right;
+}
+
+#project-details .table > tbody > tr > td { 
+	border-top: 0;
+	border-bottom: 1px solid #ddd;
+}
+
+.sidebar .sidebar-profile {
+    padding: 15px 0 0 0;
+}
+.sidebar .sidebar-profile span {
+	display: block;
+    padding: 10px 15px;
+    position: relative;
+    text-align: center;
+    color: #428bca;
+    font-style: italic;
+}
+#prj-photo img{
+	margin-bottom: 4px;
+}
+
+#contact-details span {
+	font-style: italic;
+}
+#contact-details span strong	{
+	font-size: 20px;
+	font-style: normal;
+}
+
+#tab {
+	margin-bottom: 15px;
+}

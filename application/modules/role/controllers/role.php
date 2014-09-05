@@ -23,7 +23,7 @@ class Role extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->layout->view('role/create');
+			$this->layout->view('role/create',$this->data);
 		}else{
 			$role = strtoupper(trim($this->input->post('role')));
 			$this->Role_model->insert(array('ugrp_name' => $role));
