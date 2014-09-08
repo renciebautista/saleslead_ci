@@ -11,6 +11,16 @@ class Project_detail_model extends MY_Model {
 		$this->db->order_by('created_at');
 		return $this->db->get($this->_table)->result_array();
 	}
+
+	public function get_all_details($project_id){
+		$this->db->select('project_details.id,project_details.details,project_details.created_at,
+			contacts.first_name,contacts.middle_name,contacts.last_name');
+		$this->db->where('project_contacts.project_id',$project_id);
+		$this->db->join('project_contacts','project_contacts.id = project_details.project_contact_id');
+		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
+		$this->db->order_by('project_details.created_at');
+		return $this->db->get($this->_table)->result_array();
+	}
 }
 
 /* End of file project_detail_model.php */

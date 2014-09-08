@@ -1,5 +1,8 @@
 <?php
-
+/*
+ *set time zone
+*/
+ini_set('date.timezone', 'Asia/Singapore');
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

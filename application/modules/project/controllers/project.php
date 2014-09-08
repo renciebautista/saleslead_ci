@@ -9,11 +9,12 @@ class Project extends MY_Controller {
 		$this->load->model('city/City_model');
 		$this->load->model('user/User_model');
 		$this->load->model('grouptype/Grouptype_model');
+		$this->load->model('Project_detail_model');
 
 	}
 
 	public function index(){	
-		$this->data['projects'] = $this->Project_model->search();
+		$this->data['projects'] = $this->Project_model->public_projects();
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->layout->view('project/index',$this->data);
 	}
@@ -100,6 +101,7 @@ class Project extends MY_Controller {
 			$this->layout->view('project/assigned',$this->data);
 		}else{
 			$this->data['project'] = $this->Project_model->details($id);
+			$this->data['details'] = $this->Project_detail_model->get_all_details($id);
 			$this->layout->view('project/assigned_details',$this->data);
 		}
 	}

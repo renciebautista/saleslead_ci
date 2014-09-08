@@ -35,6 +35,7 @@
 					<tr>
 						<th>Project Name</th>
 						<th>Created By</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,6 +52,9 @@
 						</td>
 						<td>
 							<?php echo strtoupper($project['last_name'].', '.$project['first_name'].' '.$project['middle_name']); ?>
+						</td>
+						<td>
+							<a href="<?php echo base_url('project/join/'.$project['id']) ?>">Join Project</a>
 						</td>
 					</tr>
 				<?php endforeach; ?>
