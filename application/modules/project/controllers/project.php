@@ -14,8 +14,9 @@ class Project extends MY_Controller {
 	}
 
 	public function index(){	
-		$this->data['projects'] = $this->Project_model->public_projects();
 		$this->data['filter'] = trim($this->input->get('q'));
+		$this->data['status'] = trim($this->input->get('s'));
+		$this->data['projects'] = $this->Project_model->public_projects($this->data['status'],$this->data['filter'], $this->flexi_auth->get_user_id());
 		$this->layout->view('project/index',$this->data);
 	}
 
@@ -94,16 +95,72 @@ class Project extends MY_Controller {
 		}
 	}
 // ======================================================================
-	public function assigned($id = null){
-		if(is_null($id)){
-			$this->data['filter'] = trim($this->input->get('q'));
-			$this->data['projects'] = $this->Project_model->assigned($this->flexi_auth->get_user_id(),$this->data['filter']);
-			$this->layout->view('project/assigned',$this->data);
-		}else{
-			$this->data['project'] = $this->Project_model->details($id);
-			$this->data['details'] = $this->Project_detail_model->get_all_details($id);
-			$this->layout->view('project/assigned_details',$this->data);
-		}
+	public function join($id = null){
+		$this->data['cities'] = $this->City_model->get_all_cities();
+		$this->data['types'] = $this->Grouptype_model->order_by('grouptype_desc')->get_all();
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->layout->view('project/join_project',$this->data);
+	}
+
+// ======================================================================
+	public function assigned(){
+		$this->data['filter'] = trim($this->input->get('q'));
+		$this->data['projects'] = $this->Project_model->assigned($this->flexi_auth->get_user_id(),$this->data['filter']);
+		$this->layout->view('project/assigned',$this->data);
+	}
+
+	public function details($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['details'] = $this->Project_detail_model->get_all_details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/assigned_details',$this->data);
+	}
+
+	public function classifications($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/classifications',$this->data);
+	}
+
+	public function categories($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/categories',$this->data);
+	}
+
+	public function stages($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/stages',$this->data);
+	}
+
+	public function statuses($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/statuses',$this->data);
+	}
+
+	public function specifications($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/specifications',$this->data);
+	}
+
+	public function files($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/files',$this->data);
+	}
+
+	public function tasks($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/tasks',$this->data);
+	}
+
+	public function addtask($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->layout->view('project/addtask',$this->data);
 	}
 }
 

@@ -38,3 +38,12 @@
 #tab {
 	margin-bottom: 15px;
 }
+
+/*search options*/
+.option-fields{
+	padding: 0 0 10px 0;
+}
+
+.custom-search-form{
+	padding-bottom: 10px;
+}

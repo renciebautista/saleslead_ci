@@ -18,7 +18,9 @@
 	<!-- Chosen CSS -->
 	<?php echo link_tag('assets/plugins/chosen-1.1.0/css/chosen.css'); ?>
 	<!-- Custom Fonts -->
-	 <?php echo link_tag('assets/plugins/font-awesome-4.1.0/css/font-awesome.min.css'); ?>
+	<?php echo link_tag('assets/plugins/font-awesome-4.1.0/css/font-awesome.min.css'); ?>
+	<!-- Timeline CSS -->
+	<?php echo link_tag('assets/plugins/timeline/css/timeline.css'); ?>
 	<!-- Select2 CSS -->
 	<?php echo link_tag('assets/plugins/select2-3.5.1/css/select2.css'); ?>
 	<?php echo link_tag('assets/plugins/select2-3.5.1/css/select2-bootstrap.css'); ?>
@@ -270,7 +272,7 @@
 					<ul class="nav" id="side-menu">
 						<li class="sidebar-profile">
 							<div class="text-center">
-								<img class="img-circle" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+">
+								<img class="img-circle " alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+">
 							</div>
 							<span><?php echo $user_full_name; ?></span>
 						</li>
@@ -278,6 +280,18 @@
 						<li>
 							<a id="dashboard" href="<?php echo base_url('dashboard'); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 						</li>
+
+						<li class="dropdown">
+							<a href="#"><i class="fa fa-tasks fa-fw"></i> Tasks<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a id="task" href="<?php echo base_url('task'); ?>">My Tasks</a>
+								</li>
+								
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+
 
 						<li class="dropdown">
 							<a href="#"><i class="fa fa-file-text-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
@@ -294,6 +308,8 @@
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
+
+
 
 						<li class="dropdown">
 							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>

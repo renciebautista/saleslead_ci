@@ -34,7 +34,7 @@
 	<div class="container">
 		<div class="row">
 			<?php //display_var($this->_ci_cached_vars);?>
-			<div class="col-md-4 col-md-offset-4">
+			<div id="login" class="col-md-4 col-md-offset-4">
 
 
 				<?php if (!empty($message)): ?>	

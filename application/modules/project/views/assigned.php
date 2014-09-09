@@ -45,7 +45,7 @@
 				<?php foreach ($projects as $project):?>
 					<tr>
 						<td>
-							<a href="<?php echo base_url('project/assigned/'.$project['id']); ?>"><?php echo $project['project_name']; ?></a><br>
+							<a href="<?php echo base_url('project/details/'.$project['id']); ?>"><?php echo $project['project_name']; ?></a><br>
 							<i>	<?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].' '.$project['city'].' '.$project['province'])); ?></i><br>
 						</td>
 						<td>

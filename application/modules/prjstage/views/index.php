@@ -9,8 +9,10 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<?php echo form_open('',array('class' => 'navbar-form', 'role' => 'search', 'method' => 'get')); ?>
-			<a href="<?php echo base_url('prjstage/create'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Project Stage</a>		
+		<?php echo form_open('',array('role' => 'search', 'method' => 'get')); ?>
+			<div class="pull-right">
+				<a href="<?php echo base_url('prjstage/create'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Project Stage</a>		
+			</div>
 			<div class="input-group custom-search-form">
 				<input type="text" name="q" class="form-control" placeholder="Search..." value="<?php echo $filter; ?>">
 					<span class="input-group-btn">

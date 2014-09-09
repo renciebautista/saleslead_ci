@@ -17,12 +17,18 @@ class Project_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
-	public function public_projects(){
+	public function public_projects($status,$filter,$id){
+
 		$this->db->select('projects.id,project_name,lot,street,brgy,city,province,
 			user_details.first_name, user_details.middle_name, user_details.last_name');
 		$this->db->join('cities','cities.id = projects.city_id');
 		$this->db->join('provinces','provinces.id = cities.province_id');
 		$this->db->join('user_details','user_details.uacc_id = projects.created_by');
+
+		$this->db->where("(project_name LIKE '%{$filter}%' OR first_name LIKE '%{$filter}%' OR middle_name LIKE '%{$filter}%' OR last_name LIKE '%{$filter}%')");
+		if($status == 1){
+			$this->db->where('projects.created_by',$id);
+		}
 		$this->db->where('projects.assigned_to >',0);
 		$this->db->where('projects.sl_status_id',1);
 		$this->db->order_by('projects.created_at,project_name');
