@@ -35,6 +35,13 @@
 			<?php echo form_error('email'); ?>
 			<input value="<?php echo set_value('email'); ?>" id="email" class="form-control" type="text" value="" name="email" placeholder="Email">
 		</div>
+
+		<div class="form-group">
+			<label for="email">Bank Account</label>
+			<?php echo form_error('email'); ?>
+			<input value="<?php echo set_value('email'); ?>" id="email" class="form-control" type="text" value="" name="email" placeholder="Bank Account">
+		</div>
+
 			<input class="btn btn-success" type="submit" value="Submit">
 			<a class="btn btn-default" href="<?php echo base_url('user'); ?>">Back</a>
 	</div>

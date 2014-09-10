@@ -30,6 +30,9 @@
 			   	<li><a href="<?php echo base_url('project/specifications/'.$project['id']); ?>" s="tab">Paint Specification</a></li>
 			   	<li><a href="<?php echo base_url('project/files/'.$project['id']); ?>" s="tab">Files</a></li>
 			   	<li><a href="<?php echo base_url('project/tasks/'.$project['id']); ?>" s="tab">Task</a></li>
+
+				<li><a href="<?php echo base_url('project/advances/'.$project['id']); ?>" s="tab">Advances</a></li>
+                <li><a href="<?php echo base_url('project/liquidations/'.$project['id']); ?>" s="tab">Liquidations</a></li>
 			</ul>
 		</div>
 

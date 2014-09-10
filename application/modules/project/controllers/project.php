@@ -162,6 +162,18 @@ class Project extends MY_Controller {
 		$this->data['project'] = $this->Project_model->details($id);
 		$this->layout->view('project/addtask',$this->data);
 	}
+
+	public function advances($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/advances',$this->data);
+	}
+
+	public function liquidations($id = null){
+		$this->data['project'] = $this->Project_model->details($id);
+		$this->data['tasks'] = array();
+		$this->layout->view('project/liquidations',$this->data);
+	}
 }
 
 /* End of file project.php */
