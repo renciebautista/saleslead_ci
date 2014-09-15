@@ -7,7 +7,7 @@ class MY_Controller extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 
-		$this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(FALSE);
 
 		// IMPORTANT! This global must be defined BEFORE the flexi auth library is loaded! 
  		// It is used as a global that is accessible via both models and both libraries, without it, flexi auth will not work.
@@ -30,10 +30,14 @@ class MY_Controller extends CI_Controller {
 
 		$this->_user_id = $this->flexi_auth->get_user_id();
 
+		
+
 		// Define a global variable to store data that is then used by the end view page.
 		$this->data = null;
 
 		$user = $this->flexi_auth->get_user_by_id_row_array();
+
+		$this->flexi_auth->update_login_sessions($this->_user_id,$user['uacc_group_fk']);
 		
 		$this->data['user_full_name'] = (! empty($user)) ? ucwords(strtolower($user['last_name'].', '.$user['first_name'].' '.$user['middle_name'])) : null;
 

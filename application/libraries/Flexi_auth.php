@@ -1150,6 +1150,10 @@ class Flexi_auth extends Flexi_auth_lite
 		
 		$this->CI->auth->template_data = $data;
 	}
+
+	public function update_login_sessions($user_id,$group_id){
+		$this->CI->flexi_auth_model->update_login_sessions($user_id,$group_id);
+	}
 }
 
 /* End of file flexi_auth.php */

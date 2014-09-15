@@ -2335,6 +2335,106 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 		);
 		set_cookie($ci_session);	
 	}
+
+	public function update_login_sessions($user_id,$group_id)
+	{
+		// if (!$user)
+		// {
+		// 	return FALSE;
+		// }
+		
+		// $user_id = $user->{$this->auth->database_config['user_acc']['columns']['id']};
+		
+		// // Regenerate CI session_id on successful login.
+		// $this->regenerate_ci_session_id();
+		
+		// // Update users last login date.
+		// $this->update_last_login($user_id);
+		
+		// // Set database and login session token if defined by config file.
+		// if ($this->auth->auth_security['validate_login_onload'] && ! $this->insert_database_login_session($user_id))
+		// {
+		// 	return FALSE;
+		// }
+		
+		// // Set verified login session if user logged in via Password rather than 'Remember me'.
+		// $this->auth->session_data[$this->auth->session_name['logged_in_via_password']] = $logged_in_via_password;
+		
+		// // Set user id and identifier data to session.
+		// $this->auth->session_data[$this->auth->session_name['user_id']] = $user_id;
+		// $this->auth->session_data[$this->auth->session_name['user_identifier']] = $user->{$this->auth->db_settings['primary_identity_col']};
+
+		// // Get group data.
+		// $sql_where[$this->auth->tbl_col_user_group['id']] = $user->{$this->auth->database_config['user_acc']['columns']['group_id']};
+		
+		// $group = $this->get_groups(FALSE, $sql_where)->row();
+		
+		// // Set admin status to session.
+		// $this->auth->session_data[$this->auth->session_name['is_admin']] = ($group->{$this->auth->database_config['user_group']['columns']['admin']} == 1);
+		
+		// $this->auth->session_data[$this->auth->session_name['group']] = 
+		// 	array($group->{$this->auth->database_config['user_group']['columns']['id']} => $group->{$this->auth->database_config['user_group']['columns']['name']});
+		
+		// ###+++++++++++++++++++++++++++++++++###
+
+		$privilege_sources = $this->auth->auth_settings['privilege_sources'];
+		$privileges = array();
+
+		// If 'user' privileges have been defined within the config 'privilege_sources'.
+        if (in_array('user', $privilege_sources))
+        {
+            // Get user privileges.
+            $sql_select = array(
+                $this->auth->tbl_col_user_privilege['id'],
+                $this->auth->tbl_col_user_privilege['name']
+            );
+
+            $sql_where = array($this->auth->tbl_col_user_privilege_users['user_id'] => $user_id);
+
+            $query = $this->get_user_privileges($sql_select, $sql_where);
+
+            // Create an array of user privileges.
+            if ($query->num_rows() > 0)
+            {
+                foreach($query->result_array() as $data)
+                {
+                    $privileges[$data[$this->auth->database_config['user_privileges']['columns']['id']]] = $data[$this->auth->database_config['user_privileges']['columns']['name']];
+                }
+            }
+        }
+        
+		// If 'group' privileges have been defined within the config 'privilege_sources'.
+        if (in_array('group', $privilege_sources))
+        {
+            // Get group privileges.
+            $sql_select = array(
+                $this->auth->tbl_col_user_privilege['id'],
+                $this->auth->tbl_col_user_privilege['name']
+            );
+
+            $sql_where = array($this->auth->tbl_col_user_privilege_groups['group_id'] => $group_id);
+
+            $query = $this->get_user_group_privileges($sql_select, $sql_where);
+
+            // Extend array of user privileges by group privileges.
+            if ($query->num_rows() > 0)
+            {
+                foreach($query->result_array() as $data)
+                {
+                    $privileges[$data[$this->auth->database_config['user_privileges']['columns']['id']]] = $data[$this->auth->database_config['user_privileges']['columns']['name']];
+                }
+            }
+        }
+
+		// Set user privileges to session.
+		$this->auth->session_data[$this->auth->session_name['privileges']] = $privileges;
+		
+		###+++++++++++++++++++++++++++++++++###
+				
+		$this->session->set_userdata(array($this->auth->session_name['name'] => $this->auth->session_data));
+
+		return TRUE;
+	}
 }
 
 /* End of file flexi_auth_model.php */

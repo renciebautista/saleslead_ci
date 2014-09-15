@@ -10,6 +10,7 @@ class Dashboard extends MY_Controller {
 
 	public function index()
 	{
+		// debug($this->flexi_auth->get_user_by_id_row_array());
 		$this->layout->view('dashboard/index',$this->data);
 	}
 
