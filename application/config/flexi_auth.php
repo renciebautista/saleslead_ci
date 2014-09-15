@@ -450,7 +450,7 @@
 	 * @param string
 	 *
 	 * !IMPORTANT: 
-	 *	Do NOT change this salt once users have started registering accounts as their passwords will not work without the original salt.
+	 *	Do NOT change this 3t once users have started registering accounts as their passwords will not work without the original salt.
 	 *	CHANGE THE DEFAULT STATIC SALT SET BELOW TO YOUR OWN RANDOM SET OF CHARACTERS.
 	*/
 	$config['security']['static_salt'] = 'change-me!';
@@ -491,7 +491,7 @@
 	 * Note: If a user exceeds 3 times the limit set, the resulting time ban is doubled to further slow down attempts.
  	 * Example: 0 = unlimited attempts, 3 = 3 attempts.
 	*/
-	$config['security']['login_attempt_limit'] = 3;
+	$config['security']['login_attempt_limit'] = 0;
 	
 	/**
 	 * If a user has exceeded the failed login attempt limit, set the length of time they must wait before they can attempt to login again.
@@ -594,7 +594,7 @@
      * Options: array('user','group'), array('user'), array('group')
      * Default: individual user privileges only.
      */
-    $config['settings']['privilege_sources'] = array('user');
+    $config['settings']['privilege_sources'] = array('user','group');
 
 	
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###	

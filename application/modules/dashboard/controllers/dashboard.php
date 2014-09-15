@@ -6,6 +6,8 @@ class Dashboard extends MY_Controller {
 		parent::__construct();
 	}
 
+	
+
 	public function index()
 	{
 		$this->layout->view('dashboard/index',$this->data);

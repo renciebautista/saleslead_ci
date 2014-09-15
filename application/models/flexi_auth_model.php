@@ -169,6 +169,7 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 	    $database_salt = $store_database_salt ? $this->generate_token($this->auth->auth_security['database_salt_length']) : FALSE;
 		
 		$hash_password = $this->generate_hash_token($password, $database_salt, TRUE);
+		
 		$activation_token = sha1($this->generate_token(20));
 		$suspend_account = ($this->auth->auth_settings['suspend_new_accounts']) ? 1 : 0;
 		

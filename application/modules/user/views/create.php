@@ -37,9 +37,9 @@
 		</div>
 
 		<div class="form-group">
-			<label for="email">Bank Account</label>
-			<?php echo form_error('email'); ?>
-			<input value="<?php echo set_value('email'); ?>" id="email" class="form-control" type="text" value="" name="email" placeholder="Bank Account">
+			<label for="bank_account">Bank Account</label>
+			<?php echo form_error('bank_account'); ?>
+			<input value="<?php echo set_value('bank_account'); ?>" id="bank_account" class="form-control" type="text" value="" name="bank_account" placeholder="Bank Account">
 		</div>
 
 			<input class="btn btn-success" type="submit" value="Submit">

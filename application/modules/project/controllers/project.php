@@ -16,7 +16,7 @@ class Project extends MY_Controller {
 	public function index(){	
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['status'] = trim($this->input->get('s'));
-		$this->data['projects'] = $this->Project_model->public_projects($this->data['status'],$this->data['filter'], $this->flexi_auth->get_user_id());
+		$this->data['projects'] = $this->Project_model->public_projects($this->data['status'],$this->data['filter'], $this->_user_id);
 		$this->layout->view('project/index',$this->data);
 	}
 
@@ -47,7 +47,7 @@ class Project extends MY_Controller {
 					'street' => strtoupper(trim($this->input->post('street'))),
 					'brgy' => strtoupper(trim($this->input->post('brgy'))),
 					'city_id' => $this->input->post('city_id'),
-					'created_by' => $this->flexi_auth->get_user_id(),
+					'created_by' => $this->_user_id,
 					));
 				
 				$this->Project_contact_model->insert(array(
@@ -88,7 +88,7 @@ class Project extends MY_Controller {
 			}else{
 				$project_id = $this->input->post('project_id');
 				$assigned_to = $this->input->post('assigned_to');
-				$this->Project_model->update($project_id,array('assigned_to' => $assigned_to, 'assigned_by' => $this->flexi_auth->get_user_id()));
+				$this->Project_model->update($project_id,array('assigned_to' => $assigned_to, 'assigned_by' => $this->_user_id));
 				$this->flash_message->set('message','alert alert-success','Project successfully assigned!');
 				redirect('project/forassigning');
 			}
@@ -105,7 +105,7 @@ class Project extends MY_Controller {
 // ======================================================================
 	public function assigned(){
 		$this->data['filter'] = trim($this->input->get('q'));
-		$this->data['projects'] = $this->Project_model->assigned($this->flexi_auth->get_user_id(),$this->data['filter']);
+		$this->data['projects'] = $this->Project_model->assigned($this->data['filter'],$this->_user_id);
 		$this->layout->view('project/assigned',$this->data);
 	}
 

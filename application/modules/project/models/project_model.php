@@ -48,7 +48,7 @@ class Project_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
-	public function assigned($id,$filter){
+	public function assigned($filter,$id){
 		$this->db->select('projects.id,project_name,lot,street,brgy,city,province,
 			user_details.first_name, user_details.middle_name, user_details.last_name,
 			sl_statuses.sl_status');

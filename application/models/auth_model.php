@@ -65,12 +65,14 @@ class Auth_model extends CI_Model {
 		{	
 			// Set validation errors.
 			
-			// $this->data['message'] = validation_errors('<p class="error_msg">', '</p>');
-			$this->data['message'] = 'Your submitted login details are incorrect.';
+			$this->data['message'] = validation_errors('<p class="error_msg">', '</p>');
+			// $this->data['message'] = 'Your submitted login details are incorrect.';
 			
 			return FALSE;
 		}
 	}
+
+	
 
 }
 

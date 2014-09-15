@@ -6,7 +6,7 @@ class User extends MY_Controller {
 		parent::__construct();
 
 		$this->load->model('department/Department_model');
-		$this->load->model('role/Role_model');
+		$this->load->model('group/Group_model');
 	}
 
 	public function index()
@@ -40,7 +40,7 @@ class User extends MY_Controller {
 
 		if ($this->form_validation->run() == FALSE){
 			$this->data['departments'] = $this->Department_model->order_by('department')->get_all();
-			$this->data['roles'] = $this->Role_model->order_by('ugrp_name')->get_all();
+			$this->data['roles'] = $this->Group_model->order_by('ugrp_name')->get_all();
 			$this->layout->view('user/create',$this->data);
 		}else{
 			// Get user login details from input.

@@ -14,7 +14,7 @@ class Company extends MY_Controller {
 
 	public function index(){
 		$this->data['filter'] = trim($this->input->get('q'));
-		$this->data['comapanies'] = $this->Company_model->my_companies($this->data['filter'],$this->flexi_auth->get_user_id());
+		$this->data['comapanies'] = $this->Company_model->my_companies($this->data['filter'],$this->_user_id);
 		$this->layout->view('company/index',$this->data);
 	}
 
@@ -46,7 +46,7 @@ class Company extends MY_Controller {
 					'street' => strtoupper(trim($this->input->post('street'))),
 					'brgy' => strtoupper(trim($this->input->post('brgy'))),
 					'city_id' => strtoupper(trim($this->input->post('city_id'))),
-					'created_by' => $this->flexi_auth->get_user_id()));
+					'created_by' => $this->_user_id));
 			$this->db->trans_complete();
 			
 			if ($this->db->trans_status() === FALSE){
@@ -77,7 +77,7 @@ class Company extends MY_Controller {
 	// 	if($this->input->is_ajax_request()){
 	// 		$filter = $this->input->get('q');
 	// 		$page_limit = $this->input->get('page_limit');
-	// 		$companies = $this->Company_model->my_companies($filter,$this->flexi_auth->get_user_id(),$page_limit);
+	// 		$companies = $this->Company_model->my_companies($filter,$this->_user_id,$page_limit);
 
 	// 		$data = array();
 	// 		if(!empty($companies)){

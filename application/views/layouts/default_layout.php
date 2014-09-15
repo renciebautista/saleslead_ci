@@ -315,13 +315,13 @@
 							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a id="project" href="<?php echo base_url('report/area'); ?>">Area Report</a>
+									<a id="report" href="<?php echo base_url('report/area'); ?>">Area Report</a>
 								</li>
 								<li>
-									<a id="project" href="<?php echo base_url('report/salesman'); ?>">Salesman Report</a>
+									<a id="report" href="<?php echo base_url('report/salesman'); ?>">Salesman Report</a>
 								</li>
 								<li>
-									<a id="project" href="<?php echo base_url('report/salesmanweekly'); ?>">Salesman Weekly Report</a>
+									<a id="report" href="<?php echo base_url('report/salesmanweekly'); ?>">Salesman Weekly Report</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->
@@ -346,13 +346,16 @@
 							<a href="#"><i class="fa fa-user fa-fw"></i> User Maintenance<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li >
-									<a id="department"  href="<?php echo base_url('department'); ?>">Department</a>
+									<a id="department"  href="<?php echo base_url('department'); ?>">Departments</a>
 								</li>
 								<li>
-									<a id="role" href="<?php echo base_url('role'); ?>">Role</a>
+									<a id="role" href="<?php echo base_url('group'); ?>">Groups</a>
 								</li>
 								<li>
-									<a id="user" href="<?php echo base_url('user'); ?>">User</a>
+									<a id="user" href="<?php echo base_url('user'); ?>">Users</a>
+								</li>
+								<li>
+									<a id="privilege" href="<?php echo base_url('privilege'); ?>">Privileges</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->

@@ -8,6 +8,10 @@ class Department extends MY_Controller {
 	}
 
 	public function index(){
+		if (!$this->flexi_auth->is_privileged('DEPARTMENTS MAINTENANCE')){
+			redirect('department/access_denied');		
+		}
+
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['departments'] = $this->Department_model->search($this->data['filter']);
 		$this->layout->view('department/index',$this->data);

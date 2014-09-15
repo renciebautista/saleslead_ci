@@ -18,7 +18,7 @@ class Contact extends MY_Controller {
 		if($this->input->is_ajax_request()){
 			$filter = $this->input->get('q');
 			$page_limit = $this->input->get('page_limit');
-			$contacts = $this->Contact_model->my_contacts($filter,$this->flexi_auth->get_user_id(),$page_limit);
+			$contacts = $this->Contact_model->my_contacts($filter,$this->_user_id,$page_limit);
 
 			$data = array();
 			if(!empty($contacts)){
@@ -59,7 +59,7 @@ class Contact extends MY_Controller {
 
 	public function index(){
 		$this->data['filter'] = trim($this->input->get('q'));
-		$this->data['contacts'] = $this->Contact_model->search($this->data['filter']);
+		$this->data['contacts'] = $this->Contact_model->search($this->data['filter'],$this->_user_id);
 		$this->layout->view('contact/index',$this->data);
 	}
 
@@ -79,7 +79,7 @@ class Contact extends MY_Controller {
 		if ($this->form_validation->run() == FALSE){
 			$this->layout->view('contact/create',$this->data);
 		}else{
-			$data['created_by'] = $this->flexi_auth->get_user_id();
+			$data['created_by'] = $this->_user_id;
 			$data['company_id'] = strtoupper(trim($this->input->post('company_id')));
 			$data['first_name'] = strtoupper(trim($this->input->post('first_name')));
 			$data['middle_name'] = strtoupper(trim($this->input->post('middle_name')));
@@ -124,7 +124,7 @@ class Contact extends MY_Controller {
 					'street' => strtoupper(trim($this->input->post('street'))),
 					'brgy' => strtoupper(trim($this->input->post('brgy'))),
 					'city_id' => strtoupper(trim($this->input->post('city_id'))),
-					'created_by' => $this->flexi_auth->get_user_id(),
+					'created_by' => $this->_user_id,
 					));
 			$this->db->trans_complete();
 			
@@ -167,7 +167,7 @@ class Contact extends MY_Controller {
 		}else{
 			$project_contact_id = $this->input->post('project_contact_id');
 			$this->Project_detail_model->insert(array(
-				'created_by' => $this->flexi_auth->get_user_id(),
+				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
 				'details' => trim($this->input->post('details'))
 				));
