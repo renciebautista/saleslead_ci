@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Sales Lead</title>
+	<title>Project Reference System</title>
 
 	<!-- Bootstrap Core CSS -->
 	<?php echo link_tag('assets/plugins/bootstrap/css/bootstrap.min.css') ?>
@@ -33,7 +33,11 @@
 
 	<div class="container">
 		<div class="row">
-			<?php //display_var($this->_ci_cached_vars);?>
+			<center>
+				<h1>Project Reference System</h1>
+			</center>
+			<hr>
+
 			<div id="login" class="col-md-4 col-md-offset-4">
 
 
@@ -44,7 +48,7 @@
 				<?php endif; ?>
 				<div class="login-panel panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Please Sign In</h3>
+						<h3 class="panel-title">Sign In</h3>
 					</div>
 
 					<div class="panel-body">
@@ -61,11 +65,24 @@
 										<input name="remember" type="checkbox" value="Remember Me">Remember Me
 									</label>
 								</div>
-								<input name="login_user" class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+								<div>
+									<input class="btn btn-success" type="submit" value="Login" name="login_user">
+									<div class="pull-right">
+										<a class="btn" href="/users/password/new">Forgot your password?</a>
+									</div>
+								</div>
 							</fieldset>
 						<?php echo form_close(); ?>
+						
 					</div>
 				</div>
+				<hr>
+						<!-- <div>
+							Don't have an account?
+							<strong>
+								<a href="/auth/sign_up">Sign up</a>
+							</strong>
+						</div> -->
 			</div>
 		</div>
 	</div>

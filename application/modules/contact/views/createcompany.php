@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">New Company</h1>				
+		<h1 class="page-header">New Company</h1>	
+		<?php echo $this->session->flashdata('message');?>							
 	</div>
 	<!-- /.col-lg-12 -->						
 </div>
@@ -8,7 +9,7 @@
 
 <div class="row">
 
-	<?php echo form_open('',array('role' => 'form')); ?>
+	<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 	<div class="col-lg-6">
 			<div class="form-group">
 				<label for="company_name">Company Name</label>
@@ -93,6 +94,22 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {
+	$(".form-validate").validate({
+		errorElement: 'span',
+		rules: {
+			company_name: "required",
+			brgy: "required",
+			city_id: {
+				required: true,
+				is_natural_no_zero: true
+			},
+			grouptype: "required",
+		},
+		errorPlacement: function(error, element) {        
+			error.insertAfter(element.siblings("label"));
+		}
+	});
+
 	$("#city_id").chosen({allow_single_deselect: true});
 });
 </script>

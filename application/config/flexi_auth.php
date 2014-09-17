@@ -184,7 +184,7 @@
 	$config['database']['custom']['user_detail']['join'] = 'user_details.uacc_id';
 	$config['database']['custom']['user_detail']['custom_columns'] = array(
 		'first_name','middle_name','last_name','emp_id','department_id',
-		'created_by','created_at','updated_at'
+		'created_by','created_at','updated_at','bank_account'
 	);
 
 
@@ -613,10 +613,10 @@
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
 	
 	// Site title shown as 'from' header on emails.
-	$config['email']['site_title'] = "flexi auth";
+	$config['email']['site_title'] = "Project Reference System";
 	
 	// Reply email shown as 'from' header on emails.
-	$config['email']['reply_email'] = "info@website.com";
+	$config['email']['reply_email'] = "info@charterchemical.com";
 	
 	/**
 	 * Type of email to send, options: 'html', 'text'.

@@ -8,12 +8,18 @@ class Prjstatus extends MY_Controller {
 	}
 
 	public function index(){
+		if (!$this->flexi_auth->is_privileged('PROJECT STATUS MAINTENANCE')){
+			redirect('prjstatus/access_denied');		
+		}
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['prjstatuses'] = $this->Prjstatus_model->search($this->data['filter']);
 		$this->layout->view('prjstatus/index',$this->data);
 	}
 
 	public function create(){
+		if (!$this->flexi_auth->is_privileged('PROJECT STATUS MAINTENANCE')){
+			redirect('prjstatus/access_denied');		
+		}
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('prjstatus', 'Project Status', 'required|is_unique[prjstatuses.prjstatus_desc]');
@@ -33,7 +39,11 @@ class Prjstatus extends MY_Controller {
 	}
 
 	public function edit($id = null){
-		if((count($this->Prjstatus_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('PROJECT STATUS MAINTENANCE')){
+			redirect('prjstatus/access_denied');		
+		}
+
+		if(!$this->Prjstatus_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
@@ -59,7 +69,11 @@ class Prjstatus extends MY_Controller {
 	}
 
 	public function delete($id = null){
-		if((count($this->Prjstatus_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('PROJECT STATUS MAINTENANCE')){
+			redirect('prjstatus/access_denied');		
+		}
+
+		if(!$this->Prjstatus_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}

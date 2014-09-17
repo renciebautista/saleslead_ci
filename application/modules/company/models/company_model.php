@@ -27,11 +27,17 @@ class Company_model extends MY_Model {
 	}
 
 	public function details($id){
-		$this->db->select('companies.id,company,lot,street,brgy,city,province');
+		$this->db->select('companies.id,company,lot,street,brgy,city,province,companies.city_id');
 		$this->db->join('cities','cities.id = companies.city_id');
 		$this->db->join('provinces','provinces.id = cities.province_id');
 		$this->db->where('companies.id',$id);
 		return $this->db->get($this->_table)->row_array();
+	}
+
+	public function is_my_company($id,$user_id){
+		$this->db->where('id',$id);
+		$this->db->where('created_by',$user_id);
+        return (boolean)$this->db->get($this->_table)->row_array();
 	}
 
 }

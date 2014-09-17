@@ -3,7 +3,7 @@
 class Group_model extends MY_Model {
 
 	protected $return_type = 'array';
-	protected $primary_key = 'ugrp_id';
+	public $primary_key = 'ugrp_id';
 	public $_table = 'user_groups';
 
 	public function search($filter){

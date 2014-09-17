@@ -18,6 +18,10 @@ class Department extends MY_Controller {
 	}
 
 	public function create(){
+		if (!$this->flexi_auth->is_privileged('DEPARTMENTS MAINTENANCE')){
+			redirect('department/access_denied');		
+		}
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('department', 'Department', 'required|is_unique[departments.department]');
@@ -37,13 +41,18 @@ class Department extends MY_Controller {
 	}
 
 	public function edit($id = null){
-		if((count($this->Department_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('DEPARTMENTS MAINTENANCE')){
+			redirect('department/access_denied');		
+		}
+
+		if(!$this->Department_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
 
 		$this->load->library('form_validation');
 
+		$this->form_validation->set_rules('_id', 'Department Id', 'required');
 		$this->form_validation->set_rules('department', 'Department', 'required|is_unique[departments.department]');
 
 		$this->form_validation->set_message('required', 'This field is required.');
@@ -63,7 +72,11 @@ class Department extends MY_Controller {
 	}
 
 	public function delete($id = null){
-		if((count($this->Department_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('DEPARTMENTS MAINTENANCE')){
+			redirect('department/access_denied');		
+		}
+
+		if(!$this->Department_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
@@ -80,9 +93,14 @@ class Department extends MY_Controller {
 		}else{
 			$_id = $this->input->post('_id');
 			$department = $this->Department_model->get($_id);
-			$this->Department_model->delete($_id);
-			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$department['department'].' department!');
-			redirect('department');
+			if($this->Department_model->related_to('user_details','department_id',$_id)){
+				$this->flash_message->set('message','alert alert-danger','Cannot delete '.$department['department'].' it is related to a record!');
+				redirect('department/delete/'.$_id);
+			}else{
+				$this->Department_model->delete($_id);
+				$this->flash_message->set('message','alert alert-success','Successfully deleted '.$department['department'].' department!');
+				redirect('department');
+			}			
 		}
 	}
 

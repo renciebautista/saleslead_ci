@@ -937,4 +937,23 @@ class MY_Model extends CI_Model
         $method = ($multi) ? 'result' : 'row';
         return $this->_temporary_return_type == 'array' ? $method . '_array' : $method;
     }
+
+//---------------------------------------------------added by rencie
+    /**
+     * check if having link
+     */
+    public function related_to($table,$field,$id){
+        $this->db->where($field,$id);
+        $row = $this->db->get($table)->result_array();
+        if(count($row) > 0){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+
+    public function id_exist($id,$field = 'id'){
+        $this->db->where($field,$id);
+        return (boolean)$this->db->get($this->_table)->row_array();
+    }
 }

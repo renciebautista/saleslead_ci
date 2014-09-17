@@ -7,7 +7,7 @@
 <!-- /.row -->
 
 <div class="row">
-	<?php echo form_open('',array('role' => 'form')); ?>
+	<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 	<div class="col-lg-6">
 		<div class="form-group">
 			<label for="first_name">First Name</label>
@@ -35,15 +35,6 @@
 			<?php echo form_error('email'); ?>
 			<input value="<?php echo set_value('email'); ?>" id="email" class="form-control" type="text" value="" name="email" placeholder="Email">
 		</div>
-
-		<div class="form-group">
-			<label for="bank_account">Bank Account</label>
-			<?php echo form_error('bank_account'); ?>
-			<input value="<?php echo set_value('bank_account'); ?>" id="bank_account" class="form-control" type="text" value="" name="bank_account" placeholder="Bank Account">
-		</div>
-
-			<input class="btn btn-success" type="submit" value="Submit">
-			<a class="btn btn-default" href="<?php echo base_url('user'); ?>">Back</a>
 	</div>
 	<div class="col-lg-6">
 		<div class="form-group">
@@ -66,21 +57,17 @@
 				<?}?>
 			</select>
 		</div>
+
 		<div class="form-group">
-			<label for="username">Username</label>
-			<?php echo form_error('username'); ?>
-			<input value="<?php echo set_value('username'); ?>" id="username" class="form-control" type="text" value="" name="username" placeholder="Username">
+			<label for="bank_account">Bank Account</label>
+			<?php echo form_error('bank_account'); ?>
+			<input value="<?php echo set_value('bank_account'); ?>" id="bank_account" class="form-control" type="text" value="" name="bank_account" placeholder="Bank Account">
 		</div>
-		<div class="form-group">
-			<label for="password">Password</label>
-			<?php echo form_error('password'); ?>
-			<input id="password" class="form-control" type="password" value="" name="password" placeholder="Password">
-		</div>
-		<div class="form-group">
-			<label for="confirm_password"> Confirm Password</label>
-			<?php echo form_error('confirm_password'); ?>
-			<input id="confirm_password" class="form-control" type="password" value="" name="confirm_password" placeholder="Confirm Password">
-		</div>
+	</div>
+
+	<div class="col-lg-12">
+		<input class="btn btn-success" type="submit" value="Submit">
+		<a class="btn btn-default" href="<?php echo base_url('user'); ?>">Back</a>
 	</div>
 	<?php echo form_close(); ?>
 	<!-- /.col-lg-6 -->						
@@ -90,6 +77,25 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {
+	$(".form-validate").validate({
+		ignore: null,
+		errorElement: 'span',
+		rules: {
+			first_name: "required",
+			middle_name: "required",
+			last_name: "required",
+			emp_id: "required",
+			email:{
+				required: true,
+				email: true
+			},
+			department_id: { is_natural_no_zero: true },
+			role_id: { is_natural_no_zero: true },
+		},
+		errorPlacement: function(error, element) {        
+			error.insertAfter(element.siblings("label"));
+		}
+	});
 	$("#department_id,#role_id").chosen({allow_single_deselect: true});
 });
 </script>

@@ -8,8 +8,11 @@ class Prjcategory extends MY_Controller {
 		$this->load->model('Prjsubcategory_model');
 	}
 
-	public function index()
-	{
+	public function index(){
+		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
+			redirect('prjcategory/access_denied');		
+		}
+
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['prjcategorys'] = $this->Prjcategory_model->search($this->data['filter']);
 		$this->layout->view('prjcategory/index',$this->data);
@@ -17,6 +20,10 @@ class Prjcategory extends MY_Controller {
 
 
 	public function create(){
+		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
+			redirect('prjcategory/access_denied');		
+		}
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('prjcategory', 'prjcategory', 'required|is_unique[prjcategories.prjcategory_desc]');
@@ -36,7 +43,11 @@ class Prjcategory extends MY_Controller {
 	}
 
 	public function edit($id = null){
-		if((count($this->Prjcategory_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
+			redirect('prjcategory/access_denied');		
+		}
+
+		if(!$this->Prjcategory_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
@@ -62,7 +73,11 @@ class Prjcategory extends MY_Controller {
 	}
 
 	public function delete($id = null){
-		if((count($this->Prjcategory_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
+			redirect('prjcategory/access_denied');		
+		}
+
+		if(!$this->Prjcategory_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
@@ -104,6 +119,15 @@ class Prjcategory extends MY_Controller {
 	}
 
 	public function subcategory($id = null){
+		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
+			redirect('prjcategory/access_denied');		
+		}
+
+		if(!$this->Prjcategory_model->id_exist($id) || (is_null($id))){
+			$this->not_found();
+			return;
+		}
+
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['category'] = $this->Prjcategory_model->get($id);
 		$this->data['subcategories'] = $this->Prjsubcategory_model->search($id,$this->data['filter']);
@@ -111,6 +135,15 @@ class Prjcategory extends MY_Controller {
 	}
 
 	public function createsubcategory($id = null){
+		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
+			redirect('prjcategory/access_denied');		
+		}
+
+		if(!$this->Prjcategory_model->id_exist($id) || (is_null($id))){
+			$this->not_found();
+			return;
+		}
+		
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('prjcategory_id', 'Project Category', 'required');
 		$this->form_validation->set_rules('subcategory', 'Sub Category', 'required');

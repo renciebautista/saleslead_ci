@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">New Company</h1>				
+		<h1 class="page-header">New Company</h1>	
+		<?php echo $this->session->flashdata('message');?>				
 	</div>
 	<!-- /.col-lg-12 -->						
 </div>
@@ -8,7 +9,7 @@
 
 <div class="row">
 
-	<?php echo form_open('',array('role' => 'form')); ?>
+	<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 	<div class="col-lg-6">
 			<div class="form-group">
 				<label for="company_name">Company Name</label>
@@ -61,12 +62,13 @@
 		
 
 				<div class="form-group">
-					<label>Company Group</label>
-				<?php if(count($grouptypes) > 0): ?>
-				<?php foreach ($grouptypes as $grouptype):?>
+					<label>Company Type</label>
+					<?php echo form_error('companytype[]'); ?>
+				<?php if(count($companytypes) > 0): ?>
+				<?php foreach ($companytypes as $companytype):?>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" name="grouptype[]" value="<?php echo $grouptype['id']; ?>" <?php echo set_checkbox('grouptype[]', $grouptype['id']); ?> /><?php echo $grouptype['grouptype_desc']; ?>
+							<input type="checkbox" id="companytype[]" name="companytype[]" value="<?php echo $companytype['id']; ?>" <?php echo set_checkbox('companytype[]', $companytype['id']); ?> /><?php echo $companytype['companytype']; ?>
 						</label>
 					</div>
 				<?php endforeach; ?>
@@ -93,6 +95,22 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {
+	$(".form-validate").validate({
+		ignore: null,
+		errorElement: 'span',
+		rules: {
+			company_name: "required",
+			brgy: "required",
+			city_id: { is_natural_no_zero: true },
+		},
+		messages: {
+			"companytype[]":"Please select at least one audience"
+		},
+		errorPlacement: function(error, element) {        
+			error.insertAfter(element.siblings("label"));
+		}
+	});
+
 	$("#city_id").chosen({allow_single_deselect: true});
 });
 </script>

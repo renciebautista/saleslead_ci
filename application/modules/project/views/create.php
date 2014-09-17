@@ -123,6 +123,7 @@ $(document).ready(function() {
 
 	$('#company_name').val('');
 	$('#address').val('');
+
 	$('#contact_id').select2({
 		initSelection: function(element, callback) {
 		    var id;
@@ -140,7 +141,7 @@ $(document).ready(function() {
 		        $('#address').val(data.contacts.address);
 		      	});
 		    }
-		 },
+		},
 		placeholder: "Contact Name",
 		allowClear: true,
 		minimumInputLength: 3,

@@ -8,11 +8,21 @@
 <!-- /.row -->
 
 <div class="row">
+    <div class="col-lg-12 header-button">
+        <a class="btn btn-default" href="<?php echo base_url('company'); ?>">
+            <i class="fa fa-reply"></i> Back
+        </a>
+    </div>
+    <!-- /.col-lg-12 -->                        
+</div>
+<!-- /.row -->
+
+
+<div class="row">
 	<div class="col-lg-12">
 		<address>
 		  	<strong><?php echo $company['company']; ?></strong><br>
-		  	<?php echo ucwords(strtolower($company['lot'].' '.$company['street'].' '.$company['brgy'])); ?><br>
-		  	<?php echo ucwords(strtolower($company['city'].' '.$company['province'])); ?><br>
+		  	<?php echo ucwords(strtolower($company['lot'].' '.$company['street'].' '.$company['brgy'].', '.$company['city'].' '.$company['province'])); ?><br>
 		</address>
 	</div>
 	<!-- /.col-lg-12 -->						
@@ -22,7 +32,10 @@
 <div class="row">
 	<div class="col-lg-12">
 		<?php echo form_open('',array('class' => 'navbar-form', 'role' => 'search', 'method' => 'get')); ?>
-			<a href="<?php echo base_url('company/createcontact/'.$company['id']); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Contact</a>		
+			<div class="pull-right">
+				<a href="<?php echo base_url('company/createcontact/'.$company['id']); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Contact</a>			
+			</div>
+			
 			<div class="input-group custom-search-form">
 				<input type="text" name="q" class="form-control" placeholder="Search..." value="<?php echo $filter; ?>">
 					<span class="input-group-btn">
@@ -45,7 +58,6 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Title / Position</th>
 						<th>Phones</th>
 						<th>Emails</th>
 						<th>Projects</th>
@@ -58,14 +70,15 @@
 						<td colspan="2">No record found.</td>
 					</tr>
 				<?php else: ?>
-				<?php foreach ($contacts as $company):?>
+				<?php foreach ($contacts as $contact):?>
 					<tr>
-						<td><?php echo $company['company']; ?></td>
-						<td><?php echo ucwords(strtolower($company['lot'].' '.$company['street'].' '.$company['brgy'].', '.$company['city'].' '.$company['province'])); ?></td>
-						<td><a href="<?php echo base_url('company/contacts/'.$company['id']); ?>" >Manage Contacts</a></td>
+						<td><?php echo $contact['last_name'].', '.$contact['first_name'].' '.$contact['middle_name']; ?></td>
+						<td><a href="<?php echo base_url('contact/phones/'.$contact['id']); ?>">Manage Phones</a></td>
+						<td><a href="<?php echo base_url('contact/emails/'.$contact['id']); ?>">Manage Emails</a></td>
+						<td><a href="<?php echo base_url('contact/project/'.$contact['id']); ?>">View Projects</a></td>
 						<td style="width:100px;text-align: center;">
-							<a href="<?php echo base_url('company/edit/'.$company['id']); ?>" >Edit</a>
-							<a href="<?php echo base_url('company/delete/'.$company['id']); ?>" >Delete</a>
+							<a href="<?php echo base_url('contact/edit/'.$contact['id']); ?>" >Edit</a>
+							<a href="<?php echo base_url('contact/delete/'.$contact['id']); ?>" >Delete</a>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -77,4 +90,3 @@
 	<!-- /.col-lg-12 -->						
 </div>
 <!-- /.row -->
-		

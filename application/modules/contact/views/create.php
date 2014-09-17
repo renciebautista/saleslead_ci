@@ -1,13 +1,14 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">New Contact</h1>				
+		<h1 class="page-header">New Contact</h1>
+		<?php echo $this->session->flashdata('message');?>								
 	</div>
 	<!-- /.col-lg-12 -->						
 </div>
 <!-- /.row -->
 <?php //debug($this->_ci_cached_vars);?>
 <div class="row">
-	<?php echo form_open('',array('role' => 'form')); ?>
+	<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 	<div class="col-lg-6">
 			<div class="form-group">
 				<a href="<?php echo base_url('contact/createcompany'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Company</a>
@@ -62,6 +63,20 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {	
+	$(".form-validate").validate({
+		errorElement: 'span',
+		rules: {
+			company_id: "required",
+			first_name: "required",
+			middle_name: "required",
+			last_name: "required",
+			title: "required"
+		},
+		errorPlacement: function(error, element) {        
+			error.insertAfter(element.siblings("label"));
+		}
+	});
+
 	$('#address').val('');
 	$('#company_id').select2({
 			placeholder: "Company Name",
@@ -82,10 +97,10 @@ $(document).ready(function() {
 					return {results: data.contacts};
 				}
 			},
-			formatResult: formatSelection,
+			formatResult: companyformatSelection,
 			escapeMarkup: function(m) { return m; }
 		}).on("select2-selecting", function(e) {
-			$('#address').val(e.object.company);
+			$('#address').val(e.object.address);
         }).on("select2-removed", function(e) {
         	$('#address').val('');
         });

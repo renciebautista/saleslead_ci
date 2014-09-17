@@ -1,10 +1,13 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Project Details</h1>				
+		<h1 class="page-header">Project Details</h1>	
+		<?php echo $this->session->flashdata('message');?>							
 	</div>
 	<!-- /.col-lg-12 -->						
 </div>
 <!-- /.row -->
+
+
 
 <div class="row">
 	<div id="contact-details" class="col-lg-12">

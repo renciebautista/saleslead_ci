@@ -3,7 +3,7 @@
 class Privilege_model extends MY_Model {	
 
 	public $_table = 'user_privileges';
-	
+	public $primary_key = 'upriv_id';
 	protected $return_type = 'array';
 
 	public function search($filter = null){

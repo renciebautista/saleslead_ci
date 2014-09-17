@@ -6,11 +6,12 @@ class Project_contact_model extends MY_Model {
 
 	public $before_create = array('created_at');
 
-	public function projects($contact_id){
+	public function projects($filter,$contact_id){
 		$this->db->select('project_contacts.id as project_contact_id,project_contacts.project_id,
 			projects.project_name,projects.lot,projects.street,projects.brgy,
 			cities.city,provinces.province');
 		$this->db->where('project_contacts.contact_id',$contact_id);
+		$this->db->where("( project_name LIKE '%{$filter}%' OR projects.lot LIKE '%{$filter}%' OR projects.street LIKE '%{$filter}%' OR projects.brgy LIKE '%{$filter}%' OR cities.city LIKE '%{$filter}%' OR provinces.province LIKE '%{$filter}%')");
 		$this->db->join('projects','projects.id = project_contacts.project_id');
 		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
 		$this->db->join('companies','companies.id = contacts.company_id');

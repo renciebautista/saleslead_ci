@@ -16,7 +16,7 @@
 			</div>
 
 			<div class="form-group">
-				<label for="group">Description</label>
+				<label for="description">Description</label>
 				<?php echo form_error('description'); ?>
 				<textarea id="description" class="form-control" placeholder="Description" rows="3" name="description"><?php echo set_value('description'); ?></textarea>
 			</div>

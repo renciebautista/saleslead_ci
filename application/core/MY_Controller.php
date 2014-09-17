@@ -30,8 +30,6 @@ class MY_Controller extends CI_Controller {
 
 		$this->_user_id = $this->flexi_auth->get_user_id();
 
-		
-
 		// Define a global variable to store data that is then used by the end view page.
 		$this->data = null;
 

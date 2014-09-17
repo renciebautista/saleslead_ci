@@ -7,14 +7,19 @@ class Prjclassification extends MY_Controller {
 		$this->load->model('Prjclassification_model');
 	}
 
-	public function index()
-	{
+	public function index(){
+		if (!$this->flexi_auth->is_privileged('PROJECT CLASSIFICATION MAINTENANCE')){
+			redirect('prjclassification/access_denied');		
+		}
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['prjclassifications'] = $this->Prjclassification_model->search($this->data['filter']);
 		$this->layout->view('prjclassification/index',$this->data);
 	}
 
 	public function create(){
+		if (!$this->flexi_auth->is_privileged('PROJECT CLASSIFICATION MAINTENANCE')){
+			redirect('prjclassification/access_denied');		
+		}
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('prjclassification', 'Project Classification', 'required|is_unique[prjclassifications.prjclassification_desc]');
@@ -34,7 +39,11 @@ class Prjclassification extends MY_Controller {
 	}
 
 	public function edit($id = null){
-		if((count($this->Prjclassification_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('PROJECT CLASSIFICATION MAINTENANCE')){
+			redirect('prjclassification/access_denied');		
+		}
+
+		if(!$this->Prjclassification_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
@@ -60,7 +69,11 @@ class Prjclassification extends MY_Controller {
 	}
 
 	public function delete($id = null){
-		if((count($this->Prjclassification_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('PROJECT CLASSIFICATION MAINTENANCE')){
+			redirect('prjclassification/access_denied');		
+		}
+
+		if(!$this->Prjclassification_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
@@ -76,6 +89,7 @@ class Prjclassification extends MY_Controller {
 		}else{
 			$_id = $this->input->post('_id');
 			$prjclassification = $this->Prjclassification_model->get($_id);
+			
 			$this->Prjclassification_model->delete($_id);
 			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$prjclassification['prjclassification_desc'].' projcet classification!');
 			redirect('prjclassification');

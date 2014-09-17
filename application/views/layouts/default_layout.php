@@ -281,107 +281,17 @@
 							<a id="dashboard" href="<?php echo base_url('dashboard'); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 						</li>
 
-						<li class="dropdown">
-							<a href="#"><i class="fa fa-tasks fa-fw"></i> Tasks<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a id="task" href="<?php echo base_url('task'); ?>">My Tasks</a>
-								</li>
-								
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
+						<?php //$this->load->view('menu/tasks'); ?>
 
+						<?php //$this->load->view('menu/projects'); ?>
 
-						<li class="dropdown">
-							<a href="#"><i class="fa fa-file-text-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a id="project" href="<?php echo base_url('project'); ?>">Projects</a>
-								</li>
-								<li>
-									<a id="project" href="<?php echo base_url('project/forassigning'); ?>">New Projects</a>
-								</li>
-								<li>
-									<a id="project" href="<?php echo base_url('project/assigned'); ?>">Assigned Projects</a>
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
+						<?php $this->load->view('menu/contacts'); ?>
 
+						<?php //$this->load->view('menu/reports'); ?>
 
+						<?php $this->load->view('menu/user_maintenance'); ?>
 
-						<li class="dropdown">
-							<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a id="report" href="<?php echo base_url('report/area'); ?>">Area Report</a>
-								</li>
-								<li>
-									<a id="report" href="<?php echo base_url('report/salesman'); ?>">Salesman Report</a>
-								</li>
-								<li>
-									<a id="report" href="<?php echo base_url('report/salesmanweekly'); ?>">Salesman Weekly Report</a>
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
-
-						<li class="dropdown">
-							<a href="#"><i class="fa fa-users fa-fw"></i> Contacts<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a id="contact" href="<?php echo base_url('contact'); ?>">Contacts</a>
-								</li>
-								<li>
-									<a id="company" href="<?php echo base_url('company'); ?>">Companies</a>
-								</li>
-								
-								
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
-
-						<li class="dropdown">
-							<a href="#"><i class="fa fa-user fa-fw"></i> User Maintenance<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li >
-									<a id="department"  href="<?php echo base_url('department'); ?>">Departments</a>
-								</li>
-								<li>
-									<a id="role" href="<?php echo base_url('group'); ?>">Groups</a>
-								</li>
-								<li>
-									<a id="user" href="<?php echo base_url('user'); ?>">Users</a>
-								</li>
-								<li>
-									<a id="privilege" href="<?php echo base_url('privilege'); ?>">Privileges</a>
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
-
-						<li class="dropdown">
-							<a href="#"><i class="fa fa-gear fa-fw"></i> File Maintenance<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a id="prjclassification" href="<?php echo base_url('prjclassification'); ?>">Project Classifications</a>
-								</li>
-								<li>
-									<a id="prjcategory" href="<?php echo base_url('prjcategory'); ?>">Project Categories</a>
-								</li>
-								<li>
-									<a id="prjstage" href="<?php echo base_url('prjstage'); ?>">Project Stages</a>
-								</li>
-								<li>
-									<a id="prjstatus" href="<?php echo base_url('prjstatus'); ?>">Project Statuses</a>
-								</li>
-								<li>
-									<a id="grouptype" href="<?php echo base_url('grouptype'); ?>">Contact Types</a>
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
+						<?php $this->load->view('menu/file_maintenance'); ?>
 
 						
 					</ul>
@@ -410,11 +320,14 @@
 	<script src="<?php echo base_url('assets/plugins/chosen-1.1.0/js/chosen.jquery.js'); ?>"></script>
 	<!-- Select2 Plugin JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/select2-3.5.1/js/select2.min.js'); ?>"></script>
-
+	<!-- Jquery Validate Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/jquery-validation-1.13.0/js/jquery.validate.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/plugins/jquery-validation-1.13.0/js/additional-methods.js'); ?>"></script>
+	<!-- Jquery Numeric_only Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/numeric_only/js/jquery.numericonly.js'); ?>"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/sb-admin-2.js'); ?>"></script>
-
 </body>
 
 </html>

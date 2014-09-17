@@ -37,7 +37,7 @@
 					<tr>
 						<th>Company</th>
 						<th>Address</th>
-						<th>Contacts</th>
+						<th style="width:150px;text-align: center;">Contacts</th>
 						<th style="width:100px;text-align: center;">Action</th>
 					</tr>
 				</thead>
@@ -51,7 +51,7 @@
 					<tr>
 						<td><?php echo $company['company']; ?></td>
 						<td><?php echo ucwords(strtolower($company['lot'].' '.$company['street'].' '.$company['brgy'].', '.$company['city'].' '.$company['province'])); ?></td>
-						<td><a href="<?php echo base_url('company/contacts/'.$company['id']); ?>" >Manage Contacts</a></td>
+						<td style="width:150px;text-align: center;"><a href="<?php echo base_url('company/contacts/'.$company['id']); ?>" >Manage Contacts</a></td>
 						<td style="width:100px;text-align: center;">
 							<a href="<?php echo base_url('company/edit/'.$company['id']); ?>" >Edit</a>
 							<a href="<?php echo base_url('company/delete/'.$company['id']); ?>" >Delete</a>

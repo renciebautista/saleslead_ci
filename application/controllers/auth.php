@@ -58,6 +58,10 @@ class Auth extends CI_Controller {
 		redirect('auth');
     }
 
+    public function sign_up(){
+    	$this->load->view('auth/sign_up');
+    }
+
 }
 
 /* End of file auth.php */

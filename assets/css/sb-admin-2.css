@@ -358,10 +358,20 @@ table.dataTable thead .sorting:after {
 .navbar-form {
 	padding-left: 0px;
 }
-.error {
+span.error {
 	color: #a94442;
 	font-style: italic;
+	padding-left: 5px;
 }
+textarea.error,input.error{
+	border-color: #a94442;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+textarea.error:focus,input.error:focus {
+    border-color: #843534;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #ce8483;
+}
+
 .error-container {
     margin-bottom: 4em;
     margin-top: 4em;
@@ -385,5 +395,5 @@ table.dataTable thead .sorting:after {
 	margin-bottom: -20%;
 }
 #login{
-	padding-top: 100px;
+	/*padding-top: 100px;*/
 }

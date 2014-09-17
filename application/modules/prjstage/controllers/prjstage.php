@@ -7,14 +7,19 @@ class Prjstage extends MY_Controller {
 		$this->load->model('Prjstage_model');
 	}
 
-	public function index()
-	{
+	public function index(){
+		if (!$this->flexi_auth->is_privileged('PROJECT STAGE MAINTENANCE')){
+			redirect('prjstage/access_denied');		
+		}
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['prjstages'] = $this->Prjstage_model->search($this->data['filter']);
 		$this->layout->view('prjstage/index',$this->data);
 	}
 
 	public function create(){
+		if (!$this->flexi_auth->is_privileged('PROJECT STAGE MAINTENANCE')){
+			redirect('prjstage/access_denied');		
+		}
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('prjstage', 'Project Stage', 'required|is_unique[prjstages.prjstage_desc]');
@@ -34,7 +39,10 @@ class Prjstage extends MY_Controller {
 	}
 
 	public function edit($id = null){
-		if((count($this->Prjstage_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('PROJECT STAGE MAINTENANCE')){
+			redirect('prjstage/access_denied');		
+		}
+		if(!$this->Prjstage_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
@@ -60,7 +68,10 @@ class Prjstage extends MY_Controller {
 	}
 
 	public function delete($id = null){
-		if((count($this->Prjstage_model->get($id))< 1) || (is_null($id))){
+		if (!$this->flexi_auth->is_privileged('PROJECT STAGE MAINTENANCE')){
+			redirect('prjstage/access_denied');		
+		}
+		if(!$this->Prjstage_model->id_exist($id) || (is_null($id))){
 			$this->not_found();
 			return;
 		}
