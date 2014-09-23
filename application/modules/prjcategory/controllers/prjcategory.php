@@ -134,6 +134,16 @@ class Prjcategory extends MY_Controller {
 		$this->layout->view('prjcategory/subcategory',$this->data);
 	}
 
+	public function subcategory_check($str,$str2){
+		if ($this->Prjsubcategory_model->subcategory_exist($str2,$str)){
+			$this->form_validation->set_message('subcategory_check', 'The %s already exist!');
+			return FALSE;
+		}else{
+			return TRUE;
+		}
+	}
+
+
 	public function createsubcategory($id = null){
 		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
 			redirect('prjcategory/access_denied');		
@@ -146,7 +156,7 @@ class Prjcategory extends MY_Controller {
 		
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('prjcategory_id', 'Project Category', 'required');
-		$this->form_validation->set_rules('subcategory', 'Sub Category', 'required');
+		$this->form_validation->set_rules('subcategory', 'Sub Category', 'trim|required|callback_subcategory_check['.$this->input->post('prjcategory_id').']');
 
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_message('is_unique', 'Value already exist.');
@@ -161,6 +171,48 @@ class Prjcategory extends MY_Controller {
 			$this->Prjsubcategory_model->insert(array('prjsubcategory_desc' => $prjsubcategory_desc,'prjcategory_id' => $prjcategory_id));
 			$this->flash_message->set('message','alert alert-success','Successfully created '.$prjsubcategory_desc.' project sub category!');
 			redirect('prjcategory/subcategory/'.$prjcategory_id);
+		}
+	}
+
+	public function editsubcategory($id = null){
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('prjcategory_id', 'Project Category', 'required');
+		$this->form_validation->set_rules('_id', 'Project Sub Category', 'required');
+		$this->form_validation->set_rules('subcategory', 'Sub Category', 'trim|required|callback_subcategory_check['.$this->input->post('prjcategory_id').']');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_unique', 'Value already exist.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$this->data['subcategory'] = $this->Prjsubcategory_model->details($id);
+			$this->layout->view('prjcategory/editsubcategory',$this->data);
+		}else{
+			$_id = $this->input->post('_id');
+			$prjcategory_id = $this->input->post('prjcategory_id');
+			$prjsubcategory_desc = strtoupper(trim($this->input->post('subcategory')));
+			$this->Prjsubcategory_model->update($_id,array('prjsubcategory_desc' => $prjsubcategory_desc));
+			$this->flash_message->set('message','alert alert-success','Successfully updated  project sub category!');
+			redirect('prjcategory/subcategory/'.$prjcategory_id);
+		}
+	}
+
+	public function deletesubcategory($id = null){
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('_id', '', 'required');
+
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$this->data['subcategory'] = $this->Prjsubcategory_model->details($id);
+			$this->layout->view('prjcategory/deletesubcategory',$this->data);
+		}else{
+			$_id = $this->input->post('_id');
+			$prjsubcategory = $this->Prjsubcategory_model->get($_id);
+			$this->Prjsubcategory_model->delete($_id);
+			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$prjsubcategory['prjsubcategory_desc'].' project sub category!');
+			redirect('prjcategory/subcategory/'.$prjsubcategory['prjcategory_id']);
 		}
 	}
 

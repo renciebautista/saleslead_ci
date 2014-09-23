@@ -34,7 +34,7 @@
 		<div class="form-group">
 			<label for="email">Email</label>
 			<?php echo form_error('email'); ?>
-			<input value="<?php echo set_value('email',$user['uacc_email']); ?>" id="email" class="form-control" type="text" name="email" placeholder="Email" readonly="">
+			<input value="<?php echo set_value('email',$user['uacc_email']); ?>" id="email" class="form-control" type="text" placeholder="Email" readonly="">
 		</div>
 	</div>
 	<div class="col-lg-6">
@@ -49,7 +49,7 @@
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="role_id">Role</label>
+			<label for="role_id">Group</label>
 			<?php echo form_error('role_id'); ?>
 			<select class="form-control" data-placeholder="SELECT ROLE" id="role_id" name="role_id" class="medium" >
 				<option value="0"></option>
@@ -68,14 +68,14 @@
 		<div class="form-group">
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" id="active" name="active" value="1"  />Active
+					<input type="checkbox" id="active" name="active" value="1"  <?php echo set_checkbox('active', '1', ($user['uacc_active']) ? TRUE:FALSE); ?>/>Active
 				</label>
 			</div>
 		</div>
 	</div>
 
 	<div class="col-lg-12">
-		<input class="btn btn-success" type="submit" value="Submit">
+		<input class="btn btn-success" type="submit" value="Update">
 		<a class="btn btn-default" href="<?php echo base_url('user'); ?>">Back</a>
 	</div>
 	<?php echo form_close(); ?>

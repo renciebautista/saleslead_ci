@@ -21,6 +21,20 @@ class Prjsubcategory_model extends MY_Model {
 		}
 	}
 
+	public function details($id){
+		$this->db->select('prjsubcategories.id,prjsubcategories.prjsubcategory_desc,prjsubcategories.prjcategory_id,
+			prjcategories.prjcategory_desc');
+		$this->db->join('prjcategories','prjcategories.id = prjsubcategories.prjcategory_id');
+		$this->db->where('prjsubcategories.id',$id);
+		return $this->db->get($this->_table)->row_array();
+	}
+
+	public function subcategory_exist($category_id,$subcategory){
+		$this->db->where('prjcategory_id',$category_id);
+		$this->db->where('prjsubcategory_desc',$subcategory);
+        return (boolean)$this->db->get($this->_table)->row_array();
+	}
+
 }
 
 /* End of file prjsubcategory_model.php */

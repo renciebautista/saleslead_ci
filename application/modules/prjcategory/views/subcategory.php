@@ -10,8 +10,12 @@
 <div class="row">
 	<div class="col-lg-12">
 		<?php echo form_open('',array('class' => 'navbar-form', 'role' => 'search', 'method' => 'get')); ?>
-		<a href="<?php echo base_url('prjcategory'); ?>" class="btn btn-default"><i class="fa fa-reply"></i> Back</a>		
-			<a href="<?php echo base_url('prjcategory/createsubcategory/'.$category['id']); ?>" class="btn btn-success"><i class="fa fa-plus"></i> Sub Category</a>		
+			<div class="pull-left" style="margin-right:10px;">
+				<a href="<?php echo base_url('prjcategory'); ?>" class="btn btn-default"><i class="fa fa-reply"></i> Back</a>
+			</div>
+			<div class="pull-right">
+				<a href="<?php echo base_url('prjcategory/createsubcategory/'.$category['id']); ?>" class="btn btn-success"><i class="fa fa-plus"></i> Sub Category</a>		
+			</div>
 			<div class="input-group custom-search-form">
 				<input type="text" name="q" class="form-control" placeholder="Search..." value="<?php echo $filter; ?>">
 					<span class="input-group-btn">
@@ -48,8 +52,8 @@
 					<tr>
 						<td><?php echo $subcategory['prjsubcategory_desc']; ?></td>
 						<td style="width:100px;text-align: center;">
-							<a href="<?php echo base_url('prjcategory/edit/'.$subcategory['id']); ?>" >Edit</a>
-							<a href="<?php echo base_url('prjcategory/delete/'.$subcategory['id']); ?>" >Delete</a>
+							<a href="<?php echo base_url('prjcategory/editsubcategory/'.$subcategory['id']); ?>" >Edit</a>
+							<a href="<?php echo base_url('prjcategory/deletesubcategory/'.$subcategory['id']); ?>" >Delete</a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

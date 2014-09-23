@@ -443,15 +443,14 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 	public function update_custom_user_data($table = FALSE, $row_id = FALSE, $custom_data = FALSE)
 	{
 		if (! is_array($custom_data) || empty($this->auth->database_config['custom']))
-		{
+		{	
 			return FALSE;
 		}
 
 		// Loop through user custom data table(s)
 		foreach ($this->auth->database_config['custom'] as $custom_table => $table_data)
-		{
+		{	
 			$identifier_id = FALSE;
-
 			// Get tables primary key, if not submitted, try to match the rows secondard key column.
 			if ($row_id && $table_data['table'] == $table)
 			{

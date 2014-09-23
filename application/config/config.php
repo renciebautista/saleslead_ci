@@ -26,7 +26,7 @@ if (defined('ENVIRONMENT'))
 			$config['base_url']	= 'http://leads.chasetech.com/';
 			break;
 		case 'production':
-			$config['base_url']	= 'http://helpdesktwo.chasetech.com/';
+			$config['base_url']	= 'http://projectreference.chasetech.com/';
 		break;
 
 		default:

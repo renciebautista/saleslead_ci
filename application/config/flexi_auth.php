@@ -180,8 +180,8 @@
 	*/ 
 	$config['database']['custom']['user_detail']['table'] = 'user_details';
 	$config['database']['custom']['user_detail']['primary_key'] = 'id';
-	$config['database']['custom']['user_detail']['foreign_key'] = 'uacc_id';
-	$config['database']['custom']['user_detail']['join'] = 'user_details.uacc_id';
+	$config['database']['custom']['user_detail']['foreign_key'] = 'uacc_id_fk';
+	$config['database']['custom']['user_detail']['join'] = 'user_details.uacc_id_fk';
 	$config['database']['custom']['user_detail']['custom_columns'] = array(
 		'first_name','middle_name','last_name','emp_id','department_id',
 		'created_by','created_at','updated_at','bank_account'

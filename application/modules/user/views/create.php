@@ -48,7 +48,7 @@
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="role_id">Role</label>
+			<label for="role_id">Group</label>
 			<?php echo form_error('role_id'); ?>
 			<select class="form-control" data-placeholder="SELECT ROLE" id="role_id" name="role_id" class="medium" >
 				<option value="0"></option>

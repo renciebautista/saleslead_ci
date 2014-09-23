@@ -28,6 +28,7 @@
 	<!-- Custom CSS -->
 	<?php echo link_tag('assets/css/sb-admin-2.css'); ?>
 	<?php echo link_tag('assets/css/sl.css'); ?>
+	<?php echo link_tag('assets/css/loading.css'); ?>
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -44,6 +45,7 @@
 
 	<div id="wrapper">
 
+		
 		<!-- Navigation -->
 		<nav class="navbar navbar-default navbar-static-top	 navbar-inverse" role="navigation" style="margin-bottom: 0">
 			<div class="navbar-header">
@@ -303,7 +305,23 @@
 
 		<!-- Page Content -->
 		<div id="page-wrapper">
-			<?php echo $content_for_layout ?>	
+			<div id="waiting">
+				<div class="row">
+					<div class="col-lg-12 waiting-message">
+						<span>Please wait while processing....</span>
+						<div id="loadingProgressG">
+
+							<div id="loadingProgressG_1" class="loadingProgressG"></div>
+						</div>
+					</div>
+					<!-- /.col-lg-12 -->						
+				</div>
+				<!-- /.row -->
+			</div>
+
+			<div id="page-content">
+				<?php echo $content_for_layout ?>	
+			</div>
 		</div>
 		<!-- /#page-wrapper -->
 
@@ -328,6 +346,35 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/sb-admin-2.js'); ?>"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+		    $('input[type="submit"]').click(function() {
+		        var class_name = $(this).closest("form").attr("class");
+		        if(class_name == "form-validate"){
+		            if ($.validator) {
+		                var valid = $(".form-validate").valid();
+		                if(!valid){
+		                    return false;
+		                }else{
+		                    if(class_name == "form-validate"){
+		                        $('#waiting').show(500);
+		                        $('#page-content').hide(0);
+		                        return true;
+		                    }
+		                }
+		            } 
+		        }else{
+		            if(class_name == "form-validate"){
+		                $('#waiting').show(500);
+		                $('#page-content').hide(0);
+		                return true;
+		            }
+		        }
+		           
+		    });
+		});
+	</script>
 </body>
 
 </html>

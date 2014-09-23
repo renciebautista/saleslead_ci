@@ -147,18 +147,58 @@ class User extends MY_Controller {
 			$this->data['user'] = $this->User_model->details($id);
 			$this->layout->view('user/edit',$this->data);
 		}else{
+			// debug($_POST);
 			$_id = $this->input->post('_id');
-			$data =	array(
+			$user_data = array(
+				'uacc_id_fk' => $_id,
+				'uacc_active' => (int)$this->input->post('active'),
 				'first_name' => strtoupper(trim($this->input->post('first_name'))),
 				'middle_name' => strtoupper(trim($this->input->post('middle_name'))),
 				'last_name' => strtoupper(trim($this->input->post('last_name'))),
 				'emp_id' => $this->input->post('emp_id'),
 				'department_id' => $this->input->post('department_id'),
 				'bank_account' => $this->input->post('bank_account'),
-				'uacc_active' => (int)$this->input->post('active'));
-			$this->flexi_auth->update_user($_id,$data);
-			$this->flash_message->set('message','alert alert-success','Successfully updated user details!');
+				'uacc_group_fk' => $this->input->post('role_id')
+				);
+			$this->flexi_auth->update_user($_id,$user_data);
+			$this->flash_message->set('message','alert alert-success',$this->flexi_auth->status_messages('public', FALSE, FALSE));
 			redirect('user');
+		}
+	}
+
+	public function delete($id = null){
+		if (!$this->flexi_auth->is_privileged('USERS MAINTENANCE')){
+			redirect('department/access_denied');		
+		}
+
+		if(!$this->User_model->id_exist($id,'uacc_id') || (is_null($id))){
+			$this->not_found();
+			return;
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('_id', '', 'required');
+
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$this->data['departments'] = $this->Department_model->order_by('department')->get_all();
+			$this->data['roles'] = $this->Group_model->order_by('ugrp_name')->get_all();
+			$this->data['user'] = $this->User_model->details($id);
+			$this->layout->view('user/delete',$this->data);
+		}else{
+			$_id = $this->input->post('_id');
+			$user = $this->User_model->details($_id);
+			if(($this->User_model->related_to('companies','created_by',$_id)) || 
+				($this->User_model->related_to('contacts','created_by',$_id))){
+				$this->flash_message->set('message','alert alert-danger','Cannot delete this user it is related to a record!');
+				redirect('user/delete/'.$_id);
+			}else{
+				$this->flexi_auth->delete_user($_id);
+				$this->flash_message->set('message','alert alert-success','Successfully deleted user!');
+				redirect('user');
+			}			
 		}
 	}
 

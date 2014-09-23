@@ -67,9 +67,9 @@ if (defined('ENVIRONMENT'))
 			break;
 		case 'production':
 			$db['default']['hostname'] = 'localhost';
-            $db['default']['username'] = 'chaset7_hdtwouse';
-            $db['default']['password'] = 'hdtwouse';
-            $db['default']['database'] = 'chaset7_hd2';
+            $db['default']['username'] = 'chaset7_leaduser';
+            $db['default']['password'] = 'leaduser';
+            $db['default']['database'] = 'chaset7_liveleads';
 		break;
 
 		default:

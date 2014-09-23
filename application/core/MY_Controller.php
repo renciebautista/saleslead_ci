@@ -37,8 +37,11 @@ class MY_Controller extends CI_Controller {
 
 		$this->flexi_auth->update_login_sessions($this->_user_id,$user['uacc_group_fk']);
 		
-		$this->data['user_full_name'] = (! empty($user)) ? ucwords(strtolower($user['last_name'].', '.$user['first_name'].' '.$user['middle_name'])) : null;
-
+		if($user['first_name'] == '') {
+			$this->data['user_full_name'] = ucwords(strtolower($user['last_name']));
+		}else{
+			$this->data['user_full_name'] = (! empty($user)) ? ucwords(strtolower($user['last_name'].', '.$user['first_name'].' '.$user['middle_name'])) : null;
+		}
 		$this->layout->setLayout('layouts/default_layout');
 	
 	}

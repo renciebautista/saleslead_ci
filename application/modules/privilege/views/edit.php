@@ -9,7 +9,7 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<?php echo form_open('',array('role' => 'form')); ?>
+		<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 		<?php echo form_hidden('_id', $privilege['upriv_id']); ?>
 			<div class="form-group">
 				<label for="privilege">Privilege Name</label>
@@ -28,5 +28,17 @@
 	<!-- /.col-lg-6 -->						
 </div>
 <!-- /.row -->
-
-
+<script type="text/delayscript">
+$(document).ready(function(){
+	$(".form-validate").validate({
+		errorElement: 'span',
+		rules:{
+			privilege: "required",
+			description: "required"
+		},
+		errroPlacement: function(error, element){
+			error.insertAfter(element.siblings("label"));
+		}
+	});
+});
+</script>

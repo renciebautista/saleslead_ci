@@ -10,7 +10,7 @@ class User_model extends MY_Model {
 		$this->db->select('user_accounts.uacc_id as id, user_details.first_name,user_details.middle_name,user_details.last_name,
 			department,user_groups.ugrp_name');
 		$this->db->where("(first_name LIKE '%{$filter}%' OR middle_name LIKE '%{$filter}%' OR last_name LIKE '%{$filter}%')");
-		$this->db->join('user_details','user_details.uacc_id = user_accounts.uacc_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = user_accounts.uacc_id');
 		$this->db->join('departments','departments.id = user_details.department_id');
 		$this->db->join('user_groups','user_groups.ugrp_id = user_accounts.uacc_group_fk');
 		$this->db->order_by('last_name,first_name');
@@ -21,7 +21,7 @@ class User_model extends MY_Model {
 		$this->db->select('user_accounts.uacc_id as id, user_details.first_name,user_details.middle_name,user_details.last_name');
 		$this->db->where('uacc_active',1);
 		$this->db->where('uacc_suspend',0);
-		$this->db->join('user_details','user_details.uacc_id = user_accounts.uacc_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = user_accounts.uacc_id');
 		$this->db->order_by('last_name,first_name');
 		return $this->db->get($this->_table)->result_array();
 	}
@@ -30,9 +30,10 @@ class User_model extends MY_Model {
 		$this->db->select('user_accounts.uacc_id as id, user_details.first_name,
 			user_details.middle_name,user_details.last_name,emp_id,
 			department,user_groups.ugrp_name,user_details.bank_account,user_accounts.uacc_email,
-			user_details.department_id,user_accounts.uacc_group_fk');
+			user_details.department_id,user_accounts.uacc_group_fk,user_accounts.uacc_active,
+			ugrp_name');
 		$this->db->where('user_accounts.uacc_id',$id);
-		$this->db->join('user_details','user_details.uacc_id = user_accounts.uacc_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = user_accounts.uacc_id');
 		$this->db->join('departments','departments.id = user_details.department_id');
 		$this->db->join('user_groups','user_groups.ugrp_id = user_accounts.uacc_group_fk');
 		$this->db->order_by('last_name,first_name');
