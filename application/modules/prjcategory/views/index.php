@@ -9,7 +9,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<?php echo form_open('',array('role' => 'search', 'method' => 'get')); ?>
+		<?php echo form_open('',array('role' => 'search', 'method' => 'get' ,'class' => 'form-validate')); ?>
 			<div class="pull-right">
 				<a href="<?php echo base_url('prjcategory/create'); ?>" class="btn btn-success"><i class="fa fa-plus"></i> Project Category</a>		
 			</div>

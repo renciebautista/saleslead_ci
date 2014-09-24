@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<?php echo form_open('',array('role' => 'form')); ?>
+		<?php echo form_open('',array('role' => 'form' , 'class' => 'form-validate')); ?>
 		<?php echo form_hidden('_id', $grouptype['id']); ?>
 			<div class="form-group">
 				<label for="grouptype">Contact Type</label>
@@ -23,4 +23,17 @@
 </div>
 <!-- /.row -->
 
+<script type="text/delayscript">
+$(document).ready(function(){
+	$(".form-validate").validate({
+		errorElement: 'span',
+		rules:{
+			grouptype: "required"
+		},
+		errorPlacement: function(error,element){
+			error.insertAfter(element.siblings("label"));
+		}
+	});
+});
+</script>
 

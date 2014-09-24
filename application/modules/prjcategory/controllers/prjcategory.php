@@ -175,6 +175,15 @@ class Prjcategory extends MY_Controller {
 	}
 
 	public function editsubcategory($id = null){
+		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
+			redirect('prjcategory/access_denied');		
+		}
+
+		if(!$this->Prjsubcategory_model->id_exist($id) || (is_null($id))){
+			$this->not_found();
+			return;
+		}
+
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('prjcategory_id', 'Project Category', 'required');
 		$this->form_validation->set_rules('_id', 'Project Sub Category', 'required');
@@ -198,6 +207,15 @@ class Prjcategory extends MY_Controller {
 	}
 
 	public function deletesubcategory($id = null){
+		if (!$this->flexi_auth->is_privileged('PROJECT CATEGORY MAINTENANCE')){
+			redirect('prjcategory/access_denied');		
+		}
+
+		if(!$this->Prjsubcategory_model->id_exist($id) || (is_null($id))){
+			$this->not_found();
+			return;
+		}
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('_id', '', 'required');

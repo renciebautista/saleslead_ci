@@ -9,7 +9,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<?php echo form_open('',array('class' => 'navbar-form', 'role' => 'search', 'method' => 'get')); ?>
+		<?php echo form_open('',array('class' => 'navbar-form', 'role' => 'search', 'method' => 'get','class' => 'form-validate')); ?>
 			<div class="pull-left" style="margin-right:10px;">
 				<a href="<?php echo base_url('prjcategory'); ?>" class="btn btn-default"><i class="fa fa-reply"></i> Back</a>
 			</div>

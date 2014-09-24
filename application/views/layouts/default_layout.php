@@ -349,6 +349,14 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('button[type="submit"]').click(function() {
+		        if($(this).closest("form").attr("class") == "form-validate"){
+	                $('#waiting').show(500);
+	                $('#page-content').hide(0);
+	                return true;
+	            }
+		    });
+
 		    $('input[type="submit"]').click(function() {
 		        var class_name = $(this).closest("form").attr("class");
 		        if(class_name == "form-validate"){
@@ -373,6 +381,8 @@
 		        }
 		           
 		    });
+
+
 		});
 	</script>
 </body>
