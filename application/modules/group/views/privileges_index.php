@@ -27,9 +27,10 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
+						<th style="width:10px;text-align: center;"></th>
 						<th>Privilege Name</th>
 						<th>Description</th>
-						<th style="width:120px;text-align: center;">Has Privilege</th>
+						
 					</tr>
 				</thead>
 				<tbody>
@@ -40,11 +41,12 @@
 				<?php else: ?>
 				<?php foreach ($privileges as $privilege):?>
 					<tr>
-						<td><?php echo $privilege['upriv_name']; ?></td>
-						<td><?php echo $privilege['upriv_desc']; ?></td>
-						<td style="width:100px;text-align: center;">
+						<td style="width:10px;text-align: center;">
 							<input type="checkbox" name="privileges[]" value="<?php echo $privilege['upriv_id']; ?>" <?php echo ((in_array($privilege['upriv_id'], $selected)) ? 'checked="checked"' : NULL); ?> />
 						</td>
+						<td><?php echo $privilege['upriv_name']; ?></td>
+						<td><?php echo $privilege['upriv_desc']; ?></td>
+						
 					</tr>
 				<?php endforeach; ?>
 				<?php endif; ?>

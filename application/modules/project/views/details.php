@@ -37,11 +37,11 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<?php echo form_open('',array('role' => 'form')); ?>
+		<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 		<?php echo form_hidden('project_id', $project['id']); ?>
 			<div class="form-group">
 				<label for="assigned_to">Assign To</label>
-				<?php echo form_error('role'); ?>
+				<?php echo form_error('assigned_to'); ?>
 				<select class="form-control" data-placeholder="ASSIGN TO" id="assigned_to" name="assigned_to" class="medium" >
 					<option value="0"></option>
 					<?php foreach($users as $user){?>
@@ -59,6 +59,19 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {
+	$(".form-validate").validate({
+		ignore: null,
+		errorElement: 'span',
+		rules: {
+			assigned_to: {
+				is_natural_no_zero: true,
+				required: true
+			}
+		},
+		errorPlacement: function(error, element){
+			error.insertAfter(element.siblings("label"));
+		}
+	});
 	$("#assigned_to").chosen({allow_single_deselect: true});
 });
 </script>

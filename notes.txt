@@ -1,5 +1,7 @@
 project classification delete
 project category delete
 
+add status database
+update project database	
 
-1. add company type before add company
+update project_contacts database

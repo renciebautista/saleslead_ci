@@ -24,6 +24,9 @@
 	<!-- Select2 CSS -->
 	<?php echo link_tag('assets/plugins/select2-3.5.1/css/select2.css'); ?>
 	<?php echo link_tag('assets/plugins/select2-3.5.1/css/select2-bootstrap.css'); ?>
+
+	<!-- DataTables-1.10.2 CSS -->
+	<?php echo link_tag('assets/plugins/DataTables-1.10.2/css/dataTables.bootstrap.css'); ?>
 	
 	<!-- Custom CSS -->
 	<?php echo link_tag('assets/css/sb-admin-2.css'); ?>
@@ -285,7 +288,7 @@
 
 						<?php //$this->load->view('menu/tasks'); ?>
 
-						<?php //$this->load->view('menu/projects'); ?>
+						<?php $this->load->view('menu/projects'); ?>
 
 						<?php $this->load->view('menu/contacts'); ?>
 
@@ -343,6 +346,12 @@
 	<script src="<?php echo base_url('assets/plugins/jquery-validation-1.13.0/js/additional-methods.js'); ?>"></script>
 	<!-- Jquery Numeric_only Plugin JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/numeric_only/js/jquery.numericonly.js'); ?>"></script>
+
+	<!-- DataTables-1.10.2 Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/DataTables-1.10.2/js/jquery.dataTables.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/plugins/DataTables-1.10.2/js/dataTables.bootstrap.js'); ?>"></script>
+
+
 	<!-- Custom Theme JavaScript -->
 	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/sb-admin-2.js'); ?>"></script>
@@ -362,10 +371,8 @@
 		        if(class_name == "form-validate"){
 		            if ($.validator) {
 		                var valid = $(".form-validate").valid();
-		                if(!valid){
-		                    return false;
-		                }else{
-		                    if(class_name == "form-validate"){
+		                if(valid){
+		                	if(class_name == "form-validate"){
 		                        $('#waiting').show(500);
 		                        $('#page-content').hide(0);
 		                        return true;

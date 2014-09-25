@@ -11,16 +11,27 @@ class Project extends MY_Controller {
 		$this->load->model('grouptype/Grouptype_model');
 		$this->load->model('Project_detail_model');
 
+
+
 	}
 
 	public function index(){	
-		$this->data['filter'] = trim($this->input->get('q'));
-		$this->data['status'] = trim($this->input->get('s'));
-		$this->data['projects'] = $this->Project_model->public_projects($this->data['status'],$this->data['filter'], $this->_user_id);
-		$this->layout->view('project/index',$this->data);
+		if (!$this->flexi_auth->is_privileged('PUBLIC PROJECT MAINTENANCE')){
+			redirect('project/access_denied');		
+		}
+		if($this->input->is_ajax_request()){
+			echo $this->Project_model->ajax_public_projects();
+		}else{
+			$this->layout->view('project/index',$this->data);
+		}
+		
 	}
 
 	public function create(){
+		if (!$this->flexi_auth->is_privileged('CREATED PROJECT MAINTENANCE')){
+			redirect('project/access_denied');		
+		}
+		
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('project_name' , 'Project Name', 'trim|required');
@@ -53,25 +64,97 @@ class Project extends MY_Controller {
 				$this->Project_contact_model->insert(array(
 					'project_id' => $project_id,
 					'contact_id' => $this->input->post('contact_id'),
-					'type_id' => $this->input->post('type_id')
+					'type_id' => $this->input->post('type_id'),
+					'created_by' =>  $this->_user_id,
+					'approved' => 1,
+					'approved_by' =>  $this->_user_id
 					));
 			$this->db->trans_complete();
 			if ($this->db->trans_status() === FALSE){
-			    $this->flash_message->set('message','alert alert-error','An error occured!');
-			    redirect('project/create');
+				$this->flash_message->set('message','alert alert-error','An error occured!');
+				redirect('project/create');
 			} 
 			$this->flash_message->set('message','alert alert-success','Project successfully created!');
-			redirect('project');
+			redirect('project/created');
+		}
+	}
+
+	public function created($id = null){	
+		if (!$this->flexi_auth->is_privileged('CREATED PROJECT MAINTENANCE')){
+			redirect('project/access_denied');		
+		}
+
+		if(is_null($id)){
+			$this->data['filter'] = trim($this->input->get('q'));
+			$this->data['status'] = trim($this->input->get('s'));
+			$this->data['projects'] = $this->Project_model->created_projects($this->data['filter'],$this->data['status'],$this->_user_id);
+			$this->layout->view('project/created',$this->data);
+		}else{
+			$this->data['types'] = $this->Grouptype_model->order_by('grouptype_desc')->get_all();
+			$this->data['project'] = $this->Project_model->details($id);
+			$this->data['contacts'] = array();
+			$this->layout->view('project/createddetails',$this->data);
+		}
+	}
+
+	public function addcontacts(){
+		if($this->input->is_ajax_request()){
+			$this->load->library('form_validation');
+
+			$this->form_validation->set_rules('project_id', 'Project Id', 'trim|required');
+			$this->form_validation->set_rules('contact_id', 'contact_id', 'trim|required');
+			$this->form_validation->set_rules('group_id', 'group_id', 'trim|required');
+
+			$this->form_validation->set_message('required', 'This field is required.');
+			$this->form_validation->set_message('is_unique', 'Value already exist.');
+			$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+			if ($this->form_validation->run() == FALSE){
+				$data = array('status' => 'error');
+			}else{
+				$this->Project_contact_model->insert(array(
+					'project_id' => (int)$this->input->post('project_id'),
+					'contact_id' => (int)$this->input->post('contact_id'),
+					'type_id' => (int)$this->input->post('group_id'),
+					'created_by' => $this->_user_id,
+					'approved' => 1,
+					'approved_by' => $this->_user_id,
+					));
+				$data = array('status' => 'ok');
+			}
+
+			
+		}else{
+			$data = array('status' => 'error');
+		}
+		
+		echo json_encode($data);
+	}
+
+	public function contacts(){
+		if($this->input->is_ajax_request()){
+
+		}else{
+			$data = array('status' => 'error');
+			echo json_encode($data);
 		}
 	}
 // ======================================================================
 
 	public function forassigning($id = null){
+		if (!$this->flexi_auth->is_privileged('PROJECT ASSIGNING MAINTENANCE')){
+			redirect('project/access_denied');		
+		}
+
 		if(is_null($id)){
 			$this->data['filter'] = trim($this->input->get('q'));
 			$this->data['projects'] = $this->Project_model->forassigning($this->data['filter']);
 			$this->layout->view('project/forassigning',$this->data);
 		}else{
+			if(!$this->Project_model->is_forassigning($id)){
+				$this->not_found();
+				return;
+			}
 			$this->load->library('form_validation');
 
 			$this->form_validation->set_rules('project_id', 'Project ID', 'required|is_natural_no_zero');
@@ -88,7 +171,7 @@ class Project extends MY_Controller {
 			}else{
 				$project_id = $this->input->post('project_id');
 				$assigned_to = $this->input->post('assigned_to');
-				$this->Project_model->update($project_id,array('assigned_to' => $assigned_to, 'assigned_by' => $this->_user_id));
+				$this->Project_model->update($project_id,array('assigned_to' => $assigned_to, 'status_id' => 2, 'assigned_by' => $this->_user_id));
 				$this->flash_message->set('message','alert alert-success','Project successfully assigned!');
 				redirect('project/forassigning');
 			}
@@ -104,6 +187,10 @@ class Project extends MY_Controller {
 
 // ======================================================================
 	public function assigned(){
+		if (!$this->flexi_auth->is_privileged('ASSIGNED PROJECT MAINTENANCE')){
+			redirect('project/access_denied');		
+		}
+
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['projects'] = $this->Project_model->assigned($this->data['filter'],$this->_user_id);
 		$this->layout->view('project/assigned',$this->data);

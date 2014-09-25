@@ -51,3 +51,7 @@
 .header-button {
 	margin-bottom: 10px;
 }
+
+table > thead .action-center, table > tbody .action-center{
+	text-align: center;
+}
