@@ -1,25 +1,26 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Project Details</h1>	
+		<h1 class="page-header">Update Project Details</h1>	
 		<?php echo $this->session->flashdata('message');?>							
 	</div>
 	<!-- /.col-lg-12 -->						
 </div>
 <!-- /.row -->
 
-
-
 <div class="row">
-	<div id="contact-details" class="col-lg-12">
-		<address>
-		  	<span><strong><?php echo strtoupper($project['project_name']); ?></strong></span><br>
-		  	<span><?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].', '.$project['city'])); ?></span><br>
-		  	<span><?php echo ucwords(strtolower($project['province'])); ?></span><br>
-		</address>
-	</div>
-	<!-- /.col-lg-12 -->						
+    <div class="col-lg-12 header-button">
+        <a class="btn btn-default" href="<?php echo (($this->session->userdata('back_link') == '') ? base_url('contact'): base_url($this->session->userdata('back_link')) ); ?>">
+            <i class="fa fa-reply"></i> Back
+        </a>
+    </div>
+    <!-- /.col-lg-12 -->                        
 </div>
 <!-- /.row -->
+
+
+<?php $this->load->view('shared/project/_project_name_address'); ?>
+
+<?php $this->load->view('shared/contact/_contact_details'); ?>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -59,12 +60,12 @@
 					</div>
 					<?php endif; ?>
 					<div class="panel-footer">
-						<?php echo form_open('contact/updatedetails', array('role' => 'form')); ?>
+						<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 						<?php echo form_hidden('project_contact_id', $project['project_contact_id']); ?>
 						  	<div class="form-group">
 						    	<textarea name="details" id="details" class="form-control" rows="3" placeholder="Details"></textarea>
 						  	</div>
-						 	<button type="submit" class="btn btn-default">Submit</button>
+						 	<button type="submit" class="btn btn-success">Submit</button>
 						<?php echo form_close(); ?>
 					</div>
 				</div>
@@ -340,4 +341,19 @@
 </div>
 <!-- /.row -->
 
+
+<script type="text/delayscript">
+$(document).ready(function() {
+	$(".form-validate").validate({
+		errorElement: 'span',
+		rules:{
+			details: "required",
+		},
+		errorPlacement: function(error, element){
+			error.insertAfter(element.siblings("label"));
+		}
+	});
+
+});
+</script>
 

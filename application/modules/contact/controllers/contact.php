@@ -482,6 +482,9 @@ class Contact extends MY_Controller {
 			return;
 		}
 
+		$this->session->set_userdata('back_link','contact/project/'.$contact_id);
+
+
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['contact'] = $this->Contact_model->details($contact_id);
 		$this->data['projects'] = $this->Project_contact_model->projects($this->data['filter'],$contact_id);
@@ -489,12 +492,14 @@ class Contact extends MY_Controller {
 	}
 
 	public function updateproject($project_contact_id = null){
-		$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
-		$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
-		$this->layout->view('contact/updateproject',$this->data);
-	}
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
 
-	public function updatedetails(){
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
@@ -505,8 +510,11 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->flash_message->set('message','alert alert-danger','Error occured on updating project details.');
-			redirect('contact');
+			$project_contact = $this->Project_contact_model->get($project_contact_id);
+			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
+			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+			$this->layout->view('contact/updateproject',$this->data);
 		}else{
 			$project_contact_id = $this->input->post('project_contact_id');
 			$this->Project_detail_model->insert(array(
@@ -514,8 +522,11 @@ class Contact extends MY_Controller {
 				'project_contact_id' => $project_contact_id,
 				'details' => trim($this->input->post('details'))
 				));
+			$this->flash_message->set('message','alert alert-success','Details successfully updated!');
 			redirect('contact/updateproject/'.$project_contact_id);
 		}
+
+		
 	}
 // ========================================================
 }

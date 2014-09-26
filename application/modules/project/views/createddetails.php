@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Project Details</h1>				
+		<h1 class="page-header">Project Details</h1>	
+		<?php echo $this->session->flashdata('message');?>				
 	</div>
 	<!-- /.col-lg-12 -->						
 </div>
@@ -55,7 +56,7 @@
 											<tr>
 												<th style="width:30%">Contact Name</th>
 												<th>Company</th>
-												<th style="width:10%" class="action-center">Actions</th>
+												<th style="width:12%" class="action-center">Actions</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -73,8 +74,8 @@
 													<?php echo $contact['company']; ?><br>
 													<i><?php echo ucwords(strtolower($contact['address'])); ?></i>
 												</td>
-												<td style="width:10%" class="action-center">
-													<a href="<?php echo base_url('project/join/'.$contact['contact_id']) ?>">Action?</a>
+												<td style="width:12%" class="action-center">
+													<a href="<?php echo base_url('contact/updateproject/'.$contact['id']) ?>">Update Project</a>
 												</td>
 											</tr>
 										<?php endforeach; ?>

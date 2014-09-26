@@ -34,7 +34,7 @@ class Project_contact_model extends MY_Model {
 	}
 
 	public function project_contacts($project_id,$group_id){
-		$this->datatables->select("project_contacts.contact_id,
+		$this->datatables->select("project_contacts.id, project_contacts.contact_id,
 			concat(last_name,', ',first_name,' ',middle_name) as contact_name,
 			companies.company,
 			concat(lot,' ',street,' ',brgy,' ',cities.city,' ',provinces.province,'') as address",false);
@@ -62,6 +62,13 @@ class Project_contact_model extends MY_Model {
 		$this->db->where('project_id',$project_id);
 		$this->db->where('contact_id',$contact_id);
 		$this->db->where('type_id',$group_id);
+		$this->db->where('approved',1);
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
+
+	public function is_my_project_contact($id,$user_id){
+		$this->db->where('id',$id);
+		$this->db->where('created_by',$user_id);
 		$this->db->where('approved',1);
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}

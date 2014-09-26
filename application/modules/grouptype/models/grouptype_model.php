@@ -10,6 +10,12 @@ class Grouptype_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
+	public function get_top_id(){
+		$this->db->order_by("grouptype_desc"); 
+		$this->db->limit(1);
+		return $this->db->get($this->_table)->row_array();
+	}
+
 }
 
 /* End of file grouptype_model.php */

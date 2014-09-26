@@ -91,9 +91,16 @@ class Project extends MY_Controller {
 				redirect('project/access_denied');		
 			}
 
-			if(!$this->Grouptype_model->id_exist($group_id)){
-				redirect('project/access_denied');		
+			if(!is_null($group_id)){
+				if(!$this->Grouptype_model->id_exist($group_id)){
+					redirect('project/access_denied');		
+				}
+			}else{
+				$group = $this->Grouptype_model->get_top_id();
+				$group_id = $group['id'];
 			}
+
+			$this->session->set_userdata('back_link','project/created/'.$id.'/'.$group_id);
 
 			$this->data['group_id'] = $group_id;
 			$this->data['types'] = $this->Grouptype_model->order_by('grouptype_desc')->get_all();
@@ -103,46 +110,39 @@ class Project extends MY_Controller {
 		}
 	}
 
-	public function addcontact(){
+	public function addcontact($project_id = null, $group_id = null){
 		if (!$this->flexi_auth->is_privileged('CREATED PROJECT MAINTENANCE')){
 			redirect('project/access_denied');		
 		}
-		// if($this->input->is_ajax_request()){
-		// 	$this->load->library('form_validation');
 
-		// 	$this->form_validation->set_rules('project_id', 'Project Id', 'trim|required');
-		// 	$this->form_validation->set_rules('contact_id', 'contact_id', 'trim|required|callback_contact_check['.$this->input->post('project_id').','.$this->input->post('group_id').']');
-		// 	$this->form_validation->set_rules('group_id', 'group_id', 'trim|required');
+		$this->load->library('form_validation');
 
-		// 	$this->form_validation->set_message('required', 'This field is required.');
-		// 	$this->form_validation->set_message('is_unique', 'Value already exist.');
+		$this->form_validation->set_rules('project_id', 'Project Id', 'trim|required');
+		$this->form_validation->set_rules('contact_id', 'contact_id', 'trim|required|callback_contact_check['.$this->input->post('project_id').','.$this->input->post('group_id').']');
+		$this->form_validation->set_rules('group_id', 'group_id', 'trim|required');
 
-		// 	if ($this->form_validation->run() == FALSE){
-		// 		$message = 'An error occured while proccessing!';
-		// 		$contact_error = form_error('contact_id');
-		// 		if(!empty($contact_error)){
-		// 			$message = "Cantact already exist in group!";
-		// 		}
-		// 		$data = array('status' => 'error','message' => $message);
-		// 	}else{
-		// 		$group_id = (int)$this->input->post('group_id');
-		// 		$this->Project_contact_model->insert(array(
-		// 			'project_id' => (int)$this->input->post('project_id'),
-		// 			'contact_id' => (int)$this->input->post('contact_id'),
-		// 			'type_id' => $group_id,
-		// 			'created_by' => $this->_user_id,
-		// 			'approved' => 1,
-		// 			'approved_by' => $this->_user_id,
-		// 			));
-		// 		$data = array('status' => 'ok','group_id' => $group_id, 'message' => 'Contact successfully created!');
-		// 	}
-
-			
-		// }else{
-		// 	$data = array('status' => 'error','message' => 'An error occured while proccessing!');
-		// }
-		
-		// echo json_encode($data);
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_unique', 'Value already exist.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+		if ($this->form_validation->run() == FALSE){
+			$this->data['project'] = $this->Project_model->details($project_id);
+			$this->data['group'] = $this->Grouptype_model->get($group_id);
+			$this->layout->view('project/addcontact',$this->data);
+		}else{
+			$p_id = $this->input->post('project_id');
+			$c_id = $this->input->post('contact_id');
+			$g_id = $this->input->post('group_id');
+			$this->Project_contact_model->insert(array(
+				'project_id' => $p_id,
+				'contact_id' => $c_id,
+				'type_id' => $g_id,
+				'created_by' => $this->_user_id,
+				'approved' => 1,
+				'approved_by' => $this->_user_id
+				));
+			$this->flash_message->set('message','alert alert-success','Contact is successfully created!');
+			redirect('project/created/'.$p_id.'/'.$g_id );		
+		}
 	}
 
 	public function contact_check($contact_id,$other_data){

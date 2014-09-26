@@ -62,7 +62,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="form-group">
-						<label for="type_id">Contact Type</label>
+						<label for="type_id">Group Type</label>
 						<?php echo form_error('type_id'); ?>
 						<select class="form-control" data-placeholder="SELECT CONTACT TYPE" id="type_id" name="type_id" class="medium" >
 							<option value="0"></option>
