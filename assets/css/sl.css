@@ -55,3 +55,10 @@
 table > thead .action-center, table > tbody .action-center{
 	text-align: center;
 }
+
+.data-table i span {
+	text-transform:capitalize;
+}
+/*p:first-letter {
+    text-transform:capitalize;
+}*/

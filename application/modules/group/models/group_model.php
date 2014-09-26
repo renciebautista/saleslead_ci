@@ -11,6 +11,11 @@ class Group_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
+	public function delete_privileges($group_id){
+		$this->db->where('upriv_groups_ugrp_fk',$group_id);
+		$this->db->delete('user_privilege_groups');
+	}
+
 	public function privileges($group_id){
 		$this->db->select('upriv_groups_upriv_fk');
 		$this->db->where('upriv_groups_ugrp_fk',$group_id);

@@ -42,6 +42,8 @@ class Project_model extends MY_Model {
 		return $this->datatables->generate();
 	}
 
+	
+
 	public function created_projects($filter,$status,$id){
 		$this->db->select('projects.id,project_name,lot,street,brgy,city,province,
 			user_details.first_name, user_details.middle_name, user_details.last_name,status.status,
@@ -76,6 +78,18 @@ class Project_model extends MY_Model {
 		$this->db->where('projects.status_id',1);
 		$this->db->order_by('projects.created_at,project_name');
 		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function ajax_forassigning(){
+		$this->datatables->select("concat('<strong>',projects.project_name,'</strong><br><i><span>',lot,'</span> <span>',lower(street),'</span> <span>',lower(brgy),'</span> <span>',cities.city,'</span> <span>',provinces.province,'</span></i>') as project_name,
+			concat(user_details.last_name,', ',user_details.first_name,' ',user_details.middle_name) as created_by",false);
+		$this->datatables->from($this->_table);
+		$this->datatables->join('cities','cities.id = projects.city_id');
+		$this->datatables->join('provinces','provinces.id = cities.province_id');
+		$this->datatables->join('user_details','user_details.uacc_id_fk = projects.created_by');
+		$this->datatables->where('projects.status_id',1);
+		$this->db->order_by('projects.created_at,project_name');
+		return $this->datatables->generate();
 	}
 
 	public function is_forassigning($id){
@@ -115,6 +129,12 @@ class Project_model extends MY_Model {
 		$this->db->join('user_details','user_details.uacc_id_fk = projects.created_by');
 		$this->db->where('projects.id',$id);
 		return $this->db->get($this->_table)->row_array();
+	}
+
+	public function my_created_project($id,$user_id){
+		$this->db->where('id',$id);
+		$this->db->where('created_by',$user_id);
+		return (boolean)$this->db->get($this->_table)->row_array();
 	}
 }
 
