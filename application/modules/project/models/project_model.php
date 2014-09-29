@@ -122,6 +122,7 @@ class Project_model extends MY_Model {
 
 	public function details($id){
 		$this->db->select('projects.id,projects.project_name,projects.lot,projects.street,projects.brgy,
+			projects.status_id,
 			cities.city,provinces.province,
 			user_details.first_name, user_details.middle_name, user_details.last_name,projects.created_at');
 		$this->db->join('cities','cities.id = projects.city_id');
@@ -134,6 +135,13 @@ class Project_model extends MY_Model {
 	public function my_created_project($id,$user_id){
 		$this->db->where('id',$id);
 		$this->db->where('created_by',$user_id);
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
+
+	public function allowed_to_update($id,$user_id){
+		$this->db->where('projects.id',$id);
+		$this->db->where('projects.created_by',$user_id);
+		$this->db->where('projects.status_id',1);
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}
 }

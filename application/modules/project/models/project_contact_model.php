@@ -72,6 +72,14 @@ class Project_contact_model extends MY_Model {
 		$this->db->where('approved',1);
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}
+
+	public function allowed_to_update($project_contact_id,$user_id){
+		$this->db->join('projects','projects.id = project_contacts.project_id');
+		$this->db->where('project_contacts.id',$project_contact_id);
+		$this->db->where('project_contacts.created_by',$user_id);
+		$this->db->where('projects.status_id <',3);
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
 }
 
 /* End of file project_contact_model.php */

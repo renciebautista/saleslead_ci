@@ -14,6 +14,11 @@
 				<?php echo form_error('prjstage'); ?>
 				<input id="prjstage" class="form-control" type="text" value="" name="prjstage" placeholder="Project Stage">
 			</div>
+			<div class="form-group">
+				<label for="remarks">Remarks</label>
+				<?php echo form_error('remarks'); ?>
+				<textarea id="remarks" name="remarks" class="form-control" rows="5" placeholder="Remarks"></textarea>
+			</div>
 			<input class="btn btn-success" type="submit" value="Submit">
 			<a class="btn btn-default" href="<?php echo base_url('prjstage'); ?>">Back</a>
 		<?php echo form_close(); ?>
@@ -27,7 +32,8 @@ $(document).ready(function(){
 	$(".form-validate").validate({
 		errorElement: 'span',
 		rules: {
-			prjstage: "required"
+			prjstage: "required",
+			remarks: "required"
 		},
 		errorPlacement: function(error, element){
 			error.insertAfter(element.siblings("label"));

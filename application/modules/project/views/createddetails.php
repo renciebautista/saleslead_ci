@@ -39,6 +39,7 @@
 						<i class="fa fa-users fa-fw"></i> Contacts
 					</div>
 					<div class="panel-body">
+						<?php if($project['status_id'] == 1):  ?>
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="pull-right">
@@ -46,6 +47,7 @@
 								</div>
 							</div>
 						</div>
+						<?php endif; ?>
 						<div class="row">
 							
 							<div class="col-lg-12">
@@ -75,7 +77,11 @@
 													<i><?php echo ucwords(strtolower($contact['address'])); ?></i>
 												</td>
 												<td style="width:12%" class="action-center">
+													<?php if($project['status_id'] == 1):  ?>
 													<a href="<?php echo base_url('contact/updateproject/'.$contact['id']) ?>">Update Project</a>
+													<?php else: ?>
+													N/A
+													<?php endif; ?>
 												</td>
 											</tr>
 										<?php endforeach; ?>

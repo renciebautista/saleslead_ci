@@ -10,6 +10,12 @@ class Prjstage_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
+	public function unique_except_me($string,$id){
+		$this->db->where('prjstage_desc',$string);
+		$this->db->where('id !=', $id);
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
+
 }
 
 /* End of file prjstage_model.php */

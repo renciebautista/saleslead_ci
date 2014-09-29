@@ -19,6 +19,8 @@ class Project extends MY_Controller {
 		if($this->input->is_ajax_request()){
 			echo $this->Project_model->ajax_public_projects();
 		}else{
+			$this->data['filter'] = trim($this->input->get('q'));
+			$this->data['projects'] = $this->Project_model->public_projects($this->data['filter']);
 			$this->layout->view('project/index',$this->data);
 		}
 		
@@ -115,6 +117,11 @@ class Project extends MY_Controller {
 			redirect('project/access_denied');		
 		}
 
+		if(!$this->Project_model->allowed_to_update($project_id,$this->_user_id)){
+			redirect('project/access_denied');		
+		}
+
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('project_id', 'Project Id', 'trim|required');
@@ -177,6 +184,8 @@ class Project extends MY_Controller {
 			if($this->input->is_ajax_request()){
 				echo $this->Project_model->ajax_forassigning();
 			}else{
+				$this->data['filter'] = $this->input->post('q');
+				$this->data['projects'] = $this->Project_model->forassigning($this->data['filter']);
 				$this->layout->view('project/forassigning',$this->data);
 			}
 			
@@ -197,6 +206,9 @@ class Project extends MY_Controller {
 			if ($this->form_validation->run() == FALSE){
 				$this->data['users'] = $this->User_model->get_all_active();
 				$this->data['project'] = $this->Project_model->details($id);
+				
+				$this->data['details'] = $this->Project_detail_model->get_all_details($id);
+
 				$this->layout->view('project/details',$this->data);
 			}else{
 				$project_id = $this->input->post('project_id');

@@ -90,9 +90,14 @@ class Prjclassification extends MY_Controller {
 			$_id = $this->input->post('_id');
 			$prjclassification = $this->Prjclassification_model->get($_id);
 			
-			$this->Prjclassification_model->delete($_id);
-			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$prjclassification['prjclassification_desc'].' projcet classification!');
-			redirect('prjclassification');
+			if($this->Prjclassification_model->related_to('project_classificaton_histories','prlclass_id',$_id)){
+				$this->flash_message->set('message','alert alert-danger','Cannot delete '.$prjclassification['prjclassification_desc'].' it is related to a project!');
+				redirect('prjclassification/delete/'.$_id);
+			}else{
+				$this->Prjclassification_model->delete($_id);
+				$this->flash_message->set('message','alert alert-success','Successfully deleted '.$prjclassification['prjclassification_desc'].' projcet classification!');
+				redirect('prjclassification');
+			}	
 		}
 	}
 

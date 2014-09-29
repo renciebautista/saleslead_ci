@@ -14,10 +14,12 @@ class Project_detail_model extends MY_Model {
 
 	public function get_all_details($project_id){
 		$this->db->select('project_details.id,project_details.details,project_details.created_at,
-			contacts.first_name,contacts.middle_name,contacts.last_name');
+			contacts.first_name,contacts.middle_name,contacts.last_name,
+			user_details.avatar');
 		$this->db->where('project_contacts.project_id',$project_id);
 		$this->db->join('project_contacts','project_contacts.id = project_details.project_contact_id');
 		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = project_details.created_by');
 		$this->db->order_by('project_details.created_at');
 		return $this->db->get($this->_table)->result_array();
 	}

@@ -42,6 +42,8 @@ class MY_Controller extends CI_Controller {
 		}else{
 			$this->data['user_full_name'] = (! empty($user)) ? ucwords(strtolower($user['last_name'].', '.$user['first_name'].' '.$user['middle_name'])) : null;
 		}
+
+		$this->data['avatar'] = $user['avatar'];
 		$this->layout->setLayout('layouts/default_layout');
 	
 	}

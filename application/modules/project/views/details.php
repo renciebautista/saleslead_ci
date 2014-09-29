@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Project Details</h1>				
+		<h1 class="page-header">For Assigning Project Details</h1>				
 	</div>
 	<!-- /.col-lg-12 -->						
 </div>
@@ -10,6 +10,10 @@
 	<div id="project-details" class="col-lg-12">
 		<table class="table">
 			<tbody>
+				<tr>
+					<td>Project Number</td>
+					<td><?php echo $project['id']; ?></td>
+				</tr>
 				<tr>
 					<td>Project Name</td>
 					<td><?php echo $project['project_name']; ?></td>
@@ -31,6 +35,61 @@
 		</table>
 	</div>
 	<!-- /.col-lg-12 -->						
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-lg-12">
+		
+		<div id="tab">
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="active"><a href="#details" role="tab" data-toggle="tab" >Project Details</a></li>
+				<li><a href="#classifications" role="tab" data-toggle="tab" >Project Classification</a></li>
+				<li><a href="#category" role="tab" data-toggle="tab" >Project Category</a></li>
+				<li><a href="#stage" role="tab" data-toggle="tab" >Project Stage</a></li>
+				<li><a href="#status" role="tab" data-toggle="tab" >Project Status</a></li>
+				<li><a href="#specification" role="tab" data-toggle="tab" >Paint Specification</a></li>
+			</ul>
+		</div>
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="details">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-comments"></i> Project Details
+					</div>
+					<?php if(!empty($details)): ?>
+					<div class="panel-body">
+						<ul class="timeline">
+							<?php foreach ($details as $detail):?>
+							<li class="timeline-inverted">
+								<div class="timeline-badge">
+									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$detail['avatar']); ?>">
+								</div>
+								<div class="timeline-panel">
+									<div class="timeline-heading">
+										<h4 class="timeline-title"><?php echo strtoupper($detail['last_name'].', '.$detail['first_name'].' '.$detail['middle_name']); ?></h4>
+										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($detail['created_at']),'m/d/y H:i:s'); ?></small>
+									</div>
+									<div class="timeline-body">
+										<p><?php echo nl2br($detail['details']); ?></p>
+									</div>
+								</div>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="classifications">...</div>
+			<div class="tab-pane fade" id="category">...</div>
+			<div class="tab-pane fade" id="stage">...</div>
+			<div class="tab-pane fade" id="status">...</div>
+			<div class="tab-pane fade" id="specification">...</div>
+		</div>
+	</div>
+
+		
 </div>
 <!-- /.row -->
 
