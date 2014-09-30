@@ -8,10 +8,10 @@
 <!-- /.row -->
 
 
-
-<div class="row">
-	<?php echo form_open('');?>  	
+<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 	<?php echo form_hidden('group_id', $group['ugrp_id']); ?>
+<div class="row">
+	
 	<div class="col-lg-12">
 		<div class="pull-left">
 			<a href="<?php echo base_url('group'); ?>" class="btn btn-default"><i class="fa fa-reply"></i>  Back</a>
@@ -56,6 +56,7 @@
 		
 	</div>
 	<!-- /.col-lg-12 -->
-	<?php echo form_close(); ?>						
+				
 </div>
 <!-- /.row -->
+	<?php echo form_close(); ?>		
