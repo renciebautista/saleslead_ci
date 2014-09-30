@@ -119,7 +119,7 @@ class Group extends MY_Controller {
 			$this->data['group'] = $this->Group_model->get($group_id);
 			$this->data['selected'] = $this->Group_model->privileges($group_id);
 			$this->data['privileges'] = $this->Privilege_model->search();
-			$this->layout->view('group/privileges_index',$this->data);
+			$this->layout->view('group/privileges',$this->data);
 		}else{
 			$group_id = $this->input->post('group_id');
 			$privileges = $this->input->post('privileges');

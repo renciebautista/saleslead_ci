@@ -6,22 +6,20 @@
 	<!-- /.col-lg-12 -->						
 </div>
 <!-- /.row -->
-
-
-
+<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
+<?php echo form_hidden('group_id', $group['ugrp_id']); ?>
 <div class="row">
-	<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
-	<?php echo form_hidden('group_id', $group['ugrp_id']); ?>
-	<div class="col-lg-12">
+    <div class="col-lg-12">
 		<div class="pull-left">
 			<a href="<?php echo base_url('group'); ?>" class="btn btn-default"><i class="fa fa-reply"></i>  Back</a>
 			<input class="btn btn-success" type="submit" value="Update">		
 		</div>
-	</div>
-	<div class="col-lg-12">
-		
-		
+	</div>                 
+</div>
+<!-- /.row -->
 
+<div class="row">
+    <div class="col-lg-12">
 		<div class="table-responsive">
 			
 			<table class="table table-hover">
@@ -53,9 +51,9 @@
 				</tbody>
 			</table>
 		</div>
-		
-	</div>
-	<!-- /.col-lg-12 -->
-	<?php echo form_close(); ?>						
+	</div>                 
 </div>
 <!-- /.row -->
+<?php echo form_close(); ?>		
+
+
