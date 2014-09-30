@@ -36,6 +36,7 @@
 				<thead>
 					<tr>
 						<th>Project Status</th>
+						<th>Remarks</th>
 						<th style="width:100px;text-align: center;">Action</th>
 					</tr>
 				</thead>
@@ -48,6 +49,7 @@
 				<?php foreach ($prjstatuses as $prjstatus):?>
 					<tr>
 						<td><?php echo $prjstatus['prjstatus_desc']; ?></td>
+						<td><?php echo nl2br($prjstatus['remarks']); ?></td>
 						<td style="width:100px;text-align: center;">
 							<a href="<?php echo base_url('prjstatus/edit/'.$prjstatus['id']); ?>" >Edit</a>
 							<a href="<?php echo base_url('prjstatus/delete/'.$prjstatus['id']); ?>" >Delete</a>

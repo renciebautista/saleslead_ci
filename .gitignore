@@ -1,5 +1,9 @@
 db
 deploy.yml
+<<<<<<< HEAD
 deploy.rb
+=======
+git-deploy.rb
+>>>>>>> project
 notes.txt
 revision

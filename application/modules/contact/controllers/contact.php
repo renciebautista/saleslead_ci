@@ -13,6 +13,14 @@ class Contact extends MY_Controller {
 		$this->load->model('project/Project_contact_model');
 		$this->load->model('project/Project_model');
 		$this->load->model('project/Project_detail_model');
+		$this->load->model('prjclassification/Prjclassification_model');
+		$this->load->model('prjclassification/Project_classificaton_history_model');
+		$this->load->model('prjcategory/Prjcategory_model');
+		$this->load->model('prjcategory/Project_category_history_model');
+		$this->load->model('prjstage/Project_stage_history_model');
+		$this->load->model('prjstage/Prjstage_model');
+		$this->load->model('prjstatus/Prjstatus_model');
+		$this->load->model('prjstatus/Project_status_history_model');
 	}
 
 	// Ajax request
@@ -482,6 +490,9 @@ class Contact extends MY_Controller {
 			return;
 		}
 
+		$this->session->set_userdata('back_link','contact/project/'.$contact_id);
+
+
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['contact'] = $this->Contact_model->details($contact_id);
 		$this->data['projects'] = $this->Project_contact_model->projects($this->data['filter'],$contact_id);
@@ -489,12 +500,18 @@ class Contact extends MY_Controller {
 	}
 
 	public function updateproject($project_contact_id = null){
-		$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
-		$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
-		$this->layout->view('contact/updateproject',$this->data);
-	}
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
 
-	public function updatedetails(){
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
@@ -505,8 +522,11 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->flash_message->set('message','alert alert-danger','Error occured on updating project details.');
-			redirect('contact');
+			$project_contact = $this->Project_contact_model->get($project_contact_id);
+			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
+			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+			$this->layout->view('contact/updateproject',$this->data);
 		}else{
 			$project_contact_id = $this->input->post('project_contact_id');
 			$this->Project_detail_model->insert(array(
@@ -514,6 +534,214 @@ class Contact extends MY_Controller {
 				'project_contact_id' => $project_contact_id,
 				'details' => trim($this->input->post('details'))
 				));
+			$this->flash_message->set('message','alert alert-success','Details successfully updated!');
+			redirect('contact/updateproject/'.$project_contact_id);
+		}
+	}
+
+	public function updateclassification($project_contact_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('prlclass_id', 'Project Classifications', 'trim|required|is_natural_no_zero');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$project_contact = $this->Project_contact_model->get($project_contact_id);
+			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['classifications'] = $this->Prjclassification_model->order_by('prjclassification_desc')->get_all();
+			$this->data['class_history'] = $this->Project_classificaton_history_model->get_contact_classificatons($project_contact_id);
+			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+			$this->layout->view('contact/updateclassification',$this->data);
+		}else{
+			$project_contact_id = $this->input->post('project_contact_id');
+			$this->Project_classificaton_history_model->insert(array(
+				'created_by' => $this->_user_id,
+				'project_contact_id' => $project_contact_id,
+				'prlclass_id' => $this->input->post('prlclass_id')
+				));
+			$this->flash_message->set('message','alert alert-success','Project classification successfully updated!');
+			redirect('contact/updateclassification/'.$project_contact_id);
+		}
+	}
+	public function updatecategory($project_contact_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('prjcat_id', 'Category Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$project_contact = $this->Project_contact_model->get($project_contact_id);
+			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+			$this->data['categories'] = $this->Prjcategory_model->order_by('prjcategory_desc')->get_all();
+			$this->data['category_histories'] = $this->Project_category_history_model->get_contact_categories($project_contact_id);
+			$this->layout->view('contact/updatecategory',$this->data);
+		}else{
+			$project_contact_id = $this->input->post('project_contact_id');
+			$this->Project_category_history_model->insert(array(
+				'created_by' => $this->_user_id,
+				'project_contact_id' => $project_contact_id,
+				'prjcat_id' => $this->input->post('prjcat_id'),
+				'prjsubcat_id' => $this->input->post('prjsubcat_id')
+				));
+			$this->flash_message->set('message','alert alert-success','Project Category successfully updated!');
+			redirect('contact/updatecategory/'.$project_contact_id);
+		}
+	}
+
+	public function updatestage($project_contact_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('prjstage_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('remarks', 'Details', 'trim|required');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$project_contact = $this->Project_contact_model->get($project_contact_id);
+			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+			$this->data['stages'] = $this->Prjstage_model->order_by('prjstage_desc')->get_all();
+			$this->data['stage_histories'] = $this->Project_stage_history_model->get_contact_stages($project_contact_id);
+
+			$this->layout->view('contact/updatestage',$this->data);
+		}else{
+			$project_contact_id = $this->input->post('project_contact_id');
+			$this->Project_stage_history_model->insert(array(
+				'created_by' => $this->_user_id,
+				'project_contact_id' => $project_contact_id,
+				'prjstage_id' => $this->input->post('prjstage_id'),
+				'remarks' => trim($this->input->post('remarks'))
+				));
+			$this->flash_message->set('message','alert alert-success','Project Stage successfully updated!');
+			redirect('contact/updatestage/'.$project_contact_id);
+		}
+	}
+	public function updatestatus($project_contact_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('prjstatus_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('remarks', 'Details', 'trim|required');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$project_contact = $this->Project_contact_model->get($project_contact_id);
+			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+			$this->data['status'] = $this->Prjstatus_model->order_by('prjstatus_desc')->get_all();
+			$this->data['status_histories'] = $this->Project_status_history_model->get_contact_status($project_contact_id);
+
+			$this->layout->view('contact/updatestatus',$this->data);
+		}else{
+			$project_contact_id = $this->input->post('project_contact_id');
+			$this->Project_status_history_model->insert(array(
+				'created_by' => $this->_user_id,
+				'project_contact_id' => $project_contact_id,
+				'prjstatus_id' => $this->input->post('prjstatus_id'),
+				'remarks' => trim($this->input->post('remarks'))
+				));
+			$this->flash_message->set('message','alert alert-success','Project Stage successfully updated!');
+			redirect('contact/updatestatus/'.$project_contact_id);
+		}
+	}
+	public function updatespecification($project_contact_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('details', 'Details', 'trim|required');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$project_contact = $this->Project_contact_model->get($project_contact_id);
+			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
+			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+			$this->layout->view('contact/updateproject',$this->data);
+		}else{
+			$project_contact_id = $this->input->post('project_contact_id');
+			$this->Project_detail_model->insert(array(
+				'created_by' => $this->_user_id,
+				'project_contact_id' => $project_contact_id,
+				'details' => trim($this->input->post('details'))
+				));
+			$this->flash_message->set('message','alert alert-success','Details successfully updated!');
 			redirect('contact/updateproject/'.$project_contact_id);
 		}
 	}

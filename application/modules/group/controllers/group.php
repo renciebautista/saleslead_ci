@@ -84,12 +84,12 @@ class Group extends MY_Controller {
 		}else{
 			$_id = $this->input->post('_id');
 			$group = $this->Group_model->get($_id);
-			if(($this->Group_model->related_to('user_accounts','uacc_group_fk',$_id)) || 
-				($this->Group_model->related_to('user_privilege_groups','upriv_groups_ugrp_fk',$_id))){
+			if($this->Group_model->related_to('user_accounts','uacc_group_fk',$_id)) {
 				$this->flash_message->set('message','alert alert-danger','Cannot delete '.$group['ugrp_name'].' it is related to a record!');
 				redirect('group/delete/'.$_id);
 			}else{
 				$this->Group_model->delete($_id);
+				$this->Group_model->delete_privileges($_id);
 				$this->flash_message->set('message','alert alert-success','Successfully deleted '.$group['ugrp_name'].' group!');
 				redirect('group');
 			}	

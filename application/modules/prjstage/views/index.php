@@ -36,18 +36,20 @@
 				<thead>
 					<tr>
 						<th>Project Stages</th>
+						<th>Remarks</th>
 						<th style="width:100px;text-align: center;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php if(count($prjstages) < 1): ?>
 					<tr>
-						<td colspan="2">No record found.</td>
+						<td colspan="3">No record found.</td>
 					</tr>
 				<?php else: ?>
 				<?php foreach ($prjstages as $prjstage):?>
 					<tr>
 						<td><?php echo $prjstage['prjstage_desc']; ?></td>
+						<td><?php echo nl2br($prjstage['remarks']) ?></td>
 						<td style="width:100px;text-align: center;">
 							<a href="<?php echo base_url('prjstage/edit/'.$prjstage['id']); ?>" >Edit</a>
 							<a href="<?php echo base_url('prjstage/delete/'.$prjstage['id']); ?>" >Delete</a>

@@ -10,9 +10,9 @@
 <div class="row">
 	<div class="col-lg-12">
 		<?php echo form_open('',array( 'role' => 'search', 'method' => 'get','class' => 'form-validate')); ?>
-			<div class="pull-right">
-				<a href="<?php echo base_url('privilege/create'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Privilege</a>			
-			</div>
+			<!-- <div class="pull-right">
+				<a href="<?php //echo base_url('privilege/create'); ?>" class="btn btn-success"><i class="fa fa-plus"></i>  Privilege</a>			
+			</div> -->
 			
 			<div class="input-group custom-search-form">
 				<input type="text" name="q" class="form-control" placeholder="Search..." value="<?php echo $filter; ?>">
@@ -38,7 +38,6 @@
 					<tr>
 						<th>Privilege Name</th>
 						<th>Description</th>
-						<th style="width:100px;text-align: center;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,10 +50,6 @@
 					<tr>
 						<td><?php echo $privilege['upriv_name']; ?></td>
 						<td><?php echo $privilege['upriv_desc']; ?></td>
-						<td style="width:100px;text-align: center;">
-							<a href="<?php echo base_url('privilege/edit/'.$privilege['upriv_id']); ?>" >Edit</a>
-							<a href="<?php echo base_url('privilege/delete/'.$privilege['upriv_id']); ?>" >Delete</a>
-						</td>
 					</tr>
 				<?php endforeach; ?>
 				<?php endif; ?>

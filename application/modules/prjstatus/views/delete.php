@@ -15,6 +15,11 @@
 				<?php echo form_error('prjstatus'); ?>
 				<input id="prjstatus" class="form-control" type="text" value="<?php echo set_value('prjstatus',$prjstatus['prjstatus_desc'] ); ?>" name="prjstatus" placeholder="Project Status" readonly="">
 			</div>
+			<div class="form-group">
+				<label for="remarks">Remarks</label>
+				<?php echo form_error('remarks'); ?>
+				<textarea id="remarks" name="remarks" class="form-control" rows="5" placeholder="Remarks" readonly=""><?php echo set_value('remarks',$prjstatus['remarks'] ); ?></textarea>
+			</div>
 			<input onclick="if(!confirm('Are you sure to delete this record?')){return false;};" class="btn btn-danger" type="submit" value="Delete">
 			<a class="btn btn-default" href="<?php echo base_url('prjstatus'); ?>">Back</a>
 		<?php echo form_close(); ?>

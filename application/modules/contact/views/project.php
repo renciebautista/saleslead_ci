@@ -35,7 +35,7 @@
 													<i>	<?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].' '.$project['city'].' '.$project['province'])); ?></i><br>
 												</td>
 												<td style="width:150px;text-align: center;">
-													<a href="<?php //echo base_url('contact/updateproject/'.$project['project_contact_id']); ?>">Update Project</a>
+													<a href="<?php echo base_url('contact/updateproject/'.$project['project_contact_id']); ?>">Update Project</a>
 												</td>
 											</tr>
 										<?php endforeach; ?>

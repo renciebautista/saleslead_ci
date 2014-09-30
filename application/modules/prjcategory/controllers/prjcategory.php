@@ -94,9 +94,14 @@ class Prjcategory extends MY_Controller {
 		}else{
 			$_id = $this->input->post('_id');
 			$prjcategory = $this->Prjcategory_model->get($_id);
-			$this->Prjcategory_model->delete($_id);
-			$this->flash_message->set('message','alert alert-success','Successfully deleted '.$prjcategory['prjcategory_desc'].' project category!');
-			redirect('prjcategory');
+			if($this->Prjcategory_model->related_to('project_category_histories','prjcat_id',$_id)){
+				$this->flash_message->set('message','alert alert-danger','Cannot delete '.$prjcategory['prjcategory_desc'].' it is related to a project!');
+				redirect('prjcategory/delete/'.$_id);
+			}else{
+				$this->Prjcategory_model->delete($_id);
+				$this->flash_message->set('message','alert alert-success','Successfully deleted '.$prjcategory['prjcategory_desc'].' project category!');
+				redirect('prjcategory');
+			}	
 		}
 	}
 //-----------------------------------------------------

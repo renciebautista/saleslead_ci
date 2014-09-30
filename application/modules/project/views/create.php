@@ -8,7 +8,7 @@
 
 <div class="row">
 
-	<?php echo form_open('',array('role' => 'form')); ?>
+	<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 	<div class="col-lg-6">
 		<div class="form-group">
 			<label for="project_name">Project Name</label>
@@ -23,14 +23,14 @@
 					<div class="form-group">
 						<label for="lot">Lot / Blk / House No. / Unit No.</label>
 						<?php echo form_error('lot'); ?>
-						<input value="<?php echo set_value('lot'); ?>" id="lot" class="form-control" type="text" value="" name="lot" placeholder="Lot / Blk / House No. / Unit No.">
+						<input value="<?php echo set_value('lot'); ?>" id="lot" class="form-control" type="text" name="lot" placeholder="Lot / Blk / House No. / Unit No.">
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="street">Street</label>
 						<?php echo form_error('street'); ?>
-						<input value="<?php echo set_value('street'); ?>" id="street" class="form-control" type="text" value="" name="street" placeholder="Street">
+						<input value="<?php echo set_value('street'); ?>" id="street" class="form-control" type="text" name="street" placeholder="Street">
 					</div>
 				</div>
 			</div>
@@ -39,7 +39,7 @@
 					<div class="form-group">
 						<label for="brgy">Brgy. / Subdivision</label>
 						<?php echo form_error('brgy'); ?>
-						<input value="<?php echo set_value('brgy'); ?>" id="brgy" class="form-control" type="text" value="" name="brgy" placeholder="Brgy. / Subdivision">
+						<input value="<?php echo set_value('brgy'); ?>" id="brgy" class="form-control" type="text" name="brgy" placeholder="Brgy. / Subdivision">
 					</div>
 				</div>
 			</div>
@@ -62,7 +62,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="form-group">
-						<label for="type_id">Contact Type</label>
+						<label for="type_id">Group Type</label>
 						<?php echo form_error('type_id'); ?>
 						<select class="form-control" data-placeholder="SELECT CONTACT TYPE" id="type_id" name="type_id" class="medium" >
 							<option value="0"></option>
@@ -78,7 +78,7 @@
 					<div class="form-group">
 						<label for="contact_id">Contact Name</label>
 						<?php echo form_error('contact_id'); ?>
-						<input value="<?php echo set_value('contact_id'); ?>" id="contact_id" class="form-control" type="text" value="" name="contact_id" placeholder="Contact Name">
+						<input value="<?php echo set_value('contact_id'); ?>" id="contact_id" class="form-control" type="text" name="contact_id" placeholder="Contact Name">
 					</div>
 				</div>
 			</div>
@@ -87,7 +87,7 @@
 					<div class="form-group">
 						<label for="company_name">Company Name</label>
 						<?php echo form_error('company_name'); ?>
-						<input value="<?php echo set_value('company_name'); ?>" id="company_name" class="form-control" type="text" value="" name="company_name" placeholder="Company Name" readonly="">
+						<input value="<?php echo set_value('company_name'); ?>" id="company_name" class="form-control" type="text" name="company_name" placeholder="Company Name" readonly="">
 					</div>
 				</div>
 			</div>
@@ -96,7 +96,7 @@
 					<div class="form-group">
 						<label for="address">Company Address</label>
 						<?php echo form_error('address'); ?>
-						<input value="<?php echo set_value('address'); ?>" id="address" class="form-control" type="text" value="" name="address" placeholder="Company Address" readonly="">
+						<input value="<?php echo set_value('address'); ?>" id="address" class="form-control" type="text" name="address" placeholder="Company Address" readonly="">
 					</div>
 				</div>
 			</div>
@@ -107,7 +107,7 @@
 	<div class="col-lg-12">
 		<div class="form-group">
 			<input class="btn btn-success" type="submit" value="Submit">
-			<a class="btn btn-default" href="<?php echo base_url('project'); ?>">Back</a>
+			<a class="btn btn-default" href="<?php echo base_url('project/created'); ?>">Back</a>
 		</div>
 	</div>
 	
@@ -119,6 +119,29 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {
+
+	$(".form-validate").validate({
+		ignore: null,
+		errorElement: 'span',
+		rules:{
+			project_name: "required",
+			brgy: "required",
+			city_id:{
+				is_natural_no_zero: true
+			},
+			type_id:{
+				is_natural_no_zero: true
+			},
+			contact_id: "required"
+		},
+		messages:{
+			contact_id: "This field is required."
+		},
+		errorPlacement: function(error, element){
+			error.insertAfter(element.siblings("label"));
+		}
+	});
+
 	$("#city_id,#type_id").chosen({allow_single_deselect: true});
 
 	$('#company_name').val('');

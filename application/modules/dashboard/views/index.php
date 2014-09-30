@@ -50,12 +50,12 @@
                                     <i class="fa fa-file-text-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
+                                    <div class="huge"><?php echo $new_project; ?></div>
                                     <div>New Projects!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="<?php echo base_url('project/assigned'); ?>">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

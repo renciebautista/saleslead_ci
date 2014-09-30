@@ -51,3 +51,31 @@
 .header-button {
 	margin-bottom: 10px;
 }
+
+table > thead .action-center, table > tbody .action-center{
+	text-align: center;
+}
+
+.data-table i span {
+	text-transform:capitalize;
+}
+/*p:first-letter {
+    text-transform:capitalize;
+}*/
+
+.text-muted{
+	/*color: #000;*/
+}
+
+.thread{
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 10px;
+}
+
+.panel-body>:last-child{
+	border-bottom: 0px;
+}
+
+.timeline > li > .timeline-badge{
+	background-color: transparent;
+}

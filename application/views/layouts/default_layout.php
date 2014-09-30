@@ -24,6 +24,9 @@
 	<!-- Select2 CSS -->
 	<?php echo link_tag('assets/plugins/select2-3.5.1/css/select2.css'); ?>
 	<?php echo link_tag('assets/plugins/select2-3.5.1/css/select2-bootstrap.css'); ?>
+
+	<!-- DataTables-1.10.2 CSS -->
+	<?php echo link_tag('assets/plugins/DataTables-1.10.2/css/dataTables.bootstrap.css'); ?>
 	
 	<!-- Custom CSS -->
 	<?php echo link_tag('assets/css/sb-admin-2.css'); ?>
@@ -62,196 +65,6 @@
 			<ul class="nav navbar-top-links navbar-right">
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
-					</a>
-					<ul class="dropdown-menu dropdown-messages">
-						<li>
-							<a href="#">
-								<div>
-									<strong>John Smith</strong>
-									<span class="pull-right text-muted">
-										<em>Yesterday</em>
-									</span>
-								</div>
-								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<strong>John Smith</strong>
-									<span class="pull-right text-muted">
-										<em>Yesterday</em>
-									</span>
-								</div>
-								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<strong>John Smith</strong>
-									<span class="pull-right text-muted">
-										<em>Yesterday</em>
-									</span>
-								</div>
-								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a class="text-center" href="#">
-								<strong>Read All Messages</strong>
-								<i class="fa fa-angle-right"></i>
-							</a>
-						</li>
-					</ul>
-					<!-- /.dropdown-messages -->
-				</li>
-				<!-- /.dropdown -->
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
-					</a>
-					<ul class="dropdown-menu dropdown-tasks">
-						<li>
-							<a href="#">
-								<div>
-									<p>
-										<strong>Task 1</strong>
-										<span class="pull-right text-muted">40% Complete</span>
-									</p>
-									<div class="progress progress-striped active">
-										<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-											<span class="sr-only">40% Complete (success)</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<p>
-										<strong>Task 2</strong>
-										<span class="pull-right text-muted">20% Complete</span>
-									</p>
-									<div class="progress progress-striped active">
-										<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-											<span class="sr-only">20% Complete</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<p>
-										<strong>Task 3</strong>
-										<span class="pull-right text-muted">60% Complete</span>
-									</p>
-									<div class="progress progress-striped active">
-										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-											<span class="sr-only">60% Complete (warning)</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<p>
-										<strong>Task 4</strong>
-										<span class="pull-right text-muted">80% Complete</span>
-									</p>
-									<div class="progress progress-striped active">
-										<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-											<span class="sr-only">80% Complete (danger)</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a class="text-center" href="#">
-								<strong>See All Tasks</strong>
-								<i class="fa fa-angle-right"></i>
-							</a>
-						</li>
-					</ul>
-					<!-- /.dropdown-tasks -->
-				</li>
-				<!-- /.dropdown -->
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
-					</a>
-					<ul class="dropdown-menu dropdown-alerts">
-						<li>
-							<a href="#">
-								<div>
-									<i class="fa fa-comment fa-fw"></i> New Comment
-									<span class="pull-right text-muted small">4 minutes ago</span>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<i class="fa fa-twitter fa-fw"></i> 3 New Followers
-									<span class="pull-right text-muted small">12 minutes ago</span>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<i class="fa fa-envelope fa-fw"></i> Message Sent
-									<span class="pull-right text-muted small">4 minutes ago</span>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<i class="fa fa-tasks fa-fw"></i> New Task
-									<span class="pull-right text-muted small">4 minutes ago</span>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<i class="fa fa-upload fa-fw"></i> Server Rebooted
-									<span class="pull-right text-muted small">4 minutes ago</span>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a class="text-center" href="#">
-								<strong>See All Alerts</strong>
-								<i class="fa fa-angle-right"></i>
-							</a>
-						</li>
-					</ul>
-					<!-- /.dropdown-alerts -->
-				</li>
-				<!-- /.dropdown -->
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-user">
@@ -274,7 +87,11 @@
 					<ul class="nav" id="side-menu">
 						<li class="sidebar-profile">
 							<div class="text-center">
+								<?php if(!empty($avatar)): ?>
+								<img class="img-circle " alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="<?php echo base_url('uploads/avatar/'.$avatar) ?>">
+								<?php else: ?>
 								<img class="img-circle " alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+">
+								<?php endif; ?>
 							</div>
 							<span><?php echo $user_full_name; ?></span>
 						</li>
@@ -285,7 +102,7 @@
 
 						<?php //$this->load->view('menu/tasks'); ?>
 
-						<?php //$this->load->view('menu/projects'); ?>
+						<?php $this->load->view('menu/projects'); ?>
 
 						<?php $this->load->view('menu/contacts'); ?>
 
@@ -343,6 +160,12 @@
 	<script src="<?php echo base_url('assets/plugins/jquery-validation-1.13.0/js/additional-methods.js'); ?>"></script>
 	<!-- Jquery Numeric_only Plugin JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/numeric_only/js/jquery.numericonly.js'); ?>"></script>
+
+	<!-- DataTables-1.10.2 Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/DataTables-1.10.2/js/jquery.dataTables.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/plugins/DataTables-1.10.2/js/dataTables.bootstrap.js'); ?>"></script>
+
+
 	<!-- Custom Theme JavaScript -->
 	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/sb-admin-2.js'); ?>"></script>
@@ -362,10 +185,8 @@
 		        if(class_name == "form-validate"){
 		            if ($.validator) {
 		                var valid = $(".form-validate").valid();
-		                if(!valid){
-		                    return false;
-		                }else{
-		                    if(class_name == "form-validate"){
+		                if(valid){
+		                	if(class_name == "form-validate"){
 		                        $('#waiting').show(500);
 		                        $('#page-content').hide(0);
 		                        return true;
