@@ -23,17 +23,17 @@
 		<?php endif; ?>
 		<?php if ($this->flexi_auth->is_privileged('CREATED PROJECT MAINTENANCE')):?>
 		<li>
-			<a id="project" href="<?php echo base_url('project/created'); ?>">Created Projects</a>
+			<a id="created" href="<?php echo base_url('project/created'); ?>">Created Projects</a>
 		</li>
 		<?php endif; ?>
 		<?php if ($this->flexi_auth->is_privileged('ASSIGNED PROJECT MAINTENANCE')):?>
 		<li>
-			<a id="project" href="<?php echo base_url('project/assigned'); ?>">Assigned Projects</a>
+			<a id="assigned" href="<?php echo base_url('project/assigned'); ?>">Assigned Projects</a>
 		</li>
 		<?php endif; ?>
 		<?php if ($this->flexi_auth->is_privileged('PROJECT ASSIGNING MAINTENANCE')):?>
 		<li>
-			<a id="project" href="<?php echo base_url('project/forassigning'); ?>">New Projects</a>
+			<a id="forassigning" href="<?php echo base_url('project/forassigning'); ?>">New Projects</a>
 		</li>
 		<?php endif; ?>
 	</ul>

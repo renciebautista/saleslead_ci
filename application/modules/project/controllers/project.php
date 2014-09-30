@@ -10,6 +10,10 @@ class Project extends MY_Controller {
 		$this->load->model('user/User_model');
 		$this->load->model('grouptype/Grouptype_model');
 		$this->load->model('Project_detail_model');
+		$this->load->model('prjclassification/Project_classificaton_history_model');
+		$this->load->model('prjcategory/Project_category_history_model');
+		$this->load->model('prjstage/Project_stage_history_model');
+		$this->load->model('prjstatus/Project_status_history_model');
 	}
 
 	public function index(){	
@@ -208,6 +212,10 @@ class Project extends MY_Controller {
 				$this->data['project'] = $this->Project_model->details($id);
 				
 				$this->data['details'] = $this->Project_detail_model->get_all_details($id);
+				$this->data['classifications'] = $this->Project_classificaton_history_model->get_all_history($id);
+				$this->data['categories'] = $this->Project_category_history_model->get_all_history($id);
+				$this->data['stages'] = $this->Project_stage_history_model->get_all_history($id);
+				$this->data['status'] = $this->Project_status_history_model->get_all_history($id);
 
 				$this->layout->view('project/details',$this->data);
 			}else{

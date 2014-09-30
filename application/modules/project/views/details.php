@@ -60,18 +60,21 @@
 					<?php if(!empty($details)): ?>
 					<div class="panel-body">
 						<ul class="timeline">
-							<?php foreach ($details as $detail):?>
+							<?php foreach ($details as $row):?>
 							<li class="timeline-inverted">
 								<div class="timeline-badge">
-									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$detail['avatar']); ?>">
+									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$row['avatar']); ?>">
 								</div>
 								<div class="timeline-panel">
 									<div class="timeline-heading">
-										<h4 class="timeline-title"><?php echo strtoupper($detail['last_name'].', '.$detail['first_name'].' '.$detail['middle_name']); ?></h4>
-										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($detail['created_at']),'m/d/y H:i:s'); ?></small>
+										<p>
+											<strong><?php echo strtoupper($row['ulast_name'].', '.$row['ufirst_name'].' '.$row['umiddle_name']); ?></strong>
+										</p>
+										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($row['created_at']),'m/d/y H:i:s'); ?></small>
 									</div>
 									<div class="timeline-body">
-										<p><?php echo nl2br($detail['details']); ?></p>
+										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
+										<p><?php echo nl2br($row['details']); ?></p>
 									</div>
 								</div>
 							</li>
@@ -81,11 +84,168 @@
 					<?php endif; ?>
 				</div>
 			</div>
-			<div class="tab-pane fade" id="classifications">...</div>
-			<div class="tab-pane fade" id="category">...</div>
-			<div class="tab-pane fade" id="stage">...</div>
-			<div class="tab-pane fade" id="status">...</div>
-			<div class="tab-pane fade" id="specification">...</div>
+			<div class="tab-pane fade" id="classifications">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-comments"></i> Project Classifications
+					</div>
+					<?php if(!empty($classifications)): ?>
+					<div class="panel-body">
+						<ul class="timeline">
+							<?php foreach ($classifications as $row):?>
+							<li class="timeline-inverted">
+								<div class="timeline-badge">
+									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$row['avatar']); ?>">
+								</div>
+								<div class="timeline-panel">
+									<div class="timeline-heading">
+										<p>
+											<strong><?php echo strtoupper($row['ulast_name'].', '.$row['ufirst_name'].' '.$row['umiddle_name']); ?></strong>
+										</p>
+										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($row['created_at']),'m/d/y H:i:s'); ?></small>
+									</div>
+									<div class="timeline-body">
+										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
+										<p>Updated to <?php echo $row['prjclassification_desc']; ?></p>
+									</div>
+								</div>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="category">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-comments"></i> Project Category
+					</div>
+					<?php if(!empty($categories)): ?>
+					<div class="panel-body">
+						<ul class="timeline">
+							<?php foreach ($categories as $row):?>
+							<li class="timeline-inverted">
+								<div class="timeline-badge">
+									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$row['avatar']); ?>">
+								</div>
+								<div class="timeline-panel">
+									<div class="timeline-heading">
+										<p>
+											<strong><?php echo strtoupper($row['ulast_name'].', '.$row['ufirst_name'].' '.$row['umiddle_name']); ?></strong>
+										</p>
+										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($row['created_at']),'m/d/y H:i:s'); ?></small>
+									</div>
+									<div class="timeline-body">
+										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
+										<p>Updated to <?php echo($row['prjcategory_desc']); ?> <?php echo (!empty($row['prjsubcategory_desc']) ? ' - '.$row['prjsubcategory_desc'] :''); ?></p>
+									</div>
+								</div>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="stage">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-comments"></i> Project Stage
+					</div>
+					<?php if(!empty($stages)): ?>
+					<div class="panel-body">
+						<ul class="timeline">
+							<?php foreach ($stages as $row):?>
+							<li class="timeline-inverted">
+								<div class="timeline-badge">
+									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$row['avatar']); ?>">
+								</div>
+								<div class="timeline-panel">
+									<div class="timeline-heading">
+										<p>
+											<strong><?php echo strtoupper($row['ulast_name'].', '.$row['ufirst_name'].' '.$row['umiddle_name']); ?></strong>
+										</p>
+										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($row['created_at']),'m/d/y H:i:s'); ?></small>
+									</div>
+									<div class="timeline-body">
+										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
+										<p>Updated to <?php echo($row['prjstage_desc']); ?></p>
+										<p><?php echo nl2br($row['remarks']); ?></p>
+									</div>
+								</div>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="status">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-comments"></i> Project Status
+					</div>
+					<?php if(!empty($status)): ?>
+					<div class="panel-body">
+						<ul class="timeline">
+							<?php foreach ($status as $row):?>
+							<li class="timeline-inverted">
+								<div class="timeline-badge">
+									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$row['avatar']); ?>">
+								</div>
+								<div class="timeline-panel">
+									<div class="timeline-heading">
+										<p>
+											<strong><?php echo strtoupper($row['ulast_name'].', '.$row['ufirst_name'].' '.$row['umiddle_name']); ?></strong>
+										</p>
+										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($row['created_at']),'m/d/y H:i:s'); ?></small>
+									</div>
+									<div class="timeline-body">
+										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
+										<p>Updated to <?php echo($row['prjstatus_desc']); ?></p>
+										<p><?php echo nl2br($row['remarks']); ?></p>
+									</div>
+								</div>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="specification">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-comments"></i> Project Details
+					</div>
+					<?php if(!empty($details)): ?>
+					<div class="panel-body">
+						<ul class="timeline">
+							<?php foreach ($details as $row):?>
+							<li class="timeline-inverted">
+								<div class="timeline-badge">
+									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$row['avatar']); ?>">
+								</div>
+								<div class="timeline-panel">
+									<div class="timeline-heading">
+										<p>
+											<strong><?php echo strtoupper($row['ulast_name'].', '.$row['ufirst_name'].' '.$row['umiddle_name']); ?></strong>
+										</p>
+										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($row['created_at']),'m/d/y H:i:s'); ?></small>
+									</div>
+									<div class="timeline-body">
+										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
+										<p><?php echo nl2br($row['details']); ?></p>
+									</div>
+								</div>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+					<?php endif; ?>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -95,24 +255,34 @@
 
 
 <div class="row">
-	<div class="col-lg-6">
-		<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
-		<?php echo form_hidden('project_id', $project['id']); ?>
-			<div class="form-group">
-				<label for="assigned_to">Assign To</label>
-				<?php echo form_error('assigned_to'); ?>
-				<select class="form-control" data-placeholder="ASSIGN TO" id="assigned_to" name="assigned_to" class="medium" >
-					<option value="0"></option>
-					<?php foreach($users as $user){?>
-						<option value="<?php echo $user['id'];?>" <?php echo set_select('assigned_to',$user['id']); ?> ><?php echo strtoupper($user['last_name'].', '.$user['first_name'].' '.$user['middle_name']);?></option>
-					<?}?>
-				</select>
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-user"></i> Assign Project To
 			</div>
-			<input class="btn btn-success" type="submit" value="Submit">
-			<a class="btn btn-default" href="<?php echo base_url('project/forassigning'); ?>">Back</a>
-		<?php echo form_close(); ?>
-	</div>
-	<!-- /.col-lg-6 -->						
+			
+			<div class="panel-body">
+				<div class="col-lg-6">
+					<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
+					<?php echo form_hidden('project_id', $project['id']); ?>
+						<div class="form-group">
+							<label for="assigned_to">Assign To</label>
+							<?php echo form_error('assigned_to'); ?>
+							<select class="form-control" data-placeholder="ASSIGN TO" id="assigned_to" name="assigned_to" class="medium" >
+								<option value="0"></option>
+								<?php foreach($users as $user){?>
+									<option value="<?php echo $user['id'];?>" <?php echo set_select('assigned_to',$user['id']); ?> ><?php echo strtoupper($user['last_name'].', '.$user['first_name'].' '.$user['middle_name']);?></option>
+								<?}?>
+							</select>
+						</div>
+						<input class="btn btn-success" type="submit" value="Submit">
+						<a class="btn btn-default" href="<?php echo base_url('project/forassigning'); ?>">Back</a>
+					<?php echo form_close(); ?>
+				</div>
+				<!-- /.col-lg-6 -->	
+			</div>
+		</div>	
+	</div>							
 </div>
 <!-- /.row -->
 

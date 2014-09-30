@@ -58,10 +58,30 @@ $(document).ready(function () {
 	
 
 	var pathArray = window.location.pathname.split( '/' );
-	if (pathArray[1].length < 1) {
-		pathArray[1] = 'dashboard';
+	var menu;
+	if(pathArray[1] == 'project'){
+		if((pathArray[1] == 'project') && (pathArray[2] == 'join')){
+		menu ='project';
+		}else if((pathArray[1] == 'project') && ((pathArray[2] == 'created') || (pathArray[2] == 'addcontact'))){
+			menu ='created';
+		}
+		else if((pathArray[1] == 'project') && (pathArray[2] == 'forassigning')){
+			menu ='forassigning';
+		}
+		else if((pathArray[1] == 'project') && ((pathArray[2] == 'details') || (pathArray[2] == 'assigned'))){
+			menu ='assigned';
+		}
+		else{
+			menu ='project';
+		}
+	}else{
+		menu = pathArray[1];
 	}
-	SetMenu(pathArray[1]);
+	
+	
+	console.log(menu);
+	
+	SetMenu(menu);
 
 	$('#side-menu').metisMenu();
 

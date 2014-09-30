@@ -21,6 +21,7 @@ class User_model extends MY_Model {
 		$this->db->select('user_accounts.uacc_id as id, user_details.first_name,user_details.middle_name,user_details.last_name');
 		$this->db->where('uacc_active',1);
 		$this->db->where('uacc_suspend',0);
+		$this->db->where('uacc_group_fk >',1);
 		$this->db->join('user_details','user_details.uacc_id_fk = user_accounts.uacc_id');
 		$this->db->order_by('last_name,first_name');
 		return $this->db->get($this->_table)->result_array();
