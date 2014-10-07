@@ -19,13 +19,15 @@
 										<thead>
 											<tr>
 												<th>Project Name</th>
+												<th>Group Type</th>
+												<th>Contact Status</th>
 												<th style="width:150px;text-align: center;">Action</th>
 											</tr>
 										</thead>
 										<tbody>
 										<?php if(count($projects) < 1): ?>
 											<tr>
-												<td colspan="3">No record found.</td>
+												<td colspan="4">No record found.</td>
 											</tr>
 										<?php else: ?>
 										<?php foreach ($projects as $project):?>
@@ -34,8 +36,23 @@
 													<?php echo $project['project_name']; ?><br>
 													<i>	<?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].' '.$project['city'].' '.$project['province'])); ?></i><br>
 												</td>
+												<td><?php echo $project['grouptype_desc']; ?></td>
+												<td>
+													<?php if($project['approved'] == 0): ?>
+													For Approval
+													<?php elseif($project['approved'] == 1): ?>
+													Approved
+													<?php else: ?>
+													Denied
+													<?php endif; ?>
+												</td>
 												<td style="width:150px;text-align: center;">
+													<?php if($project['approved'] == 1): ?>
 													<a href="<?php echo base_url('contact/updateproject/'.$project['project_contact_id']); ?>">Update Project</a>
+													<?php else: ?>
+													N/A
+													<?php endif; ?>
+													
 												</td>
 											</tr>
 										<?php endforeach; ?>

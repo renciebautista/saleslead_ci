@@ -7,6 +7,7 @@ class Contact extends MY_Controller {
 		$this->load->model('Contact_model');
 		$this->load->model('Contactphone_model');
 		$this->load->model('Contactemail_model');
+		$this->load->model('Paintspecification_model');
 		$this->load->model('grouptype/Grouptype_model');
 		$this->load->model('company/Company_model');
 		$this->load->model('city/City_model');
@@ -21,6 +22,7 @@ class Contact extends MY_Controller {
 		$this->load->model('prjstage/Prjstage_model');
 		$this->load->model('prjstatus/Prjstatus_model');
 		$this->load->model('prjstatus/Project_status_history_model');
+		$this->load->model('painttype/Painttype_model');
 	}
 
 	// Ajax request
@@ -34,7 +36,7 @@ class Contact extends MY_Controller {
 			if(!empty($contacts)){
 				foreach ($contacts as $contact) {
 					$row_array['id'] = $contact['id'];
-					$row_array['text'] = strtoupper($contact['last_name'].', '.$contact['first_name'].' '.$contact['last_name']);
+					$row_array['text'] = strtoupper($contact['last_name'].', '.$contact['first_name'].' '.$contact['middle_name']);
 					$row_array['company'] = $contact['company'];
 					$row_array['address'] = ucwords(strtolower($contact['lot'].' '.$contact['street'].' '.$contact['brgy'].', '.$contact['city'].' '.$contact['province']));
 					$data[] = $row_array;
@@ -706,6 +708,8 @@ class Contact extends MY_Controller {
 			redirect('contact/updatestatus/'.$project_contact_id);
 		}
 	}
+
+// ========================================================
 	public function updatespecification($project_contact_id = null){
 		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
 			redirect('contact/access_denied');
@@ -719,9 +723,21 @@ class Contact extends MY_Controller {
 			redirect('contact/access_denied');
 		}
 
+		$project_contact = $this->Project_contact_model->get($project_contact_id);
+		$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+		$this->data['specs'] = $this->Paintspecification_model->specifications($project_contact_id);
+		$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+		$this->layout->view('contact/updatespecification',$this->data);
+	}
+
+	public function addspecification($project_contact_id = null){
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('type', 'Paint Type', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('area', 'Area', 'trim|required');
+		$this->form_validation->set_rules('paint', 'Paint', 'trim|required');
+		$this->form_validation->set_rules('cost', 'Cost', 'trim|required');
 		$this->form_validation->set_rules('details', 'Details', 'trim|required');
 
 		$this->form_validation->set_message('required', 'This field is required.');
@@ -729,23 +745,24 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$project_contact = $this->Project_contact_model->get($project_contact_id);
-			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
-			$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
-			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
-			$this->layout->view('contact/updateproject',$this->data);
+			$this->data['types'] = $this->Painttype_model->order_by('painttype')->get_all();
+			$this->data['project_contact_id'] = $project_contact_id;
+			$this->layout->view('contact/addspecification',$this->data);
 		}else{
 			$project_contact_id = $this->input->post('project_contact_id');
-			$this->Project_detail_model->insert(array(
-				'created_by' => $this->_user_id,
+			$this->Paintspecification_model->insert(array(
 				'project_contact_id' => $project_contact_id,
-				'details' => trim($this->input->post('details'))
+				'created_by' => $this->_user_id,
+				'painttype_id' => $this->input->post('type'),
+				'area' => str_replace(",","", $this->input->post('area')),
+				'paint' => str_replace(",","", $this->input->post('paint')),
+				'cost' => str_replace(",","", $this->input->post('cost')),
+				'details' => trim($this->input->post('details')),
 				));
-			$this->flash_message->set('message','alert alert-success','Details successfully updated!');
-			redirect('contact/updateproject/'.$project_contact_id);
+			$this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
+			redirect('contact/updatespecification/'.$project_contact_id);
 		}
 	}
-// ========================================================
 }
 
 /* End of file contact.php */

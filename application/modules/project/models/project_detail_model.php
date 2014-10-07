@@ -26,6 +26,17 @@ class Project_detail_model extends MY_Model {
 		$this->db->order_by('project_details.created_at');
 		return $this->db->get($this->_table)->result_array();
 	}
+
+	public function get_all_details_user($project_id){
+		$this->db->select('user_details.last_name as ulast_name, user_details.first_name as ufirst_name, user_details.middle_name as umiddle_name');
+		$this->db->where('project_contacts.project_id',$project_id);
+		$this->db->join('project_contacts','project_contacts.id = project_details.project_contact_id');
+		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = project_details.created_by');
+		$this->db->group_by('project_details.created_by');
+		$this->db->order_by('user_details.last_name');
+		return $this->db->get($this->_table)->result_array();
+	}
 }
 
 /* End of file project_detail_model.php */

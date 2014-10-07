@@ -4,12 +4,15 @@ class Project_contact_model extends MY_Model {
 
 	protected $return_type = 'array';
 
-	public $before_create = array('created_at');
+	public $before_create = array('created_at','updated_at');
+	public $before_update = array('updated_at');
 
 	public function projects($filter,$contact_id){
 		$this->db->select('project_contacts.id as project_contact_id,project_contacts.project_id,
+			project_contacts.approved,
 			projects.project_name,projects.lot,projects.street,projects.brgy,
-			cities.city,provinces.province');
+			cities.city,provinces.province,
+			grouptypes.grouptype_desc');
 		$this->db->where('project_contacts.contact_id',$contact_id);
 		$this->db->where("( project_name LIKE '%{$filter}%' OR projects.lot LIKE '%{$filter}%' OR projects.street LIKE '%{$filter}%' OR projects.brgy LIKE '%{$filter}%' OR cities.city LIKE '%{$filter}%' OR provinces.province LIKE '%{$filter}%')");
 		$this->db->join('projects','projects.id = project_contacts.project_id');
@@ -17,6 +20,8 @@ class Project_contact_model extends MY_Model {
 		$this->db->join('companies','companies.id = contacts.company_id');
 		$this->db->join('cities','cities.id = companies.city_id');
 		$this->db->join('provinces','provinces.id = cities.province_id');
+		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
+		$this->db->order_by('projects.project_name');
 		return $this->db->get($this->_table)->result_array();
 	}
 
@@ -48,6 +53,74 @@ class Project_contact_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
+	public function for_approval_project_contacts($project_id){
+		$this->datatables->select("project_contacts.id, project_contacts.contact_id,
+			concat(contacts.last_name,', ',contacts.first_name,' ',contacts.middle_name) as contact_name,
+			companies.company,
+			concat(lot,' ',street,' ',brgy,' ',cities.city,' ',provinces.province,'') as address,
+			grouptypes.grouptype_desc,
+			concat(user_details.last_name,', ',user_details.first_name,' ',user_details.middle_name) as created_by_name,",false);
+		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
+		$this->db->join('companies','companies.id = contacts.company_id');
+		$this->db->join('cities','cities.id = companies.city_id');
+		$this->db->join('provinces','provinces.id = cities.province_id');
+		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = project_contacts.created_by');
+		$this->db->where('project_contacts.project_id',$project_id);
+		$this->db->where('project_contacts.approved',0);
+		$this->db->order_by('user_details.first_name,company');
+		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function project_contact_list($project_id){
+		$this->datatables->select("project_contacts.id, project_contacts.contact_id,
+			concat(contacts.last_name,', ',contacts.first_name,' ',contacts.middle_name) as contact_name,
+			companies.company,
+			concat(lot,' ',street,' ',brgy,' ',cities.city,' ',provinces.province,'') as address,
+			grouptypes.grouptype_desc,
+			concat(user_details.last_name,', ',user_details.first_name,' ',user_details.middle_name) as created_by_name,
+			project_contacts.approved",false);
+		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
+		$this->db->join('companies','companies.id = contacts.company_id');
+		$this->db->join('cities','cities.id = companies.city_id');
+		$this->db->join('provinces','provinces.id = cities.province_id');
+		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = project_contacts.created_by');
+		$this->db->where('project_contacts.project_id',$project_id);
+		$this->db->where('project_contacts.approved > ',0);
+		$this->db->order_by('project_contacts.approved,user_details.first_name,company');
+		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function for_approval_project_contacts_company($user_id){
+		$this->db->select('projects.id, projects.project_name,
+			lot,street,brgy,city,province,
+			user_details.first_name, user_details.middle_name, user_details.last_name');
+		$this->db->join('projects','projects.id = project_contacts.project_id');
+		$this->db->join('cities','cities.id = projects.city_id');
+		$this->db->join('provinces','provinces.id = cities.province_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = projects.created_by');
+		$this->db->where('projects.assigned_to',$user_id);
+		$this->db->where('project_contacts.approved',0);
+		$this->db->group_by('projects.id');
+		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function for_approval_project_contacts_count($user_id){
+		$this->db->select('project_contacts.created_at');
+		$this->db->join('projects','projects.id = project_contacts.project_id');
+		$this->db->where('projects.assigned_to',$user_id);
+		$this->db->where('project_contacts.approved',0);
+		$this->db->order_by('project_contacts.created_at');
+		return $this->db->get($this->_table)->result_array();
+
+		// $this->db->join('projects','projects.id = project_contacts.project_id');
+		// $this->db->where('projects.assigned_to',$user_id);
+		// $this->db->where('project_contacts.approved',0);
+		// $this->db->from($this->_table);
+		// return $this->db->count_all_results();
+	}
+
 	public function details($id){
 		$this->db->select('project_contacts.project_id as project_id,projects.project_name,projects.lot,projects.street,projects.brgy,
 			cities.city,provinces.province,project_contacts.id as project_contact_id');
@@ -62,7 +135,7 @@ class Project_contact_model extends MY_Model {
 		$this->db->where('project_id',$project_id);
 		$this->db->where('contact_id',$contact_id);
 		$this->db->where('type_id',$group_id);
-		$this->db->where('approved',1);
+		// $this->db->where('approved',1);
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}
 

@@ -78,9 +78,6 @@ $(document).ready(function () {
 		menu = pathArray[1];
 	}
 	
-	
-	console.log(menu);
-	
 	SetMenu(menu);
 
 	$('#side-menu').metisMenu();

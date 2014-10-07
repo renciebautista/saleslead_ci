@@ -37,7 +37,7 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<?php echo form_open('',array('role' => 'form')); ?>
+		<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
 		<?php echo form_hidden('project_id', $project['id']); ?>
 			<div class="row">
 				<div class="col-lg-12">
@@ -95,6 +95,26 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {
+	$(".form-validate").validate({
+		ignore: null,
+		errorElement: 'span',
+		rules:{
+			project_id:{
+				is_natural_no_zero: true
+			},
+			type_id:{
+				is_natural_no_zero: true
+			},
+			contact_id: "required"
+		},
+		messages:{
+			contact_id: "This field is required."
+		},
+		errorPlacement: function(error, element){
+			error.insertAfter(element.siblings("label"));
+		}
+	});
+
 	$("#city_id,#type_id").chosen({allow_single_deselect: true});
 
 	$('#company_name').val('');

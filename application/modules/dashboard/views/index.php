@@ -1,4 +1,4 @@
-<!--Start Breadcrumb-->
+
 <!-- <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
 		<ol class="breadcrumb">
@@ -18,98 +18,72 @@
 <!-- /.row -->
 
 <div class="row">
-
-				<div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>New Tasks!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="<?php echo base_url('task'); ?>">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-file-text-o fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><?php echo $new_project; ?></div>
-                                    <div>New Projects!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="<?php echo base_url('project/assigned'); ?>">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>New Comments!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                
-                
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Pending Tasks!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-bell fa-fw"></i>
+				Notifications Panel
+			</div>
+			
+			<div class="panel-body">
+				<div class="list-group">
+					<?php if(count($new_contacts) > 0): ?>
+					<a class="list-group-item" href="<?php echo base_url('dashboard/contacts_approval'); ?>">
+						<i class="fa fa-users fa-fw"></i>
+						<?php echo count($new_contacts); ?> Contacts Approval
+						<span class="pull-right text-muted small">
+							<em><?php echo distance_of_time_in_words(strtotime($new_contacts[0]['created_at']),strtotime(date('Y-m-d H:i:s'))); ?> ago</em>
+						</span>
+					</a>
+					<?php endif; ?>
+					<?php if(count($new_projects) > 0): ?>
+					<a class="list-group-item" href="<?php echo base_url('project/assigned'); ?>">
+						<i class="fa fa-file-text-o fa-fw"></i>
+						<?php echo count($new_projects); ?> Projects Assigned
+						<span class="pull-right text-muted small">
+							<em><?php echo distance_of_time_in_words(strtotime($new_projects[0]['updated_at']),strtotime(date('Y-m-d H:i:s'))); ?> ago</em>
+						</span>
+					</a>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-newspaper-o fa-fw"></i>
+				News Panel
+			</div>
+			<div class="panel-body">
+				<ul class="chat">
+					<li class="left clearfix">
+						<div>
+							<div class="header">
+								<strong class="primary-font">Jack Sparrow</strong>
+								<small class="pull-right text-muted">
+								<i class="fa fa-clock-o fa-fw"></i>
+								12 mins ago
+								</small>
+							</div>
+							<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales. </p>
+						</div>
+					</li>
+					<li class="left clearfix">
+						<div>
+							<div class="header">
+								<strong class="primary-font">Jack Sparrow</strong>
+								<small class="pull-right text-muted">
+								<i class="fa fa-clock-o fa-fw"></i>
+								12 mins ago
+								</small>
+							</div>
+							<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales. </p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.row 

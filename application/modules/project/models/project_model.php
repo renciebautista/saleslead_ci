@@ -18,13 +18,14 @@ class Project_model extends MY_Model {
 	}
 
 	public function public_projects($filter){
-		$this->db->select('projects.id,project_name,lot,street,brgy,city,province,
-			user_details.first_name, user_details.middle_name, user_details.last_name');
+		$this->db->select("projects.id,project_name,lot,street,brgy,city,province,
+			user_details.first_name, user_details.middle_name, user_details.last_name,
+			concat(user_details_2.last_name,', ',user_details_2.first_name,' ',user_details_2.middle_name) as assigned_to_name",false);
 		$this->db->join('cities','cities.id = projects.city_id');
 		$this->db->join('provinces','provinces.id = cities.province_id');
 		$this->db->join('user_details','user_details.uacc_id_fk = projects.created_by');
-
-		$this->db->where("(project_name LIKE '%{$filter}%' OR first_name LIKE '%{$filter}%' OR middle_name LIKE '%{$filter}%' OR last_name LIKE '%{$filter}%')");
+		$this->db->join('user_details as user_details_2','user_details_2.uacc_id_fk = projects.assigned_to');
+		$this->db->where("(project_name LIKE '%{$filter}%')");
 		$this->db->where('projects.status_id',2);
 		$this->db->order_by('projects.created_at,project_name');
 		return $this->db->get($this->_table)->result_array();
@@ -98,11 +99,18 @@ class Project_model extends MY_Model {
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}
 
-	public function new_assigned_project($id){
+	public function new_assigned_project_count($id){
+		$this->db->select('projects.updated_at');
 		$this->db->where('projects.status_id',2);
 		$this->db->where('projects.assigned_to',$id);
-		$this->db->from($this->_table);
-		return $this->db->count_all_results();
+		$this->db->where('projects.assigned_viewed',0);
+		$this->db->order_by('projects.updated_at');
+		return $this->db->get($this->_table)->result_array();
+
+		// $this->db->where('projects.status_id',2);
+		// $this->db->where('projects.assigned_to',$id);
+		// $this->db->from($this->_table);
+		// return $this->db->count_all_results();
 	}
 
 	public function assigned($filter,$id){
@@ -120,9 +128,16 @@ class Project_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
+	public function is_assigned($id,$user_id){
+		$this->db->where('id',$id);
+		$this->db->where('assigned_to',$user_id);
+		$this->db->where('status_id',2);
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
+
 	public function details($id){
 		$this->db->select('projects.id,projects.project_name,projects.lot,projects.street,projects.brgy,
-			projects.status_id,
+			projects.status_id,projects.assigned_viewed,
 			cities.city,provinces.province,
 			user_details.first_name, user_details.middle_name, user_details.last_name,projects.created_at');
 		$this->db->join('cities','cities.id = projects.city_id');
@@ -142,6 +157,12 @@ class Project_model extends MY_Model {
 		$this->db->where('projects.id',$id);
 		$this->db->where('projects.created_by',$user_id);
 		$this->db->where('projects.status_id',1);
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
+
+	public function is_public($id){
+		$this->db->where('id',$id);
+		$this->db->where('status_id',2);
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}
 }

@@ -95,6 +95,7 @@
 <script type="text/delayscript">
 $(document).ready(function() {
 	$(".form-validate").validate({
+		ignore: null,
 		errorElement: 'span',
 		rules: {
 			company_name: "required",

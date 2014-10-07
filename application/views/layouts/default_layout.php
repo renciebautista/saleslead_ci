@@ -68,9 +68,7 @@
 						<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-user">
-						<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-						</li>
-						<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+						<li><a href="<?php echo base_url('user/profile'); ?>"><i class="fa fa-user fa-fw"></i> User Profile</a>
 						</li>
 						<li class="divider"></li>
 						<li><a href="<?php echo base_url('auth/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -86,6 +84,7 @@
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
 						<li class="sidebar-profile">
+							<a href="<?php echo base_url('user/profile'); ?>">
 							<div class="text-center">
 								<?php if(!empty($avatar)): ?>
 								<img class="img-circle " alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="<?php echo base_url('uploads/avatar/'.$avatar) ?>">
@@ -94,6 +93,7 @@
 								<?php endif; ?>
 							</div>
 							<span><?php echo $user_full_name; ?></span>
+							</a>
 						</li>
 						
 						<li>
@@ -165,6 +165,8 @@
 	<script src="<?php echo base_url('assets/plugins/DataTables-1.10.2/js/jquery.dataTables.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/plugins/DataTables-1.10.2/js/dataTables.bootstrap.js'); ?>"></script>
 
+	<!-- jquery-maskmoney-3.0.2 Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/jquery-maskmoney-3.0.2/jquery.maskMoney.min.js'); ?>"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>

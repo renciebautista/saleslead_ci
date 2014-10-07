@@ -201,7 +201,106 @@ class User extends MY_Controller {
 			}			
 		}
 	}
+//===============================================================================
+	public function profile(){
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('password', '', 'trim|required');
+		$this->form_validation->set_rules('new_password', '', 'trim|required');
+		$this->form_validation->set_rules('retype_password', '', 'trim|required|matches[new_password]');
+		$this->form_validation->set_message('matches', 'This field does not match the Password field.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
+		if ($this->form_validation->run() == FALSE){
+			$this->layout->view('user/profile',$this->data);
+		}else{
+			$identity = $this->flexi_auth->get_user_identity();
+			$current_password = $this->input->post('password');
+			$new_password = $this->input->post('new_password');
+			if($this->flexi_auth->change_password($identity, $current_password, $new_password))
+			{
+				$this->flash_message->set('message','alert alert-success','Successfully changed password!');
+			}else{
+				$this->flash_message->set('message','alert alert-danger','Cannot update password!');
+			}
+			redirect('user/profile');
+		}
+
+	}
+	public function updatepic(){
+		if($_FILES){
+			$config['upload_path'] = './uploads/avatar/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			$config['remove_spaces'] = TRUE;
+			// $config['max_size']	= '100';
+			// $config['max_width']  = '1024';
+			// $config['max_height']  = '768';
+
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload()){
+				$error = array('error' => $this->upload->display_errors());
+			}else{
+				$image = $this->upload->data();
+				$this->load->library('image_lib');
+				// resize image 
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = './uploads/avatar/'.$image['file_name'];
+				$config['maintain_ratio'] = FALSE;
+				$config['width'] = 140;
+				$config['height'] = 140;
+				$config['remove_spaces'] = TRUE;
+
+				$this->image_lib->initialize($config);
+				$this->db->trans_start();
+					if ( ! $this->image_lib->resize()){
+						$this->flash_message->set('message','alert alert-danger',$this->image_lib->display_errors('', ''));
+						redirect('user/profile');
+					};
+
+					$config['image_library'] = 'gd2';
+					$config['source_image'] = './uploads/avatar/'.$image['file_name'];
+					$config['new_image'] = './uploads/thumbnail/'.$image['file_name'];
+					$config['maintain_ratio'] = FALSE;
+					$config['width'] = 50;
+					$config['height'] = 50;
+					$config['remove_spaces'] = TRUE;
+
+					$this->image_lib->initialize($config);
+
+
+					if ( ! $this->image_lib->resize()){
+						$this->flash_message->set('message','alert alert-danger',$this->image_lib->display_errors('', ''));
+						redirect('user/profile');
+					};
+
+					$user_data = array(
+						'uacc_id_fk' => $this->_user_id,
+						'avatar' => $image['file_name'],
+						);
+
+					$user = $this->flexi_auth->get_user_by_id_row_array();
+
+
+					$old_avatar = realpath('uploads/avatar/'.$user['avatar']);
+					$thumbnail = realpath('uploads/thumbnail/'.$user['avatar']);
+
+					$this->flexi_auth->update_user($this->_user_id, $user_data);
+					// debug($old_avatar);
+					unlink($old_avatar);
+					unlink($thumbnail);
+				$this->db->trans_complete();
+			}
+
+			$this->flash_message->set('message','alert alert-success','Profile picture successfully updated');
+			redirect('user/profile');
+		}else{
+			$this->flash_message->set('message','alert alert-success','Profile picture successfully updated');
+			redirect('user/profile');
+		}
+			
+			
+	}
 }
 
 /* End of file user.php */

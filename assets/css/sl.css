@@ -79,3 +79,17 @@ table > thead .action-center, table > tbody .action-center{
 .timeline > li > .timeline-badge{
 	background-color: transparent;
 }
+.submitLink {
+	background-color: transparent;
+	text-decoration: underline;
+	border: none;
+	color: blue;
+	cursor: pointer;
+	color: #428bca;
+    text-decoration: none;
+}
+
+.submitLink:hover{
+	color: #428bca;
+    text-decoration: underline;
+}

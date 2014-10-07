@@ -37,6 +37,7 @@
 				<thead>
 					<tr>
 						<th>Project Name</th>
+						<th>Assigned To</th>
 						<th>Created By</th>
 						<th>Actions</th>
 					</tr>
@@ -53,9 +54,11 @@
 							<?php echo $project['project_name']; ?><br>
 							<i>	<?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].' '.$project['city'].' '.$project['province'])); ?></i><br>
 						</td>
+						<td><?php echo strtoupper($project['assigned_to_name']); ?></td>
 						<td>
 							<?php echo strtoupper($project['last_name'].', '.$project['first_name'].' '.$project['middle_name']); ?>
 						</td>
+
 						<td>
 							<a href="<?php echo base_url('project/join/'.$project['id']) ?>">Join Project</a>
 						</td>

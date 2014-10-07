@@ -58,7 +58,7 @@
 							<?php echo strtoupper($project['last_name'].', '.$project['first_name'].' '.$project['middle_name']); ?>
 						</td>
 						<td class="action-center" style="width:120px;">
-							<a href="<?php echo base_url('project/details/'.$project['id']); ?>">View</a><br>
+							<a href="<?php echo base_url('project/contactlist/'.$project['id']); ?>">View</a><br>
 						</td>
 					</tr>
 				<?php endforeach; ?>

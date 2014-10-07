@@ -103,14 +103,24 @@ class CI_Session {
 
 		// Run the Session routine. If a session doesn't exist we'll
 		// create a new one.  If it does, we'll update it.
-		if ( ! $this->sess_read())
-		{
-			$this->sess_create();
-		}
-		else
-		{
-			$this->sess_update();
-		}
+		if ($this->sess_use_database === TRUE)
+	    {
+	        $this->CI->db->trans_start();
+	    }
+
+	    if ( ! $this->sess_read())
+	    {
+	        $this->sess_create();
+	    }
+	    else
+	    {
+	        $this->sess_update();
+	    }
+
+	    if ($this->sess_use_database === TRUE)
+	    {
+	        $this->CI->db->trans_complete();
+	    }
 
 		// Delete 'old' flashdata (from last request)
 		$this->_flashdata_sweep();
