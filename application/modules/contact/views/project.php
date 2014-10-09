@@ -48,7 +48,7 @@
 												</td>
 												<td style="width:150px;text-align: center;">
 													<?php if($project['approved'] == 1): ?>
-													<a href="<?php echo base_url('contact/updateproject/'.$project['project_contact_id']); ?>">Update Project</a>
+													<a href="<?php echo base_url('contact/updateproject/'.$project['project_contact_id']); ?>">View Details</a>
 													<?php else: ?>
 													N/A
 													<?php endif; ?>

@@ -70,8 +70,8 @@
 														<?php echo number_format($spec['cost'],2); ?><br>
 													</td>
 													<td>
-														<a href="<?php echo base_url('project/join/'.$spec['id']) ?>">Edit</a>
-														<a href="<?php echo base_url('project/join/'.$spec['id']) ?>">Delete</a>
+														<a href="<?php echo base_url('contact/editspec/'.$spec['id']) ?>">Edit</a>
+														<a href="<?php echo base_url('contact/deletespec/'.$spec['id']) ?>">Delete</a>
 													</td>
 												</tr>
 											<?php endforeach; ?>
@@ -89,7 +89,31 @@
 					</div>
 				</div>
 			  </div>
-			  <div class="tab-pane" id="history">...</div>
+			  <div class="tab-pane" id="history">
+			  	<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-comments"></i> History 
+					</div>
+					<?php if(!empty($logs)): ?>
+					<div class="panel-body">
+						<?php foreach ($logs as $log):?>
+						<div class="thread">
+							<div>
+								<p>
+								<small class="text-muted">
+									<i class="fa fa-clock-o"></i> <?php echo date_format(date_create($log['created_at']),'m/d/Y H:i:s'); ?>
+								</small>
+								</p>
+							</div>
+							<div>
+								<p><?php echo nl2br($log['remarks']) ?></p>
+							</div>
+						</div>
+						<?php endforeach; ?>
+					</div>
+					<?php endif; ?>
+				</div>
+			  </div>
 			</div>
 		</div>
 	</div>

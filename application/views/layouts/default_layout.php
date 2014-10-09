@@ -174,38 +174,18 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('button[type="submit"]').click(function() {
-		        if($(this).closest("form").attr("class") == "form-validate"){
-	                $('#waiting').show(500);
-	                $('#page-content').hide(0);
-	                return true;
-	            }
-		    });
-
-		    $('input[type="submit"]').click(function() {
-		        var class_name = $(this).closest("form").attr("class");
-		        if(class_name == "form-validate"){
-		            if ($.validator) {
-		                var valid = $(".form-validate").valid();
-		                if(valid){
-		                	if(class_name == "form-validate"){
-		                        $('#waiting').show(500);
-		                        $('#page-content').hide(0);
-		                        return true;
-		                    }
-		                }
-		            } 
-		        }else{
-		            if(class_name == "form-validate"){
-		                $('#waiting').show(500);
-		                $('#page-content').hide(0);
-		                return true;
-		            }
-		        }
-		           
-		    });
-
-
+			$("form").submit(function (e) {
+				if($(this).attr("class") == "form-validate"){
+					if ($.validator) {
+						var valid = $(".form-validate").valid();
+						if(valid){
+							$('#waiting').show(500);
+							$('#page-content').hide(0);
+							return true;
+						}
+					}
+				}
+			});
 		});
 	</script>
 </body>

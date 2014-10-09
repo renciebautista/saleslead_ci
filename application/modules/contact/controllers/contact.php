@@ -8,6 +8,7 @@ class Contact extends MY_Controller {
 		$this->load->model('Contactphone_model');
 		$this->load->model('Contactemail_model');
 		$this->load->model('Paintspecification_model');
+		$this->load->model('Paintspecification_log');
 		$this->load->model('grouptype/Grouptype_model');
 		$this->load->model('company/Company_model');
 		$this->load->model('city/City_model');
@@ -726,11 +727,24 @@ class Contact extends MY_Controller {
 		$project_contact = $this->Project_contact_model->get($project_contact_id);
 		$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 		$this->data['specs'] = $this->Paintspecification_model->specifications($project_contact_id);
+		$this->data['logs'] = $this->Paintspecification_log->logs($project_contact_id);
 		$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 		$this->layout->view('contact/updatespecification',$this->data);
 	}
 
 	public function addspecification($project_contact_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|is_natural_no_zero|required');
@@ -759,8 +773,93 @@ class Contact extends MY_Controller {
 				'cost' => str_replace(",","", $this->input->post('cost')),
 				'details' => trim($this->input->post('details')),
 				));
+			$type = $this->Painttype_model->get($this->input->post('type'));
+			$remarks = 'Added new paint speicification<br><strong>Type:</strong> '.$type['painttype'].'<br><strong>Area(SqM):</strong> '.$this->input->post('area').'<br><strong>Paint Requirement(Ltrs.):</strong> '.$this->input->post('paint').'<br><strong>Painting Cost(Php):</strong> '.$this->input->post('cost').'<br><strong>Details:</strong> '.$this->input->post('details');
+			$this->Paintspecification_log->insert(array(
+				'project_contact_id' => $project_contact_id,
+				'created_by' => $this->_user_id,
+				'remarks' => $remarks
+				));
 			$this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
 			redirect('contact/updatespecification/'.$project_contact_id);
+		}
+	}
+
+	public function deletespec($specs_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Paintspecification_model->is_my_project_specs($specs_id,$this->_user_id) || (is_null($specs_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Paintspecification_model->allowed_to_update($specs_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('_id', '', 'required');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$this->data['types'] = $this->Painttype_model->order_by('painttype')->get_all();
+			$this->data['specs'] = $this->Paintspecification_model->get_details($specs_id);
+			$this->layout->view('contact/deletespec',$this->data);
+		}else{
+			$_id = $this->input->post('_id');
+			$specs = $this->Paintspecification_model->get($_id);
+			
+			$this->Paintspecification_model->delete($_id);
+			$this->flash_message->set('message','alert alert-success','Successfully deleted a specification!');
+			redirect('contact/updatespecification/'.$specs['project_contact_id']);
+		}
+	}
+
+	public function editspec($specs_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Paintspecification_model->is_my_project_specs($specs_id,$this->_user_id) || (is_null($specs_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Paintspecification_model->allowed_to_update($specs_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('_id', '', 'required');
+		$this->form_validation->set_rules('type', 'Paint Type', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('area', 'Area', 'trim|required');
+		$this->form_validation->set_rules('paint', 'Paint', 'trim|required');
+		$this->form_validation->set_rules('cost', 'Cost', 'trim|required');
+		$this->form_validation->set_rules('details', 'Details', 'trim|required');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if ($this->form_validation->run() == FALSE){
+			$this->data['types'] = $this->Painttype_model->order_by('painttype')->get_all();
+			$this->data['specs'] = $this->Paintspecification_model->get_details($specs_id);
+			$this->layout->view('contact/editspec',$this->data);
+		}else{
+			$_id = $this->input->post('_id');
+			$specs = $this->Paintspecification_model->get_details($_id);
+			$this->Paintspecification_model->update($_id,array(
+				'painttype_id' => $this->input->post('type'),
+				'area' => str_replace(",","", $this->input->post('area')),
+				'paint' => str_replace(",","", $this->input->post('paint')),
+				'cost' => str_replace(",","", $this->input->post('cost')),
+				'details' => trim($this->input->post('details')),
+				));
+			$this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
+			redirect('contact/updatespecification/'.$specs['project_contact_id']);
 		}
 	}
 }
