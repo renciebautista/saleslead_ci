@@ -6,105 +6,175 @@
 </div>
 <!-- /.row -->
 
+
 <div class="row">
-	<div id="contact-details" class="col-lg-12">
-		<address>
-		  	<span><strong><?php echo strtoupper($project['project_name']); ?></strong></span><br>
-		  	<span><?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].', '.$project['city'])); ?></span><br>
-		  	<span><?php echo ucwords(strtolower($project['province'])); ?></span><br>
-		</address>
-	</div>
-	<!-- /.col-lg-12 -->						
+    <div class="col-lg-12 header-button">
+        <a class="btn btn-default" href="<?php echo base_url('project/assigned'); ?>">
+            <i class="fa fa-reply"></i> Back
+        </a>
+    </div>
+    <!-- /.col-lg-12 -->                        
 </div>
 <!-- /.row -->
+<?php $this->load->view('shared/project/_project_name_address'); ?>
 
 <div class="row">
 	<div class="col-lg-12">
-		<div id="tab">
-			<ul class="nav nav-tabs" role="tablist">
-			  	<li><a href="<?php echo base_url('project/details/'.$project['id']); ?>" role="tab">Project Details</a></li>
-			  	<li><a href="<?php echo base_url('project/classifications/'.$project['id']); ?>" role="tab">Project Classification</a></li>
-			  	<li><a href="<?php echo base_url('project/categories/'.$project['id']); ?>" role="tab">Project Category</a></li>
-			  	<li><a href="<?php echo base_url('project/stages/'.$project['id']); ?>" role="tab">Project Stage</a></li>
-			   	<li><a href="<?php echo base_url('project/statuses/'.$project['id']); ?>" s="tab">Project Status</a></li>
-			   	<li class="active"><a href="<?php echo base_url('project/specifications/'.$project['id']); ?>" s="tab">Paint Specification</a></li>
-			   	<li><a href="<?php echo base_url('project/files/'.$project['id']); ?>" s="tab">Files</a></li>
-			   	<li><a href="<?php echo base_url('project/tasks/'.$project['id']); ?>" s="tab">Task</a></li>
-
-			   	<li><a href="<?php echo base_url('project/advances/'.$project['id']); ?>" s="tab">Advances</a></li>
-                <li><a href="<?php echo base_url('project/liquidations/'.$project['id']); ?>" s="tab">Liquidations</a></li>
-			</ul>
-		</div>
+		<?php $this->load->view('shared/project/_assigned_tab_header'); ?>
 
 		<div class="tab-content">
-			<div id="specifications">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<i class="fa fa-paint-brush"></i> Painting Specifications
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							
-							<div class="col-lg-12">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+			  <li class="active"><a href="#specs" role="tab" data-toggle="tab">Paint Specification</a></li>
+			  <li><a href="#history" role="tab" data-toggle="tab">History</a></li>
+			</ul>
 
-								<div class="table-responsive">
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th>Type</th>
-												<th>Details</th>
-												<th>Area<i>(SqM)</i></th>
-												<th>Paint Requirement<i>(Ltrs.)</i></th>
-												<th>Painting Cost<i>(Php)</i></th>
-												<th>Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-										<?php if(count($tasks) < 1): ?>
-											<!-- <tr>
-												<td colspan="6">No record found.</td>
-											</tr> -->
-											<tr>
-												<td>Exterior</td>
-												<td>Red Paint</td>
-												<td>1,000.00</td>
-												<td>500</td>
-												<td>10,689.00</td>
-												<td><a href="">Details</a>
-												</td>
-											</tr>
-										<?php else: ?>
-										<?php foreach ($tasks as $task):?>
-											<tr>
-												<td>
-													<?php echo $task['project_name']; ?><br>
-													<i>	<?php echo ucwords(strtolower($task['lot'].' '.$task['street'].' '.$task['brgy'].' '.$task['city'].' '.$project['province'])); ?></i><br>
-												</td>
-												<td>
-													<?php echo strtoupper($task['last_name'].', '.$task['first_name'].' '.$task['middle_name']); ?>
-												</td>
-												<td>
-													<a href="<?php echo base_url('project/join/'.$task['id']) ?>">Join Project</a>
-												</td>
-											</tr>
-										<?php endforeach; ?>
-										<?php endif; ?>
-										</tbody>
-									</table>
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  	<div class="tab-pane active" id="specs">
+					<div style =" margin-top:15px;">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<i class="fa fa-comments"></i> Paint Specification
+									<?php $this->load->view('shared/project/_comment_filter'); ?>
+							</div>
+							<?php if(!empty($specs)): ?>
+							<div class="panel-body">
+								<ul class="timeline">
+									<?php foreach ($specs as $spec):?>
+									<li class="timeline-inverted">
+										<div class="timeline-badge">
+											<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$spec['details']['avatar']); ?>">
+										</div>
+										<div class="timeline-panel">
+											<div class="timeline-heading">
+												<p>
+													<strong class="bdo-name"><?php echo strtoupper($spec['details']['ulast_name'].', '.$spec['details']['ufirst_name'].' '.$spec['details']['umiddle_name']); ?></strong>
+												</p>
+												
+											</div>
+											<div class="timeline-body">
+												<em><?php echo strtoupper($spec['details']['last_name'].', '.$spec['details']['first_name'].' '.$spec['details']['middle_name']); ?> ( <?php echo $spec['details']['grouptype_desc']; ?>)</em>
+												<div class="table-responsive">
+												<table class="table table-hover">
+													<thead>
+														<tr>
+															<th>Type</th>
+															<th>Details</th>
+															<th>Area<i>(SqM)</i></th>
+															<th>Paint Requirement<i>(Ltrs.)</i></th>
+															<th>Painting Cost<i>(Php)</i></th>
+														</tr>
+													</thead>
+													<tbody>
+													<?php foreach ($spec['specs'] as $row):?>
+														<tr>
+															<td>
+																<?php echo $row['painttype']; ?><br>
+															</td>
+															<td>
+																<?php echo nl2br($row['details']); ?><br>
+															</td>
+															<td>
+																<?php echo number_format($row['area'],2); ?><br>
+															</td>
+															<td>
+																<?php echo number_format($row['paint'],2); ?><br>
+															</td>
+															<td>
+																<?php echo number_format($row['cost'],2); ?><br>
+															</td>
+
+														</tr>
+													<?php endforeach; ?>
+													</tbody>
+												</table>
+											</div>
+											</div>
+										</div>
+									</li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+							<?php endif; ?>
+						</div>
+					</div>
+			  	</div>
+			  	<div class="tab-pane" id="history">
+				  	<div style =" margin-top:15px;">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<i class="fa fa-comments"></i> History
+								<div class="pull-right">
+									<div class="btn-group">
+										Filter By :
+										<a id="filter-menu" class="dropdown-toggle" data-toggle="dropdown" href=""> All Users
+											<span class="caret"></span>
+										</a>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu" style="left: auto;">
+											<li><a href="#">All Users</a></li>
+											<?php foreach ($users2 as $row):?>
+										  	<li><a href="#"><?php echo strtoupper($row['ulast_name'].', '.$row['ufirst_name'].' '.$row['umiddle_name']); ?></a></li>
+										  	<?php endforeach; ?>
+										</ul>
+									</div>
 								</div>
 							</div>
-							<!-- /.col-lg-12 -->						
+							<?php if(!empty($logs)): ?>
+							<div class="panel-body">
+								<ul class="timeline">
+									<?php foreach ($logs as $log):?>
+									<li class="timeline-inverted">
+										<div class="timeline-badge">
+											<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$log['avatar']); ?>">
+										</div>
+										<div class="timeline-panel">
+											<div class="timeline-heading">
+												<p>
+													<strong class="bdo-name"><?php echo strtoupper($log['ulast_name'].', '.$log['ufirst_name'].' '.$log['umiddle_name']); ?></strong>
+												</p>
+												<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($log['created_at']),'m/d/y H:i:s'); ?></small>
+											</div>
+											<div class="timeline-body">
+												<em><?php echo strtoupper($log['last_name'].', '.$log['first_name'].' '.$log['middle_name']); ?> ( <?php echo $log['grouptype_desc']; ?>)</em>
+												<p><?php echo $log['remarks']; ?></p>
+												<?php echo $log['details']; ?>
+											</div>
+										</div>
+									</li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+							<?php endif; ?>
 						</div>
-						<!-- /.row -->
 					</div>
-					
-
-				</div>
+			  	</div>
 			</div>
 		</div>
+
 
 	</div>
 </div>
 <!-- /.row -->
 
 
+
+<script type="text/delayscript">
+$(".dropdown-menu li a").click(function(){
+    var filter_text = $(this).text();
+    $("#filter-menu:first-child").html(filter_text+' <span class="caret"></span>');
+
+    $(".timeline li").each(function () {
+        if(filter_text != "All Users"){
+            if ($(this).find(".bdo-name").text() == filter_text) {
+                $(this).removeClass("hidden");
+            } else {
+                $(this).addClass("hidden"); 
+            }
+        }else{
+            $(this).removeClass("hidden");
+        }
+        
+    });
+});
+</script>

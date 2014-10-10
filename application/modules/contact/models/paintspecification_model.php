@@ -37,6 +37,46 @@ class Paintspecification_model extends MY_Model {
 		return $this->db->get($this->_table)->row_array();
 	}
 
+	public function get_all_specs($project_id){
+		$specs = array();
+		$project_contact_id = $this->get_all_contact($project_id);
+		if(!empty($project_contact_id)){
+			foreach ($project_contact_id as $row) {
+				$specs[] = array('details' => $row,
+					'specs' => $this->specifications($row['project_contact_id']));
+			}
+		}
+		return $specs ;
+	}
+
+	public function get_all_contact($project_id){
+		$this->db->select('paintspecifications.project_contact_id,
+			user_details.last_name as ulast_name, user_details.first_name as ufirst_name, user_details.middle_name as umiddle_name,
+			user_details.avatar,
+			contacts.first_name,contacts.middle_name,contacts.last_name,
+			grouptypes.grouptype_desc
+			');
+		$this->db->join('project_contacts','project_contacts.id = paintspecifications.project_contact_id');
+		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = contacts.created_by');
+		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
+		$this->db->where('project_contacts.project_id',$project_id);
+		$this->db->group_by('paintspecifications.project_contact_id');
+		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function get_all_unique_contact($project_id){
+		$this->db->select('
+			user_details.last_name as ulast_name, user_details.first_name as ufirst_name, user_details.middle_name as umiddle_name
+			');
+		$this->db->join('project_contacts','project_contacts.id = paintspecifications.project_contact_id');
+		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
+		$this->db->join('user_details','user_details.uacc_id_fk = contacts.created_by');
+		$this->db->where('project_contacts.project_id',$project_id);
+		$this->db->group_by('contacts.created_by');
+		return $this->db->get($this->_table)->result_array();
+	}
+
 }
 
 /* End of file paintspecification_model.php */

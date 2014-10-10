@@ -764,6 +764,7 @@ class Contact extends MY_Controller {
 			$this->layout->view('contact/addspecification',$this->data);
 		}else{
 			$project_contact_id = $this->input->post('project_contact_id');
+			$details = trim($this->input->post('details'));
 			$this->Paintspecification_model->insert(array(
 				'project_contact_id' => $project_contact_id,
 				'created_by' => $this->_user_id,
@@ -771,15 +772,17 @@ class Contact extends MY_Controller {
 				'area' => str_replace(",","", $this->input->post('area')),
 				'paint' => str_replace(",","", $this->input->post('paint')),
 				'cost' => str_replace(",","", $this->input->post('cost')),
-				'details' => trim($this->input->post('details')),
+				'details' => $details
 				));
 			$type = $this->Painttype_model->get($this->input->post('type'));
-			$remarks = 'Added new paint speicification<br><strong>Type:</strong> '.$type['painttype'].'<br><strong>Area(SqM):</strong> '.$this->input->post('area').'<br><strong>Paint Requirement(Ltrs.):</strong> '.$this->input->post('paint').'<br><strong>Painting Cost(Php):</strong> '.$this->input->post('cost').'<br><strong>Details:</strong> '.$this->input->post('details');
+
 			$this->Paintspecification_log->insert(array(
 				'project_contact_id' => $project_contact_id,
 				'created_by' => $this->_user_id,
-				'remarks' => $remarks
+				'remarks' => "Paint specification added.",
+				'details' => $this->Paintspecification_log->generate_logs($type['painttype'],$details,$this->input->post('area'),$this->input->post('paint'),$this->input->post('cost'))
 				));
+
 			$this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
 			redirect('contact/updatespecification/'.$project_contact_id);
 		}
@@ -811,7 +814,15 @@ class Contact extends MY_Controller {
 			$this->layout->view('contact/deletespec',$this->data);
 		}else{
 			$_id = $this->input->post('_id');
-			$specs = $this->Paintspecification_model->get($_id);
+			$specs = $this->Paintspecification_model->get_details($_id);
+
+			$this->Paintspecification_log->insert(array(
+				'project_contact_id' => $specs['project_contact_id'],
+				'created_by' => $this->_user_id,
+				'remarks' => "Paint specification deleted.",
+				'details' => $this->Paintspecification_log->generate_logs($specs['painttype'],$specs['details'],
+					number_format($specs['area'],2),number_format($specs['paint'],2),number_format($specs['cost'],2))
+				));
 			
 			$this->Paintspecification_model->delete($_id);
 			$this->flash_message->set('message','alert alert-success','Successfully deleted a specification!');
@@ -851,13 +862,26 @@ class Contact extends MY_Controller {
 		}else{
 			$_id = $this->input->post('_id');
 			$specs = $this->Paintspecification_model->get_details($_id);
+			$details = trim($this->input->post('details'));
 			$this->Paintspecification_model->update($_id,array(
 				'painttype_id' => $this->input->post('type'),
 				'area' => str_replace(",","", $this->input->post('area')),
 				'paint' => str_replace(",","", $this->input->post('paint')),
 				'cost' => str_replace(",","", $this->input->post('cost')),
-				'details' => trim($this->input->post('details')),
+				'details' => $details,
 				));
+			$type = $this->Painttype_model->get($this->input->post('type'));
+
+			$old = $this->Paintspecification_log->generate_logs($type['painttype'],$details,
+					number_format($specs['area'],2),number_format($specs['paint'],2),number_format($specs['cost'],2));
+			$new = $this->Paintspecification_log->generate_logs($type['painttype'],$details,$this->input->post('area'),$this->input->post('paint'),$this->input->post('cost'));
+			$this->Paintspecification_log->insert(array(
+				'project_contact_id' => $specs['project_contact_id'],
+				'created_by' => $this->_user_id,
+				'remarks' => "Paint updated to",
+				'details' => $new. 'from' .$old
+				)) ;
+
 			$this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
 			redirect('contact/updatespecification/'.$specs['project_contact_id']);
 		}

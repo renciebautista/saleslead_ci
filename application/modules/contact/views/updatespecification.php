@@ -104,9 +104,10 @@
 									<i class="fa fa-clock-o"></i> <?php echo date_format(date_create($log['created_at']),'m/d/Y H:i:s'); ?>
 								</small>
 								</p>
+								<p><?php echo $log['remarks']; ?></p>
 							</div>
 							<div>
-								<p><?php echo nl2br($log['remarks']) ?></p>
+								<?php echo $log['details']; ?>
 							</div>
 						</div>
 						<?php endforeach; ?>

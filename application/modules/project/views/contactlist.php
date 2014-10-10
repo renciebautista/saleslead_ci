@@ -30,6 +30,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<i class="fa fa-users"></i> Contact For Approval
+						
 					</div>
 					<?php if(!empty($contacts)): ?>
 
@@ -89,6 +90,19 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<i class="fa fa-users"></i> Contact Lists
+						<div class="pull-right">
+							<div class="btn-group">
+								Filter By :
+								<a id="filter-menu" class="dropdown-toggle" data-toggle="dropdown" href=""> All Status
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu" style="left: auto;">
+									<li><a href="#">All Status</a></li>
+								  	<li><a href="#">Approved</a></li>
+								  	<li><a href="#">Denied</a></li>
+								</ul>
+							</div>
+						</div>
 					</div>
 					<?php if(!empty($contact_lists)): ?>
 
@@ -121,9 +135,10 @@
 												</td>
 												<td style="width:130px;text-align: center;">
 													<?php if($contact['approved'] == 1): ?>
-													Approved
+													<p class="join-status">Approved</p>
 													<?php else: ?>
-													Denied
+													<p class="join-status">Denied</p>
+													
 													<?php endif; ?>
 												</td>
 											</tr>
@@ -143,6 +158,27 @@
 	</div>
 </div>
 <!-- /.row -->
+
+<script type="text/delayscript">
+
+$(".dropdown-menu li a").click(function(){
+    var filter_text = $(this).text();
+    $("#filter-menu:first-child").html(filter_text+' <span class="caret"></span>');
+
+    $(".table tbody tr").each(function () {
+        if(filter_text != "All Status"){
+            if ($(this).find('.join-status').text() == filter_text) {
+                $(this).removeClass("hidden");
+            } else {
+                $(this).addClass("hidden"); 
+            }
+        }else{
+            $(this).removeClass("hidden");
+        }
+        
+    });
+});
+</script>
 
 
 

@@ -9,7 +9,7 @@
 	  	<li <?php echo (($method == 'categories') ? 'class="active"':'' ); ?>><a href="<?php echo base_url('project/categories/'.$project['id']); ?>" role="tab">Project Category</a></li>
 	  	<li <?php echo (($method == 'stages') ? 'class="active"':'' ); ?>><a href="<?php echo base_url('project/stages/'.$project['id']); ?>" role="tab">Project Stage</a></li>
 	   	<li <?php echo (($method == 'statuses') ? 'class="active"':'' ); ?>><a href="<?php echo base_url('project/statuses/'.$project['id']); ?>" s="tab">Project Status</a></li>
-	   	<!-- <li <?php //echo (($method == 'specifications') ? 'class="active"':'' ); ?>><a href="<?php //echo base_url('project/specifications/'.$project['id']); ?>" s="tab">Paint Specification</a></li> -->
+	   	<li <?php echo (($method == 'specifications') ? 'class="active"':'' ); ?>><a href="<?php echo base_url('project/specifications/'.$project['id']); ?>" s="tab">Paint Specification</a></li>
 	   	<!-- <li <?php //echo (($method == 'files') ? 'class="active"':'' ); ?>><a href="<?php //echo base_url('project/files/'.$project['id']); ?>" s="tab">Files</a></li>
 	   	<li <?php //echo (($method == 'tasks') ? 'class="active"':'' ); ?>><a href="<?php //echo base_url('project/tasks/'.$project['id']); ?>" s="tab">Task</a></li>
 

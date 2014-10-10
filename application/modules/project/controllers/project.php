@@ -14,6 +14,8 @@ class Project extends MY_Controller {
 		$this->load->model('prjcategory/Project_category_history_model');
 		$this->load->model('prjstage/Project_stage_history_model');
 		$this->load->model('prjstatus/Project_status_history_model');
+		$this->load->model('contact/Paintspecification_model');
+		$this->load->model('contact/Paintspecification_log');
 	}
 
 	public function index(){	
@@ -350,8 +352,12 @@ class Project extends MY_Controller {
 	}
 
 	public function specifications($id = null){
+		$this->project_validate($id);
 		$this->data['project'] = $this->Project_model->details($id);
-		$this->data['tasks'] = array();
+		$this->data['specs'] = $this->Paintspecification_model->get_all_specs($id);
+		$this->data['users'] = $this->Paintspecification_model->get_all_unique_contact($id);
+		$this->data['logs'] = $this->Paintspecification_log->get_all_history($id);
+		$this->data['users2'] = $this->Paintspecification_log->get_all_history_user($id);
 		$this->layout->view('project/specifications',$this->data);
 	}
 
