@@ -286,9 +286,12 @@ class User extends MY_Controller {
 					$thumbnail = realpath('uploads/thumbnail/'.$user['avatar']);
 
 					$this->flexi_auth->update_user($this->_user_id, $user_data);
-					// debug($old_avatar);
-					unlink($old_avatar);
-					unlink($thumbnail);
+					if(!empty($user['avatar'])){
+						unlink($old_avatar);
+						unlink($thumbnail);
+					}
+				
+					
 				$this->db->trans_complete();
 			}
 

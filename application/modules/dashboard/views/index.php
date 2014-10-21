@@ -27,7 +27,9 @@
 			
 			<div class="panel-body">
 				<div class="list-group">
+					<?php $not = false; ?>
 					<?php if(count($new_contacts) > 0): ?>
+						<?php $not = true; ?>
 					<a class="list-group-item" href="<?php echo base_url('dashboard/contacts_approval'); ?>">
 						<i class="fa fa-users fa-fw"></i>
 						<?php echo count($new_contacts); ?> Contacts Approval
@@ -36,7 +38,31 @@
 						</span>
 					</a>
 					<?php endif; ?>
+
+					<?php if(count($project_comments) > 0): ?>
+						<?php $not = true; ?>
+					<a class="list-group-item" href="<?php echo base_url('dashboard/projectcomments'); ?>">
+						<i class="fa fa-comments fa-fw"></i>
+						<?php echo count($project_comments); ?> Project Comments
+						<span class="pull-right text-muted small">
+							<em><?php echo distance_of_time_in_words(strtotime($project_comments[0]['created_at']),strtotime(date('Y-m-d H:i:s'))); ?> ago</em>
+						</span>
+					</a>
+					<?php endif; ?>
+
+					<?php if(count($joined_projects) > 0): ?>
+						<?php $not = true; ?>
+					<a class="list-group-item" href="<?php echo base_url('dashboard/joinedcontacts'); ?>">
+						<i class="fa fa-share-alt"></i>
+						<?php echo count($joined_projects); ?> Joined Contacts
+						<span class="pull-right text-muted small">
+							<em><?php echo distance_of_time_in_words(strtotime($joined_projects[0]['created_at']),strtotime(date('Y-m-d H:i:s'))); ?> ago</em>
+						</span>
+					</a>
+					<?php endif; ?>
+
 					<?php if(count($new_projects) > 0): ?>
+						<?php $not = true; ?>
 					<a class="list-group-item" href="<?php echo base_url('project/assigned'); ?>">
 						<i class="fa fa-file-text-o fa-fw"></i>
 						<?php echo count($new_projects); ?> Projects Assigned
@@ -44,6 +70,10 @@
 							<em><?php echo distance_of_time_in_words(strtotime($new_projects[0]['updated_at']),strtotime(date('Y-m-d H:i:s'))); ?> ago</em>
 						</span>
 					</a>
+					<?php endif; ?>
+
+					<?php if(!$not): ?>
+					No Notification found!.
 					<?php endif; ?>
 				</div>
 			</div>

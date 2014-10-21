@@ -71,6 +71,10 @@ $(document).ready(function () {
 		else if((pathArray[1] == 'project') && ((pathArray[2] == 'details') || (pathArray[2] == 'assigned'))){
 			menu ='assigned';
 		}
+		else if((pathArray[1] == 'project') && (pathArray[2] == 'joined')){
+			menu ='joined';
+		}
+
 		else{
 			menu ='project';
 		}

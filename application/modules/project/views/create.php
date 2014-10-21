@@ -106,6 +106,12 @@
 
 	<div class="col-lg-12">
 		<div class="form-group">
+			<div id="map" style="width: 100%; height: 400px"></div>
+		</div>
+	</div>
+
+	<div class="col-lg-12">
+		<div class="form-group">
 			<input class="btn btn-success" type="submit" value="Submit">
 			<a class="btn btn-default" href="<?php echo base_url('project/created'); ?>">Back</a>
 		</div>
@@ -119,6 +125,26 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {
+
+	var map, newMarker, markerLocation;
+	$(function(){
+		// Initialize the map
+		var map = L.map('map').setView([13, 122], 5);
+		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	    	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
+	    	maxZoom: 20
+		}).addTo(map);
+		newMarkerGroup = new L.LayerGroup();
+
+		map.on('click', addMarker);
+
+		function addMarker(e){
+			// Add marker to map at click location; add popup window
+		    var newMarker = new L.marker(e.latlng).addTo(map);
+		}
+	});
+
+	
 
 	$(".form-validate").validate({
 		ignore: null,

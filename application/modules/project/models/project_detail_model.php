@@ -7,12 +7,37 @@ class Project_detail_model extends MY_Model {
 	public $before_create = array('created_at');
 
 	public function get_contact_details($project_contact_id){
+		$details = $this->_get_contact_details($project_contact_id);
+		if(!empty($details)){
+			foreach ($details as $key => $value) {
+				$details[$key]['files'] = $this->Projectfile_model->getfiles($value['id'],1);
+			}
+		}
+
+		return $details;
+	}
+
+
+
+	private function _get_contact_details($project_contact_id){
 		$this->db->where('project_contact_id',$project_contact_id);
 		$this->db->order_by('created_at');
 		return $this->db->get($this->_table)->result_array();
 	}
 
 	public function get_all_details($project_id){
+		
+		$details = $this->_get_all_details($project_id);
+		if(!empty($details)){
+			foreach ($details as $key => $value) {
+				$details[$key]['files'] = $this->Projectfile_model->getfiles($value['id'],1);
+			}
+		}
+
+		return $details;
+	}
+
+	private function _get_all_details($project_id){
 		$this->db->select('project_details.id,project_details.details,project_details.created_at,
 			contacts.first_name,contacts.middle_name,contacts.last_name,
 			user_details.avatar, 

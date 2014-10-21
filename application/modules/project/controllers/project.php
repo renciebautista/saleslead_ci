@@ -16,6 +16,8 @@ class Project extends MY_Controller {
 		$this->load->model('prjstatus/Project_status_history_model');
 		$this->load->model('contact/Paintspecification_model');
 		$this->load->model('contact/Paintspecification_log');
+		$this->load->model('notifications/Notification_model');
+		$this->load->model('contact/Projectfile_model');
 	}
 
 	public function index(){	
@@ -213,6 +215,7 @@ class Project extends MY_Controller {
 				$this->data['project'] = $this->Project_model->details($id);
 				
 				$this->data['details'] = $this->Project_detail_model->get_all_details($id);
+
 				$this->data['classifications'] = $this->Project_classificaton_history_model->get_all_history($id);
 				$this->data['categories'] = $this->Project_category_history_model->get_all_history($id);
 				$this->data['stages'] = $this->Project_stage_history_model->get_all_history($id);
@@ -269,7 +272,7 @@ class Project extends MY_Controller {
 			redirect('project/access_denied');		
 		}
 
-
+		$this->session->set_userdata('back_link','project/assigned');
 		$this->data['filter'] = trim($this->input->get('q'));
 		$this->data['projects'] = $this->Project_model->assigned($this->data['filter'],$this->_user_id);
 		$this->layout->view('project/assigned',$this->data);
@@ -286,8 +289,17 @@ class Project extends MY_Controller {
 		if($project['assigned_viewed'] == 0){
 			$this->Project_model->update($id,array('assigned_viewed' => 1));
 		}
+
 		$this->data['project'] = $project;
+		$this->data['contact_count'] = $this->Project_contact_model->for_approval_project_contact_count($id);
+		$this->data['details_count'] = $this->Notification_model->get_count($id,1,1);
+		$this->data['class_count'] = $this->Notification_model->get_count($id,2,1);
+		$this->data['cat_count'] = $this->Notification_model->get_count($id,3,1);
+		$this->data['stage_count'] = $this->Notification_model->get_count($id,4,1);
+		$this->data['status_count'] = $this->Notification_model->get_count($id,5,1);
+		$this->data['specifications'] = $this->Notification_model->get_count($id,6,1);
 	}
+
 
 	public function contactlist($id = null){
 		$this->project_validate($id);
@@ -299,16 +311,38 @@ class Project extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
+
 			$this->data['contacts'] = $this->Project_contact_model->for_approval_project_contacts($id);
 			$this->data['contact_lists'] = $this->Project_contact_model->project_contact_list($id);
 			$this->layout->view('project/contactlist',$this->data);
 		}else{
 			$project_id = $this->input->post('project_id');
+			$project_contact_id = $this->input->post('_id');
 			$approve = 3;
 			if($this->input->post('submit') == 'Approve'){
 				$approve = 1;
 			}
-			$this->Project_contact_model->update($this->input->post('_id'),array('approved' => $approve, 'approved_by' => $this->_user_id));
+
+			if($approve == 1){
+				// add notification
+				$this->Notification_model->insert(array(
+					'type' => 2,
+					'project_contact_id' => $project_contact_id,
+					'group_id' => 6,
+					'remarks' => "alert alert-success alert-dismissable",
+					'created_by' => $this->_user_id));
+			}else{
+				// add notification
+				$this->Notification_model->insert(array(
+					'type' => 2,
+					'project_contact_id' => $project_contact_id,
+					'group_id' => 6,
+					'remarks' => "alert alert-danger alert-dismissable",
+					'created_by' => $this->_user_id));
+			}
+
+			
+			$this->Project_contact_model->update($project_contact_id ,array('approved' => $approve, 'approved_by' => $this->_user_id));
 			$this->flash_message->set('message','alert alert-success','Contact successfully updated!');
 			redirect('project/contactlist/'.$project_id);
 		}
@@ -318,13 +352,20 @@ class Project extends MY_Controller {
 	
 	public function details($id = null){
 		$this->project_validate($id);
+
+		$this->Notification_model->delete_notifications($id,$this->_user_id,1);
+
 		$this->data['details'] = $this->Project_detail_model->get_all_details($id);
+
 		$this->data['users'] = $this->Project_detail_model->get_all_details_user($id);
 		$this->layout->view('project/assigned_details',$this->data);
 	}
 
 	public function classifications($id = null){
 		$this->project_validate($id);
+
+		$this->Notification_model->delete_notifications($id,$this->_user_id,2);
+
 		$this->data['classifications'] = $this->Project_classificaton_history_model->get_all_history($id);
 		$this->data['users'] = $this->Project_classificaton_history_model->get_all_history_user($id);
 		$this->layout->view('project/classifications',$this->data);
@@ -332,21 +373,33 @@ class Project extends MY_Controller {
 
 	public function categories($id = null){
 		$this->project_validate($id);
+
+		$this->Notification_model->delete_notifications($id,$this->_user_id,3);
+
 		$this->data['categories'] = $this->Project_category_history_model->get_all_history($id);
+
 		$this->data['users'] = $this->Project_category_history_model->get_all_history_user($id);
 		$this->layout->view('project/categories',$this->data);
 	}
 
 	public function stages($id = null){
 		$this->project_validate($id);
+
+		$this->Notification_model->delete_notifications($id,$this->_user_id,4);
+
 		$this->data['stages'] = $this->Project_stage_history_model->get_all_history($id);
+
 		$this->data['users'] = $this->Project_stage_history_model->get_all_history_user($id);
 		$this->layout->view('project/stages',$this->data);
 	}
 
 	public function statuses($id = null){
 		$this->project_validate($id);
+
+		$this->Notification_model->delete_notifications($id,$this->_user_id,5);
+
 		$this->data['status'] = $this->Project_status_history_model->get_all_history($id);
+		
 		$this->data['users'] = $this->Project_status_history_model->get_all_history_user($id);
 		$this->layout->view('project/statuses',$this->data);
 	}
@@ -361,36 +414,77 @@ class Project extends MY_Controller {
 		$this->layout->view('project/specifications',$this->data);
 	}
 
-	public function files($id = null){
-		$this->data['project'] = $this->Project_model->details($id);
-		$this->data['tasks'] = array();
-		$this->layout->view('project/files',$this->data);
+	public function deletenotifications(){
+		if($this->input->is_ajax_request()){
+			$id = $this->input->post('project_id');
+			$this->Notification_model->delete_notifications($id,$this->_user_id,6);
+		}
 	}
 
-	public function tasks($id = null){
-		$this->data['project'] = $this->Project_model->details($id);
-		$this->data['tasks'] = array();
-		$this->layout->view('project/tasks',$this->data);
-	}
+	// public function files($id = null){
+	// 	$this->data['project'] = $this->Project_model->details($id);
+	// 	$this->data['tasks'] = array();
+	// 	$this->layout->view('project/files',$this->data);
+	// }
 
-	public function addtask($id = null){
-		$this->data['project'] = $this->Project_model->details($id);
-		$this->layout->view('project/addtask',$this->data);
-	}
+	// public function tasks($id = null){
+	// 	$this->data['project'] = $this->Project_model->details($id);
+	// 	$this->data['tasks'] = array();
+	// 	$this->layout->view('project/tasks',$this->data);
+	// }
 
-	public function advances($id = null){
-		$this->data['project'] = $this->Project_model->details($id);
-		$this->data['tasks'] = array();
-		$this->layout->view('project/advances',$this->data);
-	}
+	// public function addtask($id = null){
+	// 	$this->data['project'] = $this->Project_model->details($id);
+	// 	$this->layout->view('project/addtask',$this->data);
+	// }
 
-	public function liquidations($id = null){
-		$this->data['project'] = $this->Project_model->details($id);
-		$this->data['tasks'] = array();
-		$this->layout->view('project/liquidations',$this->data);
-	}
+	// public function advances($id = null){
+	// 	$this->data['project'] = $this->Project_model->details($id);
+	// 	$this->data['tasks'] = array();
+	// 	$this->layout->view('project/advances',$this->data);
+	// }
+
+	// public function liquidations($id = null){
+	// 	$this->data['project'] = $this->Project_model->details($id);
+	// 	$this->data['tasks'] = array();
+	// 	$this->layout->view('project/liquidations',$this->data);
+	// }
 // ======================================================================
-	public function joined(){
+	public function joined($id = null){
+
+		if (!$this->flexi_auth->is_privileged('JOINED PROJECT MAINTENANCE')){
+			redirect('project/access_denied');		
+		}
+
+		if(is_null($id)){
+			$this->data['filter'] = trim($this->input->get('q'));
+			$this->data['projects'] = $this->Project_contact_model->joined_projects($this->data['filter'],$this->_user_id);
+			$this->layout->view('project/joined',$this->data);
+		}else{
+				if(!$this->Project_contact_model->my_joined_project_contact($id,$this->_user_id)){
+					redirect('project/access_denied');
+				}
+
+				$this->session->set_userdata('back_link','project/joined/'.$id);
+				
+				$this->data['project'] = $this->Project_model->details($id);
+				$this->data['contacts'] = $this->Project_contact_model->joined_project_contact($id,$this->_user_id);
+				$this->layout->view('project/joinedcontactlist',$this->data);
+		}
+		
+	}
+
+	public function getfile($hash = null){
+		$file = $this->Projectfile_model->downloadfile($hash);
+		if($file){
+			$this->load->helper('download');
+			$filename = $file['filename'];
+			$data = file_get_contents('uploads/files/'.$hash); // Read the file's contents
+			force_download($filename, $data);
+		}else{
+			$this->_pageNotFound();
+			return;
+		}
 		
 	}
 }

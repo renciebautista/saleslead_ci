@@ -7,15 +7,7 @@
 <!-- /.row -->
 
 
-<div class="row">
-    <div class="col-lg-12 header-button">
-        <a class="btn btn-default" href="<?php echo base_url('project/assigned'); ?>">
-            <i class="fa fa-reply"></i> Back
-        </a>
-    </div>
-    <!-- /.col-lg-12 -->                        
-</div>
-<!-- /.row -->
+<?php $this->load->view('shared/project/_project_back'); ?>
 <?php $this->load->view('shared/project/_project_name_address'); ?>
 
 <div class="row">
@@ -26,7 +18,11 @@
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs" role="tablist">
 			  <li class="active"><a href="#specs" role="tab" data-toggle="tab">Paint Specification</a></li>
-			  <li><a href="#history" role="tab" data-toggle="tab">History</a></li>
+			  <li><a href="#history" role="tab" data-toggle="tab">
+			  	<?php if($specifications > 0): ?>
+	  			<span class="badge green"><?php echo $specifications; ?></span>
+	  			<?php endif; ?>
+			  		History</a></li>
 			</ul>
 
 			<!-- Tab panes -->
@@ -177,4 +173,25 @@ $(".dropdown-menu li a").click(function(){
         
     });
 });
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	if($(e.target).attr('href') == "#history"){
+		// console.log($(e.target).find('span').text());
+		var count = $(e.target).find('span').text();
+		if(count > 0){
+			$('.timeline li .timeline-panel').slice(-count).css('border', '1px solid #449d44')
+			$("html,body").animate({scrollTop: $('#history .timeline li:nth-last-child('+count+')').offset().top-30});
+			var post_data = {
+		        'project_id': <?php echo $project['id']; ?>,
+		        '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php echo $this->security->get_csrf_hash(); ?>'
+		    };
+
+			$.ajax({
+				type: "POST",
+				url: domain + '/project/deletenotifications',
+				data: post_data
+			});
+		}
+	}
+})
 </script>

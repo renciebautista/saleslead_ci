@@ -25,12 +25,21 @@
 							<div>
 								<p>Updated to <?php echo($row['prjclassification_desc']); ?></p>
 							</div>
+							<?php if(!empty($row['files'])): ?>
+							<div class="attached-files">
+								<ul>
+									<?php foreach ($row['files'] as $file):?>
+									<li><a href="<?php echo base_url('contact/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+							<?php endif; ?>
 						</div>
 						<?php endforeach; ?>
 					</div>
 					<?php endif; ?>
 					<div class="panel-footer">
-						<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
+						<?php echo form_open_multipart('',array('role' => 'form', 'class' => 'form-validate')); ?>
 						<?php echo form_hidden('project_contact_id', $project['project_contact_id']); ?>
 						<div class="row">
 							<div class="col-lg-6">
@@ -44,6 +53,10 @@
 										<?}?>
 									</select>
 								</div>
+								<div class="form-group">
+							    	<p class="help-block">Attach files</p>
+							    	<input  type="file" id="files" name="files[]" size="20"  />
+							  	</div>
 						  	</div>
 						</div>
 						<div class="row">
@@ -68,6 +81,15 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {	
+
+	$('#files').MultiFile({
+		STRING: {
+				remove: 'Delete', 
+				removeClass: 'btn btn-danger btn-xs',
+			},
+		duplicate: false
+	});
+
 	$(".form-validate").validate({
 		ignore: null,
 		errorElement: 'span',

@@ -385,7 +385,7 @@
 	 *
 	 * Note: Only used when $config['security']['validate_login_onload'] = TRUE
 	*/
-	$config['security']['extend_login_session'] = TRUE;
+	$config['security']['extend_login_session'] = FALSE;
 	
 	/**
 	 * Set whether a user is logged out as soon as the browser is closed.

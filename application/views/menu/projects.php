@@ -4,7 +4,8 @@
 		'PUBLIC PROJECT MAINTENANCE',
 		'CREATED PROJECT MAINTENANCE',
 		'PROJECT ASSIGNING MAINTENANCE',
-		'ASSIGNED PROJECT MAINTENANCE');
+		'ASSIGNED PROJECT MAINTENANCE',
+		'JOINED PROJECT MAINTENANCE');
 
 	foreach($modules as $module){
 		if(in_array($module,$this->session->userdata['flexi_auth']['privileges'])){
@@ -24,6 +25,11 @@
 		<?php if ($this->flexi_auth->is_privileged('CREATED PROJECT MAINTENANCE')):?>
 		<li>
 			<a id="created" href="<?php echo base_url('project/created'); ?>">Created Projects</a>
+		</li>
+		<?php endif; ?>
+		<?php if ($this->flexi_auth->is_privileged('JOINED PROJECT MAINTENANCE')):?>
+		<li>
+			<a id="joined" href="<?php echo base_url('project/joined'); ?>">Joined Projects</a>
 		</li>
 		<?php endif; ?>
 		<?php if ($this->flexi_auth->is_privileged('ASSIGNED PROJECT MAINTENANCE')):?>

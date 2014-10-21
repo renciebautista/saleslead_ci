@@ -9,6 +9,7 @@ class Contact extends MY_Controller {
 		$this->load->model('Contactemail_model');
 		$this->load->model('Paintspecification_model');
 		$this->load->model('Paintspecification_log');
+		$this->load->model('Projectfile_model');
 		$this->load->model('grouptype/Grouptype_model');
 		$this->load->model('company/Company_model');
 		$this->load->model('city/City_model');
@@ -24,6 +25,8 @@ class Contact extends MY_Controller {
 		$this->load->model('prjstatus/Prjstatus_model');
 		$this->load->model('prjstatus/Project_status_history_model');
 		$this->load->model('painttype/Painttype_model');
+		$this->load->model('notifications/Notification_model');
+
 	}
 
 	// Ajax request
@@ -483,6 +486,55 @@ class Contact extends MY_Controller {
 	}
 // ========================================================
 
+	public function getfile($hash = null){
+		$file = $this->Projectfile_model->downloadfile($hash);
+		if($file){
+			$this->load->helper('download');
+			$filename = $file['filename'];
+			$data = file_get_contents('uploads/files/'.$hash); // Read the file's contents
+			force_download($filename, $data);
+		}else{
+			$this->_pageNotFound();
+			return;
+		}
+		
+	}
+
+	private function upload_files($remark_id,$group_id){
+		if($_FILES['files']['name'][0] != ''){
+
+			$this->load->library('upload');
+			$this->upload->initialize(array(
+				"upload_path"   => "./uploads/files/",
+				"allowed_types" => "pdf|gif|jpg|png|txt|xls|xlsx|doc|docx|jpeg|bmp|csv",
+				"encrypt_name" => true,
+				"max_size" => 0
+			));
+			if($this->upload->do_multi_upload("files")){
+				//Code to run upon successful upload.
+				$files = $this->upload->get_multi_upload_data();
+				// debug($files);
+				if(!empty($files)){
+					$data = array();
+					foreach ($files as $file) {
+						$_file = array(
+							'group_id' => $group_id,
+							'remark_id' => $remark_id,
+							'hashname' => $file['file_name'],
+							'filename' => $file['client_name']);
+						$data[] = $_file;
+					}
+					$this->Projectfile_model->insert_many($data);
+				}
+				return TRUE;
+			}else{
+				$this->flash_message->set('message','alert alert-danger',$this->upload->display_errors());
+				return FALSE;
+			}
+		}
+		return TRUE;
+	}
+
 	public function project($contact_id = null) {
 		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
 			redirect('contact/access_denied');
@@ -526,18 +578,33 @@ class Contact extends MY_Controller {
 
 		if ($this->form_validation->run() == FALSE){
 			$project_contact = $this->Project_contact_model->get($project_contact_id);
-			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 			$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
 			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 			$this->layout->view('contact/updateproject',$this->data);
 		}else{
+			// debug($_FILES);
+			$group_id = 1;
 			$project_contact_id = $this->input->post('project_contact_id');
-			$this->Project_detail_model->insert(array(
+			$details = trim($this->input->post('details'));
+			$remark_id = $this->Project_detail_model->insert(array(
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
-				'details' => trim($this->input->post('details'))
+				'details' => $details
 				));
-			$this->flash_message->set('message','alert alert-success','Details successfully updated!');
+
+			// add notification
+			$this->Notification_model->insert(array(
+				'type' => 1,
+				'project_contact_id' => $project_contact_id,
+				'group_id' => $group_id,
+				'remarks' => substr($details, 0, 100),
+				'created_by' => $this->_user_id));
+
+			if($this->upload_files($remark_id,$group_id)){
+				$this->flash_message->set('message','alert alert-success','Details successfully updated!');
+			}
+
 			redirect('contact/updateproject/'.$project_contact_id);
 		}
 	}
@@ -572,13 +639,26 @@ class Contact extends MY_Controller {
 			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 			$this->layout->view('contact/updateclassification',$this->data);
 		}else{
+			$group_id = 2;
 			$project_contact_id = $this->input->post('project_contact_id');
-			$this->Project_classificaton_history_model->insert(array(
+			$remark_id = $this->Project_classificaton_history_model->insert(array(
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
 				'prlclass_id' => $this->input->post('prlclass_id')
 				));
-			$this->flash_message->set('message','alert alert-success','Project classification successfully updated!');
+
+			// add notification
+			$this->Notification_model->insert(array(
+				'type' => 1,
+				'project_contact_id' => $project_contact_id,
+				'group_id' => $group_id,
+				'remarks' => "Changed project classifications",
+				'created_by' => $this->_user_id));
+			
+			if($this->upload_files($remark_id,$group_id)){
+				$this->flash_message->set('message','alert alert-success','Details successfully updated!');
+			}
+
 			redirect('contact/updateclassification/'.$project_contact_id);
 		}
 	}
@@ -611,14 +691,27 @@ class Contact extends MY_Controller {
 			$this->data['category_histories'] = $this->Project_category_history_model->get_contact_categories($project_contact_id);
 			$this->layout->view('contact/updatecategory',$this->data);
 		}else{
+			$group_id = 3;
 			$project_contact_id = $this->input->post('project_contact_id');
-			$this->Project_category_history_model->insert(array(
+			$remark_id = $this->Project_category_history_model->insert(array(
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
 				'prjcat_id' => $this->input->post('prjcat_id'),
 				'prjsubcat_id' => $this->input->post('prjsubcat_id')
 				));
-			$this->flash_message->set('message','alert alert-success','Project Category successfully updated!');
+
+			// add notification
+			$this->Notification_model->insert(array(
+				'type' => 1,
+				'project_contact_id' => $project_contact_id,
+				'group_id' => $group_id,
+				'remarks' => "Changed project category",
+				'created_by' => $this->_user_id));
+
+			if($this->upload_files($remark_id,$group_id)){
+				$this->flash_message->set('message','alert alert-success','Details successfully updated!');
+			}
+
 			redirect('contact/updatecategory/'.$project_contact_id);
 		}
 	}
@@ -655,14 +748,28 @@ class Contact extends MY_Controller {
 
 			$this->layout->view('contact/updatestage',$this->data);
 		}else{
+			$group_id = 4;
 			$project_contact_id = $this->input->post('project_contact_id');
-			$this->Project_stage_history_model->insert(array(
+			$remark_id = $this->Project_stage_history_model->insert(array(
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
 				'prjstage_id' => $this->input->post('prjstage_id'),
 				'remarks' => trim($this->input->post('remarks'))
 				));
-			$this->flash_message->set('message','alert alert-success','Project Stage successfully updated!');
+
+
+			// add notification
+			$this->Notification_model->insert(array(
+				'type' => 1,
+				'project_contact_id' => $project_contact_id,
+				'group_id' => $group_id,
+				'remarks' => "Changed project stage",
+				'created_by' => $this->_user_id));
+
+			if($this->upload_files($remark_id,$group_id)){
+				$this->flash_message->set('message','alert alert-success','Details successfully updated!');
+			}
+
 			redirect('contact/updatestage/'.$project_contact_id);
 		}
 	}
@@ -698,14 +805,26 @@ class Contact extends MY_Controller {
 
 			$this->layout->view('contact/updatestatus',$this->data);
 		}else{
+			$group_id = 5;
 			$project_contact_id = $this->input->post('project_contact_id');
-			$this->Project_status_history_model->insert(array(
+			$remark_id = $this->Project_status_history_model->insert(array(
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
 				'prjstatus_id' => $this->input->post('prjstatus_id'),
 				'remarks' => trim($this->input->post('remarks'))
 				));
-			$this->flash_message->set('message','alert alert-success','Project Stage successfully updated!');
+
+			// add notification
+			$this->Notification_model->insert(array(
+				'type' => 1,
+				'project_contact_id' => $project_contact_id,
+				'group_id' => $group_id,
+				'remarks' => "Changed project status",
+				'created_by' => $this->_user_id));
+
+			if($this->upload_files($remark_id,$group_id)){
+				$this->flash_message->set('message','alert alert-success','Details successfully updated!');
+			}
 			redirect('contact/updatestatus/'.$project_contact_id);
 		}
 	}
@@ -783,6 +902,14 @@ class Contact extends MY_Controller {
 				'details' => $this->Paintspecification_log->generate_logs($type['painttype'],$details,$this->input->post('area'),$this->input->post('paint'),$this->input->post('cost'))
 				));
 
+			// add notification
+			$this->Notification_model->insert(array(
+				'type' => 1,
+				'project_contact_id' => $project_contact_id,
+				'group_id' => 6,
+				'remarks' => "Add paint specification",
+				'created_by' => $this->_user_id));
+
 			$this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
 			redirect('contact/updatespecification/'.$project_contact_id);
 		}
@@ -823,6 +950,14 @@ class Contact extends MY_Controller {
 				'details' => $this->Paintspecification_log->generate_logs($specs['painttype'],$specs['details'],
 					number_format($specs['area'],2),number_format($specs['paint'],2),number_format($specs['cost'],2))
 				));
+
+			// add notification
+			$this->Notification_model->insert(array(
+				'type' => 1,
+				'project_contact_id' => $specs['project_contact_id'],
+				'group_id' => 6,
+				'remarks' => "Delete paint specification",
+				'created_by' => $this->_user_id));
 			
 			$this->Paintspecification_model->delete($_id);
 			$this->flash_message->set('message','alert alert-success','Successfully deleted a specification!');
@@ -881,6 +1016,14 @@ class Contact extends MY_Controller {
 				'remarks' => "Paint updated to",
 				'details' => $new. 'from' .$old
 				)) ;
+
+			// add notification
+			$this->Notification_model->insert(array(
+				'type' => 1,
+				'project_contact_id' => $specs['project_contact_id'],
+				'group_id' => 6,
+				'remarks' => "Edit paint specification",
+				'created_by' => $this->_user_id));
 
 			$this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
 			redirect('contact/updatespecification/'.$specs['project_contact_id']);

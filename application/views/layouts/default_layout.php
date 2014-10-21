@@ -28,6 +28,7 @@
 	<!-- DataTables-1.10.2 CSS -->
 	<?php echo link_tag('assets/plugins/DataTables-1.10.2/css/dataTables.bootstrap.css'); ?>
 	
+	
 	<!-- Custom CSS -->
 	<?php echo link_tag('assets/css/sb-admin-2.css'); ?>
 	<?php echo link_tag('assets/css/sl.css'); ?>
@@ -106,7 +107,7 @@
 
 						<?php $this->load->view('menu/contacts'); ?>
 
-						<?php //$this->load->view('menu/reports'); ?>
+						<?php $this->load->view('menu/reports'); ?>
 
 						<?php $this->load->view('menu/user_maintenance'); ?>
 
@@ -168,10 +169,14 @@
 	<!-- jquery-maskmoney-3.0.2 Plugin JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/jquery-maskmoney-3.0.2/jquery.maskMoney.min.js'); ?>"></script>
 
+	<!-- multiple-file-upload Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/multiple-file-upload/jquery.MultiFile.js'); ?>"></script>
+
 	<!-- Custom Theme JavaScript -->
 	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/sb-admin-2.js'); ?>"></script>
 
+	
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("form").submit(function (e) {

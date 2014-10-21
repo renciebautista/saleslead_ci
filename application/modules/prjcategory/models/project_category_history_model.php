@@ -7,6 +7,17 @@ class Project_category_history_model extends MY_Model {
 
 
 	public function get_contact_categories($project_contact_id){
+		$history = $this->_get_contact_categories($project_contact_id);
+		if(!empty($history)){
+			foreach ($history as $key => $value) {
+				$history[$key]['files'] = $this->Projectfile_model->getfiles($value['id'],3);
+			}
+		}
+
+		return $history;
+	}
+
+	private function _get_contact_categories($project_contact_id){
 		$this->db->select('project_category_histories.id,project_category_histories.created_at,
 			prjcategories.prjcategory_desc,
 			prjsubcategories.prjsubcategory_desc');
@@ -18,6 +29,17 @@ class Project_category_history_model extends MY_Model {
 	}
 
 	public function get_all_history($project_id){
+		$history = $this->_get_all_history($project_id);
+		if(!empty($history)){
+			foreach ($history as $key => $value) {
+				$history[$key]['files'] = $this->Projectfile_model->getfiles($value['id'],3);
+			}
+		}
+
+		return $history;
+	}
+
+	private function _get_all_history($project_id){
 		$this->db->select('project_category_histories.id,project_category_histories.created_at,
 			contacts.first_name,contacts.middle_name,contacts.last_name,
 			user_details.avatar, 

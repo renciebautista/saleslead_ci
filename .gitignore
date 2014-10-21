@@ -4,3 +4,4 @@ deploy.rb
 notes.txt
 revision
 .htaccess
+/uploads

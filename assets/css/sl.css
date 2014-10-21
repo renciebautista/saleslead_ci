@@ -93,3 +93,37 @@ table > thead .action-center, table > tbody .action-center{
 	color: #428bca;
     text-decoration: underline;
 }
+
+.green {
+	background-color: #449D44;
+    border-color: #398439;
+    color: #fff;
+}
+
+.blue {
+	background-color: #3071A9;
+    border-color: #285E8E;
+    color: #fff;
+}
+
+.orange {
+	background-color: #EC971F;
+    border-color: #D58512;
+    color: #fff;
+}
+
+.MultiFile-label {
+    margin-top: 10px;
+}
+
+.attached-files ul {
+	list-style: none outside none;
+	margin-left: -30px;
+}
+
+.attached-files ul li {
+
+}
+.attached-files ul li a {
+	font-style: italic;
+}

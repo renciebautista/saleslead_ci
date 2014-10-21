@@ -7,6 +7,17 @@ class Project_stage_history_model extends MY_Model {
 
 
 	public function get_contact_stages($project_contact_id){
+		$history = $this->_get_contact_stages($project_contact_id);
+		if(!empty($history)){
+			foreach ($history as $key => $value) {
+				$history[$key]['files'] = $this->Projectfile_model->getfiles($value['id'],4);
+			}
+		}
+
+		return $history;
+	}
+
+	public function _get_contact_stages($project_contact_id){
 		$this->db->select('project_stage_histories.id,project_stage_histories.remarks,project_stage_histories.created_at,
 			prjstages.prjstage_desc');
 		$this->db->where('project_contact_id',$project_contact_id);
@@ -16,6 +27,17 @@ class Project_stage_history_model extends MY_Model {
 	}
 
 	public function get_all_history($project_id){
+		$history = $this->_get_all_history($project_id);
+		if(!empty($history)){
+			foreach ($history as $key => $value) {
+				$history[$key]['files'] = $this->Projectfile_model->getfiles($value['id'],4);
+			}
+		}
+
+		return $history;
+	}
+
+	private function _get_all_history($project_id){
 		$this->db->select('project_stage_histories.id,project_stage_histories.created_at,
 			project_stage_histories.remarks,
 			contacts.first_name,contacts.middle_name,contacts.last_name,

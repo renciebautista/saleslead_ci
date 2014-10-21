@@ -25,15 +25,28 @@
 							<div>
 								<p><?php echo nl2br($detail['details']) ?></p>
 							</div>
+							<?php if(!empty($detail['files'])): ?>
+							<div class="attached-files">
+								<ul>
+									<?php foreach ($detail['files'] as $file):?>
+									<li><a href="<?php echo base_url('contact/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+							<?php endif; ?>
 						</div>
 						<?php endforeach; ?>
 					</div>
 					<?php endif; ?>
 					<div class="panel-footer">
-						<?php echo form_open('',array('role' => 'form', 'class' => 'form-validate')); ?>
+						<?php echo form_open_multipart('',array('role' => 'form', 'class' => 'form-validate')); ?>
 						<?php echo form_hidden('project_contact_id', $project['project_contact_id']); ?>
 							<div class="form-group">
 						    	<textarea name="details" id="details" class="form-control" rows="3" placeholder="Details"></textarea>
+						  	</div>
+						  	<div class="form-group">
+						    	<p class="help-block">Attach files</p>
+						    	<input  type="file" id="files" name="files[]" size="20"  />
 						  	</div>
 						  	<input class="btn btn-success" type="submit" value="Submit">
 						<?php echo form_close(); ?>
@@ -51,6 +64,15 @@
 
 <script type="text/delayscript">
 $(document).ready(function() {	
+	$('#files').MultiFile({
+		STRING: {
+				remove: 'Delete', 
+				removeClass: 'btn btn-danger btn-xs',
+			},
+		duplicate: false
+	});
+
+
 	$(".form-validate").validate({
 		errorElement: 'span',
 		rules: {
@@ -61,6 +83,7 @@ $(document).ready(function() {
 		}
 	});
 
+	
 });
 </script>
 

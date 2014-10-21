@@ -7,15 +7,7 @@
 <!-- /.row -->
 
 
-<div class="row">
-    <div class="col-lg-12 header-button">
-        <a class="btn btn-default" href="<?php echo base_url('project/assigned'); ?>">
-            <i class="fa fa-reply"></i> Back
-        </a>
-    </div>
-    <!-- /.col-lg-12 -->                        
-</div>
-<!-- /.row -->
+<?php $this->load->view('shared/project/_project_back'); ?>
 
 <?php $this->load->view('shared/project/_project_name_address'); ?>
 
@@ -50,6 +42,16 @@
                                         <em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
                                         <p>Updated to <?php echo $row['prjclassification_desc']; ?></p>
                                     </div>
+                                    <?php if(!empty($row['files'])): ?>
+                                    <div class="attached-files">
+                                        <p style="padding-top:5px;border-bottom: 1px solid #ccc;">Attached files</p>
+                                        <ul>
+                                            <?php foreach ($row['files'] as $file):?>
+                                            <li><a href="<?php echo base_url('project/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                    <?php endif; ?>
                                 </div>
                             </li>
                             <?php endforeach; ?>
@@ -65,21 +67,30 @@
 <!-- /.row -->
 
 <script type="text/delayscript">
-$(".dropdown-menu li a").click(function(){
-    var filter_text = $(this).text();
-    $("#filter-menu:first-child").html(filter_text+' <span class="caret"></span>');
+$(document).ready(function(){
 
-    $(".timeline li").each(function () {
-        if(filter_text != "All Users"){
-            if ($(this).find(".bdo-name").text() == filter_text) {
+    $(".dropdown-menu li a").click(function(){
+        var filter_text = $(this).text();
+        $("#filter-menu:first-child").html(filter_text+' <span class="caret"></span>');
+
+        $(".timeline .timeline-inverted").each(function () {
+            if(filter_text != "All Users"){
+                if ($(this).find(".bdo-name").text() == filter_text) {
+                    $(this).removeClass("hidden");
+                } else {
+                    $(this).addClass("hidden"); 
+                }
+            }else{
                 $(this).removeClass("hidden");
-            } else {
-                $(this).addClass("hidden"); 
             }
-        }else{
-            $(this).removeClass("hidden");
-        }
-        
+            
+        });
     });
+    var count = $("#tab .active .badge").text();
+    if(count > 0){
+        $('.timeline li .timeline-panel').slice(-count).css('border', '1px solid #449d44')
+        $("html,body").animate({scrollTop: $('.timeline .timeline-inverted:nth-last-child('+count+')').offset().top-30});
+    }
+    
 });
 </script>

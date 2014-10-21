@@ -7,6 +7,17 @@ class Project_classificaton_history_model extends MY_Model {
 
 
 	public function get_contact_classificatons($project_contact_id){
+		$history = $this->_get_contact_classificatons($project_contact_id);
+		if(!empty($history)){
+			foreach ($history as $key => $value) {
+				$history[$key]['files'] = $this->Projectfile_model->getfiles($value['id'],2);
+			}
+		}
+
+		return $history;
+	}
+
+	private function _get_contact_classificatons($project_contact_id){
 		$this->db->select('project_classificaton_histories.id,project_classificaton_histories.created_at,prjclassifications.prjclassification_desc');
 		$this->db->where('project_contact_id',$project_contact_id);
 		$this->db->join('prjclassifications','prjclassifications.id = project_classificaton_histories.prlclass_id');
@@ -15,6 +26,17 @@ class Project_classificaton_history_model extends MY_Model {
 	}
 
 	public function get_all_history($project_id){
+		$details = $this->_get_all_history($project_id);
+		if(!empty($details)){
+			foreach ($details as $key => $value) {
+				$details[$key]['files'] = $this->Projectfile_model->getfiles($value['id'],2);
+			}
+		}
+
+		return $details;
+	}
+
+	private function _get_all_history($project_id){
 		$this->db->select('project_classificaton_histories.id,project_classificaton_histories.created_at,
 			contacts.first_name,contacts.middle_name,contacts.last_name,
 			user_details.avatar, 
