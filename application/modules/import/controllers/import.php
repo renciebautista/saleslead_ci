@@ -7,12 +7,7 @@ class Import extends CI_Controller {
 		$this->load->library('filereader');
 	}
 
-	public function index()
-	{
-		$this->_update_province();
-	}
-
-	private function _update_province(){
+	public function update_province(){
 		$this->load->model('province/Province_model');
 		$filePath = realpath('uploads/luzon.txt');
 		$data = $this->filereader->parse_file($filePath,"\n","\n",false);

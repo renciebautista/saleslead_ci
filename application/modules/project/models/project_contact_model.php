@@ -12,7 +12,8 @@ class Project_contact_model extends MY_Model {
 			project_contacts.approved,
 			projects.project_name,projects.lot,projects.street,projects.brgy,
 			cities.city,provinces.province,
-			grouptypes.grouptype_desc');
+			grouptypes.grouptype_desc,
+			projectcontact_status.pc_status');
 		$this->db->where('project_contacts.contact_id',$contact_id);
 		$this->db->where("( project_name LIKE '%{$filter}%' OR projects.lot LIKE '%{$filter}%' OR projects.street LIKE '%{$filter}%' OR projects.brgy LIKE '%{$filter}%' OR cities.city LIKE '%{$filter}%' OR provinces.province LIKE '%{$filter}%')");
 		$this->db->join('projects','projects.id = project_contacts.project_id');
@@ -21,6 +22,7 @@ class Project_contact_model extends MY_Model {
 		$this->db->join('cities','cities.id = companies.city_id');
 		$this->db->join('provinces','provinces.id = cities.province_id');
 		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
+		$this->db->join('projectcontact_status','projectcontact_status.id = project_contacts.approved');
 		$this->db->order_by('projects.project_name');
 		return $this->db->get($this->_table)->result_array();
 	}
@@ -67,14 +69,14 @@ class Project_contact_model extends MY_Model {
 		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
 		$this->db->join('user_details','user_details.uacc_id_fk = project_contacts.created_by');
 		$this->db->where('project_contacts.project_id',$project_id);
-		$this->db->where('project_contacts.approved',0);
+		$this->db->where('project_contacts.approved',1);
 		$this->db->order_by('user_details.first_name,company');
 		return $this->db->get($this->_table)->result_array();
 	}
 
 	public function for_approval_project_contact_count($project_id){
 		$this->db->where('project_contacts.project_id',$project_id);
-		$this->db->where('project_contacts.approved',0);
+		$this->db->where('project_contacts.approved',1);
 		$this->db->from($this->_table);
 		return $this->db->count_all_results();
 	}
@@ -86,15 +88,17 @@ class Project_contact_model extends MY_Model {
 			concat(lot,' ',street,' ',brgy,' ',cities.city,' ',provinces.province,'') as address,
 			grouptypes.grouptype_desc,
 			concat(user_details.last_name,', ',user_details.first_name,' ',user_details.middle_name) as created_by_name,
-			project_contacts.approved",false);
+			project_contacts.approved,
+			projectcontact_status.pc_status",false);
 		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
 		$this->db->join('companies','companies.id = contacts.company_id');
 		$this->db->join('cities','cities.id = companies.city_id');
 		$this->db->join('provinces','provinces.id = cities.province_id');
 		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
 		$this->db->join('user_details','user_details.uacc_id_fk = project_contacts.created_by');
+		$this->db->join('projectcontact_status','projectcontact_status.id = project_contacts.approved');
 		$this->db->where('project_contacts.project_id',$project_id);
-		$this->db->where('project_contacts.approved > ',0);
+		$this->db->where('project_contacts.approved >',1);
 		$this->db->order_by('project_contacts.approved,user_details.first_name,company');
 		return $this->db->get($this->_table)->result_array();
 	}
@@ -108,7 +112,7 @@ class Project_contact_model extends MY_Model {
 		$this->db->join('provinces','provinces.id = cities.province_id');
 		$this->db->join('user_details','user_details.uacc_id_fk = projects.created_by');
 		$this->db->where('projects.assigned_to',$user_id);
-		$this->db->where('project_contacts.approved',0);
+		$this->db->where('project_contacts.approved',1);
 		$this->db->group_by('projects.id');
 		return $this->db->get($this->_table)->result_array();
 	}
@@ -117,7 +121,7 @@ class Project_contact_model extends MY_Model {
 		$this->db->select('project_contacts.created_at');
 		$this->db->join('projects','projects.id = project_contacts.project_id');
 		$this->db->where('projects.assigned_to',$user_id);
-		$this->db->where('project_contacts.approved',0);
+		$this->db->where('project_contacts.approved',1);
 		$this->db->order_by('project_contacts.created_at');
 		return $this->db->get($this->_table)->result_array();
 
@@ -149,7 +153,7 @@ class Project_contact_model extends MY_Model {
 	public function is_my_project_contact($id,$user_id){
 		$this->db->where('id',$id);
 		$this->db->where('created_by',$user_id);
-		$this->db->where('approved',1);
+		$this->db->where('approved',2);
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}
 
@@ -157,7 +161,7 @@ class Project_contact_model extends MY_Model {
 		$this->db->join('projects','projects.id = project_contacts.project_id');
 		$this->db->where('project_contacts.id',$project_contact_id);
 		$this->db->where('project_contacts.created_by',$user_id);
-		$this->db->where('projects.status_id <',3);
+		$this->db->where('projects.status_id',2);
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}
 
@@ -184,13 +188,15 @@ class Project_contact_model extends MY_Model {
 			concat(lot,' ',street,' ',brgy,' ',cities.city,' ',provinces.province,'') as address,
 			grouptypes.grouptype_desc,
 			concat(user_details.last_name,', ',user_details.first_name,' ',user_details.middle_name) as created_by_name,
-			project_contacts.approved",false);
+			project_contacts.approved,
+			projectcontact_status.pc_status",false);
 		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
 		$this->db->join('companies','companies.id = contacts.company_id');
 		$this->db->join('cities','cities.id = companies.city_id');
 		$this->db->join('provinces','provinces.id = cities.province_id');
 		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
 		$this->db->join('user_details','user_details.uacc_id_fk = project_contacts.created_by');
+		$this->db->join('projectcontact_status','projectcontact_status.id = project_contacts.approved');
 		$this->db->where('project_contacts.project_id',$project_id);
 		$this->db->where('contacts.created_by',$user_id);
 		$this->db->order_by('contact_name');

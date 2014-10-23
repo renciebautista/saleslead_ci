@@ -30,6 +30,9 @@
 		   <div class="col-lg-4">
 		  		<div class="form-group">
 		   			<input class="btn btn-success" type="submit" value="Process">
+		   		<?php if(count($callreports)>0): ?>
+		   			<input class="btn btn-success" type="submit" value="Print">
+		   		<?php endif; ?>
 		 		</div>
 		   </div>
 		<?php echo form_close(); ?>

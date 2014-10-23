@@ -38,16 +38,10 @@
 												</td>
 												<td><?php echo $project['grouptype_desc']; ?></td>
 												<td>
-													<?php if($project['approved'] == 0): ?>
-													For Approval
-													<?php elseif($project['approved'] == 1): ?>
-													Approved
-													<?php else: ?>
-													Denied
-													<?php endif; ?>
+													<?php echo $project['pc_status']; ?>
 												</td>
 												<td style="width:150px;text-align: center;">
-													<?php if($project['approved'] == 1): ?>
+													<?php if($project['approved'] == 2): ?>
 													<a href="<?php echo base_url('contact/updateproject/'.$project['project_contact_id']); ?>">View Details</a>
 													<?php else: ?>
 													N/A

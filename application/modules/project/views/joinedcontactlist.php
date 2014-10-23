@@ -30,6 +30,7 @@
 						<th>Contact Name</th>
 						<th>Contact Group</th>
 						<th>Company Name</th>
+						<th>Status</th>
 						<th style="width:130px;text-align: center;">Actions</th>
 					</tr>
 				</thead>
@@ -43,8 +44,13 @@
 							<?php echo $contact['company']; ?><br>
 							<i>	<?php echo ucwords(strtolower($contact['address'])); ?></i><br>
 						</td>
+						<td><?php echo $contact['pc_status']; ?></td>
 						<td style="width:130px;text-align: center;">
+							<?php if($contact['approved'] == 2): ?>
 							<a href="<?php echo base_url('contact/updateproject/'.$contact['id']); ?>">View Details</a>
+							<?php else: ?>
+							N/A
+							<?php endif; ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

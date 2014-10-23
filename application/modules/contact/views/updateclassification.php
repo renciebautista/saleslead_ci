@@ -48,9 +48,9 @@
 									<?php echo form_error('prlclass_id'); ?>
 									<select class="form-control" data-placeholder="SELECT CLASSIFICATION" id="prlclass_id" name="prlclass_id" class="medium" >
 										<option value="0">SELECT CLASSIFICATION</option>
-										<?php foreach($classifications as $classification){?>
+										<?php foreach($classifications as $classification):?>
 											<option value="<?php echo $classification['id'];?>" <?php echo set_select('prlclass_id',$classification['id']); ?> ><?php echo strtoupper($classification['prjclassification_desc']);?></option>
-										<?}?>
+										<?php endforeach; ?>
 									</select>
 								</div>
 								<div class="form-group">

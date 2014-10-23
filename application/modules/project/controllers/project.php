@@ -312,14 +312,15 @@ class Project extends MY_Controller {
 			$this->data['contact_lists'] = $this->Project_contact_model->project_contact_list($id);
 			$this->layout->view('project/contactlist',$this->data);
 		}else{
+			debug($_POST);
 			$project_id = $this->input->post('project_id');
 			$project_contact_id = $this->input->post('_id');
 			$approve = 3;
 			if($this->input->post('submit') == 'Approve'){
-				$approve = 1;
+				$approve = 2;
 			}
 
-			if($approve == 1){
+			if($approve == 2){
 				// add notification
 				$this->Notification_model->insert(array(
 					'type' => 2,

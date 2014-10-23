@@ -126,12 +126,7 @@
 													<i>	<?php echo ucwords(strtolower($contact['address'])); ?></i><br>
 												</td>
 												<td style="width:130px;text-align: center;">
-													<?php if($contact['approved'] == 1): ?>
-													<p class="join-status">Approved</p>
-													<?php else: ?>
-													<p class="join-status">Denied</p>
-													
-													<?php endif; ?>
+													<?php echo $contact['pc_status']; ?>
 												</td>
 											</tr>
 										<?php endforeach; ?>
