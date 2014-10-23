@@ -17,8 +17,6 @@ class Project_detail_model extends MY_Model {
 		return $details;
 	}
 
-
-
 	private function _get_details($project_contact_id,$group_id){
 		$this->db->where('project_contact_id',$project_contact_id);
 		$this->db->where('group_id',$group_id);
@@ -65,6 +63,25 @@ class Project_detail_model extends MY_Model {
 		$this->db->group_by('project_details.created_by');
 		$this->db->order_by('user_details.last_name');
 		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function get_call_report($user_id,$start_date,$end_date){
+		$this->db->select('project_details.created_at,
+			projects.project_name,
+			contacts.first_name,contacts.middle_name,contacts.last_name,
+			grouptypes.grouptype_desc,
+			project_details.details,
+			project_details.remarks,
+			project_details.group_id');
+		$this->db->join('project_contacts','project_contacts.id = project_details.project_contact_id');
+		$this->db->join('contacts', 'contacts.id = project_contacts.contact_id');
+		$this->db->join('projects', 'projects.id = project_contacts.project_id');
+		$this->db->join('grouptypes', 'grouptypes.id = project_contacts.type_id');
+		$this->db->where('project_details.created_by',$user_id);
+		$this->db->where('CAST(project_details.created_at AS DATE) >=',date_format(date_create($start_date),'Y-m-d'));
+		$this->db->where('CAST(project_details.created_at AS DATE) <=',date_format(date_create($end_date),'Y-m-d'));
+		return $this->db->get($this->_table)->result_array();
+
 	}
 }
 

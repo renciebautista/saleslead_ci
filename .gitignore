@@ -3,5 +3,8 @@ deploy.yml
 deploy.rb
 notes.txt
 revision
-.htaccess
+*.htaccess
 /uploads
+/uploads/files/*.*
+/uploads/avatar/*.*
+/uploads/thumbnails/*.*

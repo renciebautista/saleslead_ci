@@ -10,7 +10,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-			<?php echo form_open('',array('role' => 'search', 'method' => 'get','class' => 'form-horizontal')); ?>
+			<?php echo form_open('',array('role' => 'search','class' => 'form-horizontal')); ?>
 			<div class="col-lg-4">
 		  		<div class="form-group">
 		   			<label for="start_date" class="col-sm-4 control-label">Start Date</label>
@@ -45,10 +45,10 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th class="action-center" style="width:120px;">Day</th>
-						<th class="action-center" style="width:120px;">Date</th>
-						<th>Company / Organization</th>
-						<th>Client / Designation</th>
+						<th class="action-center" style="width:10px;">Day</th>
+						<th class="action-center" style="width:100px;">Date</th>
+						<th style="width:300px;">Company / Organization</th>
+						<th style="width:300px;">Client / Designation</th>
 						<th>Remarks</th>
 					</tr>
 				</thead>
@@ -58,20 +58,27 @@
 						<td colspan="3">No record found.</td>
 					</tr>
 				<?php else: ?>
-				<?php foreach ($callreports as $project):?>
+				<?php foreach ($callreports as $row):?>
 					<tr>
-						<td class="action-center" style="width:120px;">
-							<?php echo date_format(date_create($project['created_at']),'m/d/Y'); ?>
-						</td>
-						<td>
-							<strong><?php echo $project['project_name']; ?></strong><br>
-							<i>	<?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].', '.$project['city'].' '.$project['province'])); ?></i><br>
-						</td>
-						<td class="action-center" style="width:150px;">
-							<?php echo $project['status']; ?>
+						<td class="action-center" style="width:10px;">
+							<?php echo date('D',strtotime($row['created_at'])); ?>
 						</td>
 						<td class="action-center" style="width:100px;">
-							<a href="<?php echo base_url('project/created/'.$project['id']) ?>">View</a>
+							<?php echo date_format(date_create($row['created_at']),'m/d/Y'); ?>
+						</td>
+						<td>
+							<?php echo $row['project_name']; ?>
+						</td>
+						<td>
+							<?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?><br>
+							<em><?php echo $row['grouptype_desc']; ?></em>
+						</td>
+						<td>
+							<?php if($row['group_id'] == 6): ?>
+							<?php echo $row['remarks']; ?>
+							<?php else: ?>
+							<?php echo $row['details']; ?>
+							<?php endif; ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>
