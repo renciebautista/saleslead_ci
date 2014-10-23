@@ -11,24 +11,24 @@
 					<div class="panel-heading">
 						<i class="fa fa-comments"></i> Project Classification Update 
 					</div>
-					<?php if(!empty($class_history)): ?>
+					<?php if(!empty($details)): ?>
 					<div class="panel-body">
-						<?php foreach ($class_history as $row):?>
+						<?php foreach ($details as $detail):?>
 						<div class="thread">
 							<div>
 								<p>
 								<small class="text-muted">
-									<i class="fa fa-clock-o"></i> <?php echo date_format(date_create($row['created_at']),'m/d/Y H:i:s'); ?>
+									<i class="fa fa-clock-o"></i> <?php echo date_format(date_create($detail['created_at']),'m/d/Y H:i:s'); ?>
 								</small>
 								</p>
 							</div>
 							<div>
-								<p>Updated to <?php echo($row['prjclassification_desc']); ?></p>
+								<p><?php echo nl2br($detail['details']) ?></p>
 							</div>
-							<?php if(!empty($row['files'])): ?>
+							<?php if(!empty($detail['files'])): ?>
 							<div class="attached-files">
 								<ul>
-									<?php foreach ($row['files'] as $file):?>
+									<?php foreach ($detail['files'] as $file):?>
 									<li><a href="<?php echo base_url('contact/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
 									<?php endforeach; ?>
 								</ul>

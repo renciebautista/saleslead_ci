@@ -17,13 +17,10 @@ class Contact extends MY_Controller {
 		$this->load->model('project/Project_model');
 		$this->load->model('project/Project_detail_model');
 		$this->load->model('prjclassification/Prjclassification_model');
-		$this->load->model('prjclassification/Project_classificaton_history_model');
 		$this->load->model('prjcategory/Prjcategory_model');
-		$this->load->model('prjcategory/Project_category_history_model');
-		$this->load->model('prjstage/Project_stage_history_model');
+		$this->load->model('prjcategory/Prjsubcategory_model');
 		$this->load->model('prjstage/Prjstage_model');
 		$this->load->model('prjstatus/Prjstatus_model');
-		$this->load->model('prjstatus/Project_status_history_model');
 		$this->load->model('painttype/Painttype_model');
 		$this->load->model('notifications/Notification_model');
 
@@ -71,7 +68,7 @@ class Contact extends MY_Controller {
 		}
 	}
 
-// ============================================================
+// ========================================================
 
 	public function index(){
 		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
@@ -576,20 +573,23 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
+		$group_id = 1;
+
 		if ($this->form_validation->run() == FALSE){
 			$project_contact = $this->Project_contact_model->get($project_contact_id);
 			$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 
-			$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
-			
+			$this->data['details'] = $this->Project_detail_model->get_details($project_contact_id,$group_id);
+
 			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 			$this->layout->view('contact/updateproject',$this->data);
 		}else{
 			// debug($_FILES);
-			$group_id = 1;
+			
 			$project_contact_id = $this->input->post('project_contact_id');
 			$details = trim($this->input->post('details'));
 			$remark_id = $this->Project_detail_model->insert(array(
+				'group_id' => $group_id,
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
 				'details' => $details
@@ -632,21 +632,27 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-
+		$group_id = 2;
 		if ($this->form_validation->run() == FALSE){
 			$project_contact = $this->Project_contact_model->get($project_contact_id);
 			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 			$this->data['classifications'] = $this->Prjclassification_model->order_by('prjclassification_desc')->get_all();
-			$this->data['class_history'] = $this->Project_classificaton_history_model->get_contact_classificatons($project_contact_id);
+
+			$this->data['details'] = $this->Project_detail_model->get_details($project_contact_id,$group_id);
+
 			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 			$this->layout->view('contact/updateclassification',$this->data);
 		}else{
-			$group_id = 2;
+
+
 			$project_contact_id = $this->input->post('project_contact_id');
-			$remark_id = $this->Project_classificaton_history_model->insert(array(
+			$classification = $this->Prjclassification_model->get($this->input->post('prlclass_id'));
+			$details = "Project classification is updated to ".$classification['prjclassification_desc'].".";
+			$remark_id = $this->Project_detail_model->insert(array(
+				'group_id' => $group_id,
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
-				'prlclass_id' => $this->input->post('prlclass_id')
+				'details' => $details
 				));
 
 			// add notification
@@ -684,22 +690,28 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-
+		$group_id = 3;
 		if ($this->form_validation->run() == FALSE){
 			$project_contact = $this->Project_contact_model->get($project_contact_id);
 			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 			$this->data['categories'] = $this->Prjcategory_model->order_by('prjcategory_desc')->get_all();
-			$this->data['category_histories'] = $this->Project_category_history_model->get_contact_categories($project_contact_id);
+
+			$this->data['details'] = $this->Project_detail_model->get_details($project_contact_id,$group_id);
+
 			$this->layout->view('contact/updatecategory',$this->data);
 		}else{
-			$group_id = 3;
+			
 			$project_contact_id = $this->input->post('project_contact_id');
-			$remark_id = $this->Project_category_history_model->insert(array(
+
+			$category = $this->Prjcategory_model->get($this->input->post('prjcat_id'));
+			$subcategory = $this->Prjsubcategory_model->get($this->input->post('prjsubcat_id'));
+			$details = "Project category is updated to ".$category['prjcategory_desc']." - ".$subcategory['prjsubcategory_desc'].".";
+			$remark_id = $this->Project_detail_model->insert(array(
+				'group_id' => $group_id,
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
-				'prjcat_id' => $this->input->post('prjcat_id'),
-				'prjsubcat_id' => $this->input->post('prjsubcat_id')
+				'details' => $details
 				));
 
 			// add notification
@@ -740,23 +752,26 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-
+		$group_id = 4;
 		if ($this->form_validation->run() == FALSE){
 			$project_contact = $this->Project_contact_model->get($project_contact_id);
 			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 			$this->data['stages'] = $this->Prjstage_model->order_by('prjstage_desc')->get_all();
-			$this->data['stage_histories'] = $this->Project_stage_history_model->get_contact_stages($project_contact_id);
+
+			$this->data['details'] = $this->Project_detail_model->get_details($project_contact_id,$group_id);
 
 			$this->layout->view('contact/updatestage',$this->data);
 		}else{
-			$group_id = 4;
+
 			$project_contact_id = $this->input->post('project_contact_id');
-			$remark_id = $this->Project_stage_history_model->insert(array(
+			$stages = $this->Prjstage_model->get($this->input->post('prjstage_id'));
+			$details = "Project stage is updated to ".$stages['prjstage_desc']."<br><em>".trim($this->input->post('remarks'))."</em>";
+			$remark_id = $this->Project_detail_model->insert(array(
+				'group_id' => $group_id,
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
-				'prjstage_id' => $this->input->post('prjstage_id'),
-				'remarks' => trim($this->input->post('remarks'))
+				'details' => $details
 				));
 
 
@@ -797,24 +812,28 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-
+		$group_id = 5;
 		if ($this->form_validation->run() == FALSE){
 			$project_contact = $this->Project_contact_model->get($project_contact_id);
 			$this->data['contact'] = $this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 			$this->data['status'] = $this->Prjstatus_model->order_by('prjstatus_desc')->get_all();
-			$this->data['status_histories'] = $this->Project_status_history_model->get_contact_status($project_contact_id);
+
+			$this->data['details'] = $this->Project_detail_model->get_details($project_contact_id,$group_id);
 
 			$this->layout->view('contact/updatestatus',$this->data);
 		}else{
-			$group_id = 5;
+
 			$project_contact_id = $this->input->post('project_contact_id');
-			$remark_id = $this->Project_status_history_model->insert(array(
+			$status = $this->Prjstatus_model->get($this->input->post('prjstatus_id'));
+			$details = "Project status is updated to ".$status['prjstatus_desc']."<br><em>".trim($this->input->post('remarks'))."</em>";
+			$remark_id = $this->Project_detail_model->insert(array(
+				'group_id' => $group_id,
 				'created_by' => $this->_user_id,
 				'project_contact_id' => $project_contact_id,
-				'prjstatus_id' => $this->input->post('prjstatus_id'),
-				'remarks' => trim($this->input->post('remarks'))
+				'details' => $details
 				));
+
 
 			// add notification
 			$this->Notification_model->insert(array(
@@ -830,7 +849,6 @@ class Contact extends MY_Controller {
 			redirect('contact/updatestatus/'.$project_contact_id);
 		}
 	}
-
 // ========================================================
 	public function updatespecification($project_contact_id = null){
 		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
@@ -848,7 +866,10 @@ class Contact extends MY_Controller {
 		$project_contact = $this->Project_contact_model->get($project_contact_id);
 		$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 		$this->data['specs'] = $this->Paintspecification_model->specifications($project_contact_id);
-		$this->data['logs'] = $this->Paintspecification_log->logs($project_contact_id);
+
+		// $this->data['logs'] = $this->Paintspecification_log->logs($project_contact_id);
+		$this->data['logs'] = $this->Project_detail_model->get_details($project_contact_id,6);
+
 		$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 		$this->layout->view('contact/updatespecification',$this->data);
 	}
@@ -878,7 +899,7 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_message('is_natural_no_zero', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-
+		$group_id = 6;
 		if ($this->form_validation->run() == FALSE){
 			$this->data['types'] = $this->Painttype_model->order_by('painttype')->get_all();
 			$this->data['project_contact_id'] = $project_contact_id;
@@ -897,18 +918,20 @@ class Contact extends MY_Controller {
 				));
 			$type = $this->Painttype_model->get($this->input->post('type'));
 
-			$this->Paintspecification_log->insert(array(
-				'project_contact_id' => $project_contact_id,
+			$details = trim($this->input->post('details'));
+			$remark_id = $this->Project_detail_model->insert(array(
+				'group_id' => $group_id,
 				'created_by' => $this->_user_id,
+				'project_contact_id' => $project_contact_id,
+				'details' => $this->Paintspecification_log->generate_logs($type['painttype'],$details,$this->input->post('area'),$this->input->post('paint'),$this->input->post('cost')),
 				'remarks' => "Paint specification added.",
-				'details' => $this->Paintspecification_log->generate_logs($type['painttype'],$details,$this->input->post('area'),$this->input->post('paint'),$this->input->post('cost'))
 				));
 
 			// add notification
 			$this->Notification_model->insert(array(
 				'type' => 1,
 				'project_contact_id' => $project_contact_id,
-				'group_id' => 6,
+				'group_id' => $group_id,
 				'remarks' => "Add paint specification",
 				'created_by' => $this->_user_id));
 
@@ -936,7 +959,7 @@ class Contact extends MY_Controller {
 
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-
+		$group_id = 6;
 		if ($this->form_validation->run() == FALSE){
 			$this->data['types'] = $this->Painttype_model->order_by('painttype')->get_all();
 			$this->data['specs'] = $this->Paintspecification_model->get_details($specs_id);
@@ -945,19 +968,20 @@ class Contact extends MY_Controller {
 			$_id = $this->input->post('_id');
 			$specs = $this->Paintspecification_model->get_details($_id);
 
-			$this->Paintspecification_log->insert(array(
-				'project_contact_id' => $specs['project_contact_id'],
+			$remark_id = $this->Project_detail_model->insert(array(
+				'group_id' => $group_id,
 				'created_by' => $this->_user_id,
-				'remarks' => "Paint specification deleted.",
+				'project_contact_id' => $specs['project_contact_id'],
 				'details' => $this->Paintspecification_log->generate_logs($specs['painttype'],$specs['details'],
-					number_format($specs['area'],2),number_format($specs['paint'],2),number_format($specs['cost'],2))
+					number_format($specs['area'],2),number_format($specs['paint'],2),number_format($specs['cost'],2)),
+				'remarks' => "Paint specification deleted.",
 				));
 
 			// add notification
 			$this->Notification_model->insert(array(
 				'type' => 1,
 				'project_contact_id' => $specs['project_contact_id'],
-				'group_id' => 6,
+				'group_id' => $group_id,
 				'remarks' => "Delete paint specification",
 				'created_by' => $this->_user_id));
 			
@@ -991,7 +1015,7 @@ class Contact extends MY_Controller {
 
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-
+		$group_id = 6;
 		if ($this->form_validation->run() == FALSE){
 			$this->data['types'] = $this->Painttype_model->order_by('painttype')->get_all();
 			$this->data['specs'] = $this->Paintspecification_model->get_details($specs_id);
@@ -1012,18 +1036,21 @@ class Contact extends MY_Controller {
 			$old = $this->Paintspecification_log->generate_logs($type['painttype'],$details,
 					number_format($specs['area'],2),number_format($specs['paint'],2),number_format($specs['cost'],2));
 			$new = $this->Paintspecification_log->generate_logs($type['painttype'],$details,$this->input->post('area'),$this->input->post('paint'),$this->input->post('cost'));
-			$this->Paintspecification_log->insert(array(
-				'project_contact_id' => $specs['project_contact_id'],
+
+			$remark_id = $this->Project_detail_model->insert(array(
+				'group_id' => $group_id,
 				'created_by' => $this->_user_id,
+				'project_contact_id' => $specs['project_contact_id'],
+				'details' => $new. 'from' .$old,
 				'remarks' => "Paint updated to",
-				'details' => $new. 'from' .$old
-				)) ;
+				));
+
 
 			// add notification
 			$this->Notification_model->insert(array(
 				'type' => 1,
 				'project_contact_id' => $specs['project_contact_id'],
-				'group_id' => 6,
+				'group_id' => $group_id,
 				'remarks' => "Edit paint specification",
 				'created_by' => $this->_user_id));
 

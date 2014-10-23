@@ -10,10 +10,6 @@ class Project extends MY_Controller {
 		$this->load->model('user/User_model');
 		$this->load->model('grouptype/Grouptype_model');
 		$this->load->model('Project_detail_model');
-		$this->load->model('prjclassification/Project_classificaton_history_model');
-		$this->load->model('prjcategory/Project_category_history_model');
-		$this->load->model('prjstage/Project_stage_history_model');
-		$this->load->model('prjstatus/Project_status_history_model');
 		$this->load->model('contact/Paintspecification_model');
 		$this->load->model('contact/Paintspecification_log');
 		$this->load->model('notifications/Notification_model');
@@ -352,65 +348,57 @@ class Project extends MY_Controller {
 	
 	public function details($id = null){
 		$this->project_validate($id);
-
-		$this->Notification_model->delete_notifications($id,$this->_user_id,1);
-
-		$this->data['details'] = $this->Project_detail_model->get_all_details($id);
-
-		$this->data['users'] = $this->Project_detail_model->get_all_details_user($id);
+		$group_id = 1;
+		$this->Notification_model->delete_notifications($id,$this->_user_id,$group_id);
+		$this->data['details'] = $this->Project_detail_model->get_all_details($id,$group_id);
+		$this->data['users'] = $this->Project_detail_model->get_all_details_user($id,$group_id);
 		$this->layout->view('project/assigned_details',$this->data);
 	}
 
 	public function classifications($id = null){
 		$this->project_validate($id);
-
-		$this->Notification_model->delete_notifications($id,$this->_user_id,2);
-
-		$this->data['classifications'] = $this->Project_classificaton_history_model->get_all_history($id);
-		$this->data['users'] = $this->Project_classificaton_history_model->get_all_history_user($id);
+		$group_id = 2;
+		$this->Notification_model->delete_notifications($id,$this->_user_id,$group_id);
+		$this->data['details'] = $this->Project_detail_model->get_all_details($id,$group_id);
+		$this->data['users'] = $this->Project_detail_model->get_all_details_user($id,$group_id);
 		$this->layout->view('project/classifications',$this->data);
 	}
 
 	public function categories($id = null){
 		$this->project_validate($id);
-
-		$this->Notification_model->delete_notifications($id,$this->_user_id,3);
-
-		$this->data['categories'] = $this->Project_category_history_model->get_all_history($id);
-
-		$this->data['users'] = $this->Project_category_history_model->get_all_history_user($id);
+		$group_id = 3;
+		$this->Notification_model->delete_notifications($id,$this->_user_id,$group_id);
+		$this->data['details'] = $this->Project_detail_model->get_all_details($id,$group_id);
+		$this->data['users'] = $this->Project_detail_model->get_all_details_user($id,$group_id);
 		$this->layout->view('project/categories',$this->data);
 	}
 
 	public function stages($id = null){
 		$this->project_validate($id);
-
-		$this->Notification_model->delete_notifications($id,$this->_user_id,4);
-
-		$this->data['stages'] = $this->Project_stage_history_model->get_all_history($id);
-
-		$this->data['users'] = $this->Project_stage_history_model->get_all_history_user($id);
+		$group_id = 4;
+		$this->Notification_model->delete_notifications($id,$this->_user_id,$group_id);
+		$this->data['details'] = $this->Project_detail_model->get_all_details($id,$group_id);
+		$this->data['users'] = $this->Project_detail_model->get_all_details_user($id,$group_id);
 		$this->layout->view('project/stages',$this->data);
 	}
 
 	public function statuses($id = null){
 		$this->project_validate($id);
-
-		$this->Notification_model->delete_notifications($id,$this->_user_id,5);
-
-		$this->data['status'] = $this->Project_status_history_model->get_all_history($id);
-		
-		$this->data['users'] = $this->Project_status_history_model->get_all_history_user($id);
+		$group_id = 5;
+		$this->Notification_model->delete_notifications($id,$this->_user_id,$group_id);
+		$this->data['details'] = $this->Project_detail_model->get_all_details($id,$group_id);
+		$this->data['users'] = $this->Project_detail_model->get_all_details_user($id,$group_id);
 		$this->layout->view('project/statuses',$this->data);
 	}
 
 	public function specifications($id = null){
 		$this->project_validate($id);
+		$group_id = 6;
 		$this->data['project'] = $this->Project_model->details($id);
 		$this->data['specs'] = $this->Paintspecification_model->get_all_specs($id);
 		$this->data['users'] = $this->Paintspecification_model->get_all_unique_contact($id);
-		$this->data['logs'] = $this->Paintspecification_log->get_all_history($id);
-		$this->data['users2'] = $this->Paintspecification_log->get_all_history_user($id);
+		$this->data['logs'] = $this->Project_detail_model->get_all_details($id,$group_id);
+		$this->data['users2'] = $this->Project_detail_model->get_all_details_user($id,$group_id);
 		$this->layout->view('project/specifications',$this->data);
 	}
 
