@@ -11,20 +11,27 @@ class Report extends MY_Controller {
 		
 	}
 
-	public function area(){
-		$this->data['report'] = array();
-		$this->layout->view('report/area',$this->data);
+	public function callreport(){
+		$this->data['start_date'] = $this->input->get('start_date');
+		$this->data['end_date'] = $this->input->get('end_date');
+		$this->data['callreports'] = array();
+		$this->layout->view('report/callreport',$this->data);
 	}
 
-	public function salesman(){
-		$this->data['report'] = array();
-		$this->layout->view('report/salesman',$this->data);
-	}
+	// public function area(){
+	// 	$this->data['report'] = array();
+	// 	$this->layout->view('report/area',$this->data);
+	// }
 
-	public function salesmanweekly(){
-		$this->data['report'] = array();
-		$this->layout->view('report/salesmanweekly',$this->data);
-	}
+	// public function salesman(){
+	// 	$this->data['report'] = array();
+	// 	$this->layout->view('report/salesman',$this->data);
+	// }
+
+	// public function salesmanweekly(){
+	// 	$this->data['report'] = array();
+	// 	$this->layout->view('report/salesmanweekly',$this->data);
+	// }
 }
 
 /* End of file report.php */

@@ -172,6 +172,9 @@
 	<!-- multiple-file-upload Plugin JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/multiple-file-upload/jquery.MultiFile.js'); ?>"></script>
 
+	<!-- masked-input-plugin Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/masked-input-plugin/jquery.maskedinput.min.js'); ?>"></script>
+
 	<!-- Custom Theme JavaScript -->
 	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/sb-admin-2.js'); ?>"></script>
@@ -179,6 +182,7 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
+			
 			$("form").submit(function (e) {
 				if($(this).attr("class") == "form-validate"){
 					if ($.validator) {

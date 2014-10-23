@@ -579,7 +579,9 @@ class Contact extends MY_Controller {
 		if ($this->form_validation->run() == FALSE){
 			$project_contact = $this->Project_contact_model->get($project_contact_id);
 			$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+
 			$this->data['details'] = $this->Project_detail_model->get_contact_details($project_contact_id);
+			
 			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
 			$this->layout->view('contact/updateproject',$this->data);
 		}else{
