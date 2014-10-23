@@ -1,9 +1,9 @@
 <IfModule mod_rewrite.c>
 	
 	## change upload size
-	#php_value upload_max_filesize 10M
-	#php_value post_max_size 20M
-	#php_value memory_limit 128M
+	##php_value upload_max_filesize 10M
+	##php_value post_max_size 20M
+	##php_value memory_limit 128M
 
 	##Options +FollowSymLinks All -Indexes
 	## Enable the rewrite engine
@@ -11,7 +11,7 @@
 	RewriteBase /
 
 	## Enable php short tags
-	php_flag short_open_tag on
+	##php_flag short_open_tag on
 
 	## Disable the server signature
 	ServerSignature Off
@@ -205,5 +205,3 @@ allow from all
 </Files>
 
 deny from 208.115.111.71
-
-
