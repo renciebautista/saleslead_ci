@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Delete '<?php echo $prjstatus['prjstatus_desc']; ?>' Project Status</h1>				
+		<h1 class="page-header">Delete '<?php echo $prjstatus['prjstatus_desc']; ?>' Project Status</h1>	
+		<?php echo $this->session->flashdata('message');?>				
 	</div>
 	<!-- /.col-lg-12 -->						
 </div>

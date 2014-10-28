@@ -10,6 +10,7 @@ class Contact extends MY_Controller {
 		$this->load->model('Paintspecification_model');
 		$this->load->model('Paintspecification_log');
 		$this->load->model('Projectfile_model');
+		$this->load->model('Requests_model');
 		$this->load->model('grouptype/Grouptype_model');
 		$this->load->model('company/Company_model');
 		$this->load->model('city/City_model');
@@ -23,6 +24,7 @@ class Contact extends MY_Controller {
 		$this->load->model('prjstatus/Prjstatus_model');
 		$this->load->model('painttype/Painttype_model');
 		$this->load->model('notifications/Notification_model');
+		$this->load->model('requesttype/Requesttype_model');
 
 	}
 
@@ -1056,6 +1058,141 @@ class Contact extends MY_Controller {
 
 			$this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
 			redirect('contact/updatespecification/'.$specs['project_contact_id']);
+		}
+	}
+
+	public function request($project_contact_id = null){
+		$project_contact = $this->Project_contact_model->get($project_contact_id);
+		$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+
+		$this->data['requests'] = $this->Requests_model->get_contact_request($project_contact_id);
+		$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+		$this->layout->view('contact/request',$this->data);
+	}
+
+	public function addrequest($project_contact_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('project_contact_id', 'Project Contact Id', 'trim|required');
+		$this->form_validation->set_rules('requesttype_id', 'Request Type', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('date_needed', 'Date Needed', 'trim|required');
+		$this->form_validation->set_rules('particular', 'Particular', 'trim|required');
+		$this->form_validation->set_rules('remarks', 'Remarks', 'trim|required');
+		$this->form_validation->set_rules('amount', 'Amount   ', 'trim|required');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+		if ($this->form_validation->run() == FALSE){
+			$project_contact = $this->Project_contact_model->get($project_contact_id);
+			$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['project'] = $this->Project_contact_model->details($project_contact_id);
+			$this->data['requesttypes'] = $this->Requesttype_model->order_by('requesttype')->get_all();
+			$this->layout->view('contact/addrequest',$this->data);
+		}else{
+			$project_contact_id = $this->input->post('project_contact_id');
+			$this->Requests_model->insert(array(
+				'project_contact_id' => $project_contact_id,
+				'requesttype_id' => $this->input->post('requesttype_id'),
+				'date_needed' => date('Y-m-d',strtotime($this->input->post('date_needed'))),
+				'particular' => $this->input->post('particular'),
+				'remarks' => $this->input->post('remarks'),
+				'amount' => str_replace(",", "", $this->input->post('amount')),
+				'created_by' => $this->_user_id
+				));
+			$this->flash_message->set('message','alert alert-success','Request successfully created!');
+			redirect('contact/request/'.$project_contact_id);
+		}
+	}
+
+	public function editrequest($id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+		$this->_request_access($id);
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('_id', 'Request Id', 'trim|required');
+		$this->form_validation->set_rules('requesttype_id', 'Request Type', 'trim|is_natural_no_zero|required');
+		$this->form_validation->set_rules('date_needed', 'Date Needed', 'trim|required');
+		$this->form_validation->set_rules('particular', 'Particular', 'trim|required');
+		$this->form_validation->set_rules('remarks', 'Remarks', 'trim|required');
+		$this->form_validation->set_rules('amount', 'Amount   ', 'trim|required');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+		if ($this->form_validation->run() == FALSE){
+			$request = $this->Requests_model->get($id);
+			$this->data['request'] = $request;
+			$project_contact = $this->Project_contact_model->get($request['project_contact_id']);
+			$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['project'] = $this->Project_contact_model->details($request['project_contact_id']);
+			$this->data['requesttypes'] = $this->Requesttype_model->order_by('requesttype')->get_all();
+			$this->layout->view('contact/editrequest',$this->data);
+		}else{
+			$_id = $this->input->post('_id');
+			$request = $this->Requests_model->get($_id);
+			$this->Requests_model->update($_id, array(
+				'requesttype_id' => $this->input->post('requesttype_id'),
+				'date_needed' => date('Y-m-d',strtotime($this->input->post('date_needed'))),
+				'particular' => $this->input->post('particular'),
+				'remarks' => $this->input->post('remarks'),
+				'amount' => str_replace(",", "", $this->input->post('amount'))
+				));
+			$this->flash_message->set('message','alert alert-success','Request successfully updated!');
+			redirect('contact/request/'.$request['project_contact_id']);
+		}
+	}
+
+	public function deleterequest($id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+		$this->_request_access($id);
+		
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('_id', 'Request Id', 'trim|required');
+
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+		if ($this->form_validation->run() == FALSE){
+			$request = $this->Requests_model->get_details($id);
+			$this->data['request'] = $request;
+			$project_contact = $this->Project_contact_model->get($request['project_contact_id']);
+			$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
+			$this->data['project'] = $this->Project_contact_model->details($request['project_contact_id']);
+			$this->layout->view('contact/deleterequest',$this->data);
+		}else{
+			$_id = $this->input->post('_id');
+			$request = $this->Requests_model->get_details($id);
+			$this->Requests_model->delete($_id);
+
+			$this->flash_message->set('message','alert alert-success','Request successfully deleted!');
+			redirect('contact/request/'.$request['project_contact_id']);		
+
+		}
+	}
+
+	private function _request_access($id){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Requests_model->for_edit($id)){
+			redirect('contact/access_denied');
 		}
 	}
 }

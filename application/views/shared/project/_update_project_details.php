@@ -8,5 +8,6 @@
 	  	<li <?php echo (($method == 'updatestage') ? 'class="active"':'' ); ?> ><a href="<?php echo base_url('contact/updatestage/'.$project['project_contact_id']) ?>" role="tab" >Project Stage</a></li>
 	   	<li <?php echo (($method == 'updatestatus') ? 'class="active"':'' ); ?> ><a href="<?php echo base_url('contact/updatestatus/'.$project['project_contact_id']) ?>" s="tab" >Project Status</a></li>
 	   	<li <?php echo (($method == 'updatespecification') ? 'class="active"':'' ); ?> ><a href="<?php echo base_url('contact/updatespecification/'.$project['project_contact_id']) ?>" s="tab" >Paint Specification</a></li>
+	   	<li <?php echo (($method == 'request') ? 'class="active"':'' ); ?> ><a href="<?php echo base_url('contact/request/'.$project['project_contact_id']) ?>" s="tab" >Request</a></li>
 	</ul>
 </div>

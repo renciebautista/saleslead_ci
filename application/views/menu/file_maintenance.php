@@ -6,7 +6,9 @@
 		'PROJECT STAGE MAINTENANCE',
 		'PROJECT STATUS MAINTENANCE',
 		'CONTACT TYPE STATUS MAINTENANCE',
-		'COMPANY TYPE MAINTENANCE');
+		'COMPANY TYPE MAINTENANCE',
+		'REQUEST TYPE MAINTENANCE'
+		);
 
 	foreach($modules as $module){
 		if(in_array($module,$this->session->userdata['flexi_auth']['privileges'])){
@@ -46,6 +48,11 @@
 		<?php if ($this->flexi_auth->is_privileged('COMPANY TYPE MAINTENANCE')):?>
 		<li>
 			<a id="companytype" href="<?php echo base_url('companytype'); ?>">Company Types</a>
+		</li>
+		<?php endif; ?>
+		<?php if ($this->flexi_auth->is_privileged('REQUEST TYPE MAINTENANCE')):?>
+		<li>
+			<a id="requesttype" href="<?php echo base_url('requesttype'); ?>">Request Types</a>
 		</li>
 		<?php endif; ?>
 	</ul>

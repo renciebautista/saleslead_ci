@@ -27,6 +27,9 @@
 
 	<!-- DataTables-1.10.2 CSS -->
 	<?php echo link_tag('assets/plugins/DataTables-1.10.2/css/dataTables.bootstrap.css'); ?>
+
+	<!-- bootstrap-datetimepicker-3.1.3 CSS -->
+	<?php echo link_tag('assets/plugins/bootstrap-datetimepicker-3.1.3/css/bootstrap-datetimepicker.min.css'); ?>
 	
 	
 	<!-- Custom CSS -->
@@ -174,6 +177,12 @@
 
 	<!-- masked-input-plugin Plugin JavaScript -->
 	<script src="<?php echo base_url('assets/plugins/masked-input-plugin/jquery.maskedinput.min.js'); ?>"></script>
+
+	<!-- moment Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/moment/moment.js'); ?>"></script>
+
+	<!-- bootstrap-datetimepicker-3.1.3 Plugin JavaScript -->
+	<script src="<?php echo base_url('assets/plugins/bootstrap-datetimepicker-3.1.3/js/bootstrap-datetimepicker.min.js'); ?>"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="<?php echo base_url('assets/js/sl.js'); ?>"></script>

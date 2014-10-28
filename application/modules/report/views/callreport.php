@@ -31,7 +31,7 @@
 		  		<div class="form-group">
 		   			<input class="btn btn-success" type="submit" value="Process">
 		   		<?php if(count($callreports)>0): ?>
-		   			<input class="btn btn-success" type="submit" value="Print">
+		   			<input class="btn btn-success" type="submit" value="Export To PDF">
 		   		<?php endif; ?>
 		 		</div>
 		   </div>
