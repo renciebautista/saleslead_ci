@@ -633,7 +633,9 @@ class CI_Input {
 
 			foreach ($_COOKIE as $key => $val)
 			{
-				$_COOKIE[$this->_clean_input_keys($key)] = $this->_clean_input_data($val);
+				// $_COOKIE[$this->_clean_input_keys($key)] = $this->_clean_input_data($val);
+				if(!(config_item('sess_encrypt_cookie') === TRUE) || $key!=config_item('sess_cookie_name'))
+   			 		$_COOKIE[$this->_clean_input_keys($key)] = $this->_clean_input_data($val);
 			}
 		}
 

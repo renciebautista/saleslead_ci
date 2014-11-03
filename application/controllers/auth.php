@@ -51,7 +51,7 @@ class Auth extends CI_Controller {
 	{
 		// By setting the logout functions argument as 'TRUE', all browser sessions are logged out.
 		$this->flexi_auth->logout(TRUE);
-		
+		$this->session->sess_destroy();
 		// Set a message to the CI flashdata so that it is available after the page redirect.
 		$this->session->set_flashdata('message', $this->flexi_auth->get_messages());		
  

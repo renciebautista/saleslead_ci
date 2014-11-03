@@ -72,7 +72,7 @@
 					</a>
 					<?php endif; ?>
 
-					<?php if(count($for_assigning) > 0): ?>
+					<?php if((count($for_assigning) > 0) && ($this->flexi_auth->is_privileged('PROJECT ASSIGNING MAINTENANCE'))): ?>
 						<?php $not = true; ?>
 					<a class="list-group-item" href="<?php echo base_url('project/forassigning'); ?>">
 						<i class="fa fa-file-text fa-fw"></i>
