@@ -175,7 +175,7 @@ class Flexi_auth_lite
 	 * @author Rob Hussey
 	 */
 	public function is_logged_in()
-	{
+	{	
 		return (bool) $this->CI->auth->session_data[$this->CI->auth->session_name['user_identifier']];
 	}
 

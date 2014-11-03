@@ -17,6 +17,17 @@ class Project_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
+	public function duplicate_project($user_id,$project_name,$lot,$street,$brgy,$city_id){
+		$this->db->where('created_by',$user_id);
+		$this->db->where('project_name',$project_name);
+		$this->db->where('lot',$lot);
+		$this->db->where('street',$street);
+		$this->db->where('brgy',$brgy);
+		$this->db->where('city_id',$city_id);
+
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
+
 	public function public_projects($filter){
 		$this->db->select("projects.id,project_name,lot,street,brgy,city,province,
 			user_details.first_name, user_details.middle_name, user_details.last_name,
@@ -79,6 +90,14 @@ class Project_model extends MY_Model {
 		$this->db->where('projects.status_id',1);
 		$this->db->order_by('projects.created_at,project_name');
 		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function forassigning_count(){
+		$this->db->select('projects.updated_at');
+		$this->db->where('projects.status_id',1);
+		$this->db->order_by('projects.updated_at');
+		return $this->db->get($this->_table)->result_array();
+
 	}
 
 	public function ajax_forassigning(){

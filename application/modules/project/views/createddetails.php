@@ -58,6 +58,7 @@
 											<tr>
 												<th style="width:30%">Contact Name</th>
 												<th>Company</th>
+												<th>Status</th>
 												<th style="width:12%" class="action-center">Actions</th>
 											</tr>
 										</thead>
@@ -76,9 +77,14 @@
 													<?php echo $contact['company']; ?><br>
 													<i><?php echo ucwords(strtolower($contact['address'])); ?></i>
 												</td>
+												<td><?php echo $contact['pc_status']; ?></td>
 												<td style="width:12%" class="action-center">
-													<?php if($project['status_id'] == 1):  ?>
-													<a href="<?php echo base_url('contact/updateproject/'.$contact['id']) ?>">Update Project</a>
+													<?php if($project['status_id'] < 3):  ?>
+														<?php if($contact['approved'] == 2): ?>
+															<a href="<?php echo base_url('contact/updateproject/'.$contact['id']) ?>">Update Project</a>
+														<?php else: ?>
+														N/A
+														<?php endif; ?>
 													<?php else: ?>
 													N/A
 													<?php endif; ?>

@@ -72,6 +72,17 @@
 					</a>
 					<?php endif; ?>
 
+					<?php if(count($for_assigning) > 0): ?>
+						<?php $not = true; ?>
+					<a class="list-group-item" href="<?php echo base_url('project/forassigning'); ?>">
+						<i class="fa fa-file-text fa-fw"></i>
+						<?php echo count($for_assigning); ?> New Project
+						<span class="pull-right text-muted small">
+							<em><?php echo distance_of_time_in_words(strtotime($for_assigning[0]['updated_at']),strtotime(date('Y-m-d H:i:s'))); ?> ago</em>
+						</span>
+					</a>
+					<?php endif; ?>
+
 					<?php if(!$not): ?>
 					No Notification found!.
 					<?php endif; ?>

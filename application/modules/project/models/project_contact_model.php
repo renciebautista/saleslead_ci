@@ -40,17 +40,21 @@ class Project_contact_model extends MY_Model {
 		return $this->datatables->generate();
 	}
 
-	public function project_contacts($project_id,$group_id){
+	public function project_contacts($project_id,$group_id,$user_id){
 		$this->datatables->select("project_contacts.id, project_contacts.contact_id,
 			concat(last_name,', ',first_name,' ',middle_name) as contact_name,
+			project_contacts.approved,
+			projectcontact_status.pc_status,
 			companies.company,
 			concat(lot,' ',street,' ',brgy,' ',cities.city,' ',provinces.province,'') as address",false);
 		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
 		$this->db->join('companies','companies.id = contacts.company_id');
 		$this->db->join('cities','cities.id = companies.city_id');
 		$this->db->join('provinces','provinces.id = cities.province_id');
+		$this->db->join('projectcontact_status','projectcontact_status.id = project_contacts.approved');
 		$this->db->where('project_contacts.project_id',$project_id);
 		$this->db->where('project_contacts.type_id',$group_id);
+		$this->db->where('contacts.created_by',$user_id);
 		$this->db->order_by('first_name,company');
 		return $this->db->get($this->_table)->result_array();
 	}
@@ -158,11 +162,26 @@ class Project_contact_model extends MY_Model {
 	}
 
 	public function allowed_to_update($project_contact_id,$user_id){
+		$project = $this->_allowed_to_update($project_contact_id,$user_id);
+		if($project['status_id'] < 3){
+			if(($project['created_by'] == $user_id) || (($project['approved'] == 2) && ($project['created_by'] == $user_id))){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}else{
+			return FALSE;
+		}
+	}
+
+	private function _allowed_to_update($project_contact_id,$user_id){
+		$this->db->select('projects.status_id,projects.created_by,project_contacts.approved,
+			contacts.created_by');
 		$this->db->join('projects','projects.id = project_contacts.project_id');
+		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
 		$this->db->where('project_contacts.id',$project_contact_id);
 		$this->db->where('project_contacts.created_by',$user_id);
-		$this->db->where('projects.status_id',2);
-		return (boolean)$this->db->get($this->_table)->row_array();
+		return $this->db->get($this->_table)->row_array();
 	}
 
 	public function joined_projects($filter,$user_id){

@@ -377,7 +377,7 @@
 	 *   There are then functions within the library to check whether a user is logged in via entering a password, or via a cookie - typically sensitive data should 
 	 *   only be available to users logged in via a password, and less sensitive data to users logged in via 'Remember me' cookies.
 	*/
-	$config['security']['login_session_expire'] = 60*60*3;
+	$config['security']['login_session_expire'] = 0;
 	
 	/**
 	 * Set whether a users login time is extended when their session token is validated (On every page load).
@@ -385,7 +385,7 @@
 	 *
 	 * Note: Only used when $config['security']['validate_login_onload'] = TRUE
 	*/
-	$config['security']['extend_login_session'] = FALSE;
+	$config['security']['extend_login_session'] = TRUE;
 	
 	/**
 	 * Set whether a user is logged out as soon as the browser is closed.

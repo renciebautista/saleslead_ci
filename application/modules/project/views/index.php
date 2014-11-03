@@ -51,7 +51,7 @@
 				<?php foreach ($projects as $project):?>
 					<tr>
 						<td>
-							<?php echo $project['project_name']; ?><br>
+							<strong><?php echo $project['project_name']; ?></strong><br>
 							<i>	<?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].' '.$project['city'].' '.$project['province'])); ?></i><br>
 						</td>
 						<td><?php echo strtoupper($project['assigned_to_name']); ?></td>

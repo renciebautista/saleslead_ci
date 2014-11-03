@@ -106,12 +106,6 @@
 
 	<div class="col-lg-12">
 		<div class="form-group">
-			<div id="map" style="width: 100%; height: 400px"></div>
-		</div>
-	</div>
-
-	<div class="col-lg-12">
-		<div class="form-group">
 			<input class="btn btn-success" type="submit" value="Submit">
 			<a class="btn btn-default" href="<?php echo base_url('project/created'); ?>">Back</a>
 		</div>

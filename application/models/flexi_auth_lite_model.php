@@ -364,8 +364,10 @@ class Flexi_auth_lite_model extends CI_Model
 	public function validate_database_login_session()
 	{
 		$user_id = $this->auth->session_data[$this->auth->session_name['user_id']];
+
 		$session_token = $this->auth->session_data[$this->auth->session_name['login_session_token']];
-		
+		// echo $session_token;
+
 		$sql_where = array(
 			$this->auth->tbl_col_user_account['id'] => $user_id,
 			$this->auth->tbl_col_user_account['active'] => 1,
@@ -373,6 +375,7 @@ class Flexi_auth_lite_model extends CI_Model
 			$this->auth->tbl_col_user_session['token'] => $session_token
 		);
 
+		// debug($this->auth->auth_security);
 		// If a session expire time is defined, check its valid. 
 		if ($this->auth->auth_security['login_session_expire'] > 0)
 		{
@@ -396,6 +399,7 @@ class Flexi_auth_lite_model extends CI_Model
 			// Validate if user has closed their browser since login (Defined by config file).
 			if ($this->auth->auth_security['logout_user_onclose'])
 			{
+				// echo get_cookie($this->auth->cookie_name['login_session_token']) . ' => ' .$hash_session_token;
 				if (get_cookie($this->auth->cookie_name['login_session_token']) != $hash_session_token)
 				{
 					$this->set_error_message('login_session_expired', 'config');
@@ -423,7 +427,9 @@ class Flexi_auth_lite_model extends CI_Model
 					$this->auth->tbl_col_user_session['user_id'] => $user_id,
 					$this->auth->tbl_col_user_session['token'] => $session_token
 				);
-				
+				// debug($this->auth->tbl_user_session);
+				// debug($sql_update);
+				// debug($sql_where);
 				$this->db->update($this->auth->tbl_user_session, $sql_update, $sql_where);
 			}
 			

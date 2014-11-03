@@ -25,7 +25,7 @@ class Contact extends MY_Controller {
 		$this->load->model('painttype/Painttype_model');
 		$this->load->model('notifications/Notification_model');
 		$this->load->model('requesttype/Requesttype_model');
-
+		$this->load->model('companytype/Companytype_model');
 	}
 
 	// Ajax request
@@ -210,21 +210,23 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
 		if ($this->form_validation->run() == FALSE){
-			$this->data['grouptypes'] = $this->Grouptype_model->order_by('grouptype_desc')->get_all();
+			$this->data['companytypes'] = $this->Companytype_model->order_by('companytype')->get_all();
 			$this->data['cities'] = $this->City_model->get_all_cities();
 			$this->layout->view('contact/createcompany',$this->data);
 		}else{
 			$this->db->trans_start();
-				$contact = strtoupper(trim($this->input->post('company_name')));
-				$groups = $this->input->post('grouptype');
-				$contact_id = $this->Company_model->insert(array(
-					'company' => $contact, 
+
+				$company = strtoupper(trim($this->input->post('company_name')));
+				$company_types = $this->input->post('companytype');
+				$company_id = $this->Company_model->insert(array(
+					'company' => $company, 
 					'lot' => strtoupper(trim($this->input->post('lot'))),
 					'street' => strtoupper(trim($this->input->post('street'))),
 					'brgy' => strtoupper(trim($this->input->post('brgy'))),
 					'city_id' => strtoupper(trim($this->input->post('city_id'))),
-					'created_by' => $this->_user_id,
-					));
+					'created_by' => $this->_user_id));
+
+				$this->Company_typelist_model->insert_types($company_id,$company_types);
 			$this->db->trans_complete();
 			
 			if ($this->db->trans_status() === FALSE){

@@ -62,12 +62,13 @@
 		
 
 				<div class="form-group">
-					<label>Company Group</label>
-				<?php if(count($grouptypes) > 0): ?>
-				<?php foreach ($grouptypes as $grouptype):?>
+					<label>Company Type</label>
+					<?php echo form_error('companytype[]'); ?>
+				<?php if(count($companytypes) > 0): ?>
+				<?php foreach ($companytypes as $companytype):?>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" name="grouptype[]" value="<?php echo $grouptype['id']; ?>" <?php echo set_checkbox('grouptype[]', $grouptype['id']); ?> /><?php echo $grouptype['grouptype_desc']; ?>
+							<input type="checkbox" id="companytype[]" name="companytype[]" value="<?php echo $companytype['id']; ?>" <?php echo set_checkbox('companytype[]', $companytype['id']); ?> /><?php echo $companytype['companytype']; ?>
 						</label>
 					</div>
 				<?php endforeach; ?>

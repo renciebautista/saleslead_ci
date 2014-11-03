@@ -1151,13 +1151,65 @@ class Flexi_auth extends Flexi_auth_lite
 		$this->CI->auth->template_data = $data;
 	}
 
-
 	public function update_login_sessions($user_id,$group_id){
-
 		$this->CI->flexi_auth_model->update_login_sessions($user_id,$group_id);
 
-	}
+		$privilege_sources = $this->auth->auth_settings['privilege_sources'];
+		$privileges = array();
 
+		// If 'user' privileges have been defined within the config 'privilege_sources'.
+        if (in_array('user', $privilege_sources))
+        {
+            // Get user privileges.
+            $sql_select = array(
+                $this->auth->tbl_col_user_privilege['id'],
+                $this->auth->tbl_col_user_privilege['name']
+            );
+
+            $sql_where = array($this->auth->tbl_col_user_privilege_users['user_id'] => $user_id);
+
+            $query = $this->get_user_privileges($sql_select, $sql_where);
+
+            // Create an array of user privileges.
+            if ($query->num_rows() > 0)
+            {
+                foreach($query->result_array() as $data)
+                {
+                    $privileges[$data[$this->auth->database_config['user_privileges']['columns']['id']]] = $data[$this->auth->database_config['user_privileges']['columns']['name']];
+                }
+            }
+        }
+        
+		// If 'group' privileges have been defined within the config 'privilege_sources'.
+        if (in_array('group', $privilege_sources))
+        {
+            // Get group privileges.
+            $sql_select = array(
+                $this->auth->tbl_col_user_privilege['id'],
+                $this->auth->tbl_col_user_privilege['name']
+            );
+
+            $sql_where = array($this->auth->tbl_col_user_privilege_groups['group_id'] => $group_id);
+
+            $query = $this->get_user_group_privileges($sql_select, $sql_where);
+
+            // Extend array of user privileges by group privileges.
+            if ($query->num_rows() > 0)
+            {
+                foreach($query->result_array() as $data)
+                {
+                    $privileges[$data[$this->auth->database_config['user_privileges']['columns']['id']]] = $data[$this->auth->database_config['user_privileges']['columns']['name']];
+                }
+            }
+        }
+
+		// Set user privileges to session.
+		$this->auth->session_data[$this->auth->session_name['privileges']] = $privileges;
+		
+		###+++++++++++++++++++++++++++++++++###
+				
+		$this->session->set_userdata(array($this->auth->session_name['name'] => $this->auth->session_data));
+	}
 }
 
 /* End of file flexi_auth.php */

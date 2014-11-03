@@ -30,6 +30,19 @@ class Project extends MY_Controller {
 		
 	}
 
+	public function duplicate_project($str){
+		$lot = strtoupper(trim($this->input->post('lot')));
+		$street = strtoupper(trim($this->input->post('street')));
+		$brgy = strtoupper(trim($this->input->post('brgy')));
+		$city_id = $this->input->post('city_id');
+		if($this->Project_model->duplicate_project($this->_user_id,$str,$lot,$street,$brgy,$city_id)){
+			$this->form_validation->set_message('duplicate_project', 'Project name and details already exist!');
+			return FALSE;
+		}else{
+			return TRUE;
+		}
+	}
+
 	public function create(){
 		if (!$this->flexi_auth->is_privileged('CREATED PROJECT MAINTENANCE')){
 			redirect('project/access_denied');		
@@ -37,7 +50,7 @@ class Project extends MY_Controller {
 		
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('project_name' , 'Project Name', 'trim|required');
+		$this->form_validation->set_rules('project_name' , 'Project Name', 'trim|required|callback_duplicate_project');
 		$this->form_validation->set_rules('lot', 'Lot', 'trim');
 		$this->form_validation->set_rules('street', 'Street', 'trim');
 		$this->form_validation->set_rules('brgy', 'Bgry', 'trim|required');
@@ -69,7 +82,7 @@ class Project extends MY_Controller {
 					'contact_id' => $this->input->post('contact_id'),
 					'type_id' => $this->input->post('type_id'),
 					'created_by' =>  $this->_user_id,
-					'approved' => 1,
+					'approved' => 2,
 					'approved_by' =>  $this->_user_id
 					));
 			$this->db->trans_complete();
@@ -111,7 +124,7 @@ class Project extends MY_Controller {
 			$this->data['group_id'] = $group_id;
 			$this->data['types'] = $this->Grouptype_model->order_by('grouptype_desc')->get_all();
 			$this->data['project'] = $this->Project_model->details($id);
-			$this->data['contacts'] = $this->Project_contact_model->project_contacts($id,$group_id);
+			$this->data['contacts'] = $this->Project_contact_model->project_contacts($id,$group_id,$this->_user_id);
 			$this->layout->view('project/createddetails',$this->data);
 		}
 	}
@@ -209,13 +222,15 @@ class Project extends MY_Controller {
 			if ($this->form_validation->run() == FALSE){
 				$this->data['users'] = $this->User_model->get_all_active();
 				$this->data['project'] = $this->Project_model->details($id);
-				
-				$this->data['details'] = $this->Project_detail_model->get_all_details($id);
 
-				$this->data['classifications'] = $this->Project_classificaton_history_model->get_all_history($id);
-				$this->data['categories'] = $this->Project_category_history_model->get_all_history($id);
-				$this->data['stages'] = $this->Project_stage_history_model->get_all_history($id);
-				$this->data['status'] = $this->Project_status_history_model->get_all_history($id);
+				$this->data['details'] = $this->Project_detail_model->get_all_details($id,1);
+				$this->data['classifications'] = $this->Project_detail_model->get_all_details($id,2);
+				$this->data['categories'] = $this->Project_detail_model->get_all_details($id,3);
+				$this->data['stages'] = $this->Project_detail_model->get_all_details($id,4);
+				$this->data['status'] = $this->Project_detail_model->get_all_details($id,5);
+
+				$this->data['specs'] = $this->Paintspecification_model->get_all_specs($id);
+				$this->data['logs'] = $this->Project_detail_model->get_all_details($id,6);
 
 				$this->layout->view('project/details',$this->data);
 			}else{

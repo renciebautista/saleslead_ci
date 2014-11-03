@@ -35,6 +35,16 @@ class Requests_model extends MY_Model {
 		return (boolean)$this->db->get($this->_table)->row_array();
 	}
 
+	public function get_all_for_approval_in_group(){
+		$query = sprintf("SELECT requests.requesttype_id,requesttypes.requesttype,
+			COUNT(requests.requesttype_id) as total_request
+			FROM requests 
+			JOIN requesttypes ON requesttypes.id = requests.requesttype_id
+			GROUP BY requests.requesttype_id
+			ORDER BY requesttypes.requesttype");
+		return $this->db->query($query)->result_array();
+	}
+
 }
 
 /* End of file requests_model.php */

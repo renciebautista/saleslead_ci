@@ -6,7 +6,7 @@ class MY_Controller extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
-
+		
 		$this->output->enable_profiler(FALSE);
 
 		// IMPORTANT! This global must be defined BEFORE the flexi auth library is loaded! 
@@ -34,7 +34,7 @@ class MY_Controller extends CI_Controller {
 		$this->data = null;
 
 		$user = $this->flexi_auth->get_user_by_id_row_array();
-
+		
 		$this->flexi_auth->update_login_sessions($this->_user_id,$user['uacc_group_fk']);
 		
 		if($user['first_name'] == '') {

@@ -41,6 +41,8 @@
 $route['default_controller'] = "auth";
 $route['404_override'] = '';
 
+$route['requestapproval'] = "requestapproval/index";
+$route['requestapproval/(:num)'] = "requestapproval/index/$1";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

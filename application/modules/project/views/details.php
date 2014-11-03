@@ -76,6 +76,17 @@
 										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
 										<p><?php echo nl2br($row['details']); ?></p>
 									</div>
+
+									<?php if(!empty($row['files'])): ?>
+									<div class="attached-files">
+										<p style="padding-top:5px;border-bottom: 1px solid #ccc;">Attached files</p>
+										<ul>
+											<?php foreach ($row['files'] as $file):?>
+											<li><a href="<?php echo base_url('project/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
+											<?php endforeach; ?>
+										</ul>
+									</div>
+									<?php endif; ?>
 								</div>
 							</li>
 							<?php endforeach; ?>
@@ -106,8 +117,19 @@
 									</div>
 									<div class="timeline-body">
 										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
-										<p>Updated to <?php echo $row['prjclassification_desc']; ?></p>
+										<p><?php echo nl2br($row['details']); ?></p>
 									</div>
+
+									<?php if(!empty($row['files'])): ?>
+									<div class="attached-files">
+										<p style="padding-top:5px;border-bottom: 1px solid #ccc;">Attached files</p>
+										<ul>
+											<?php foreach ($row['files'] as $file):?>
+											<li><a href="<?php echo base_url('project/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
+											<?php endforeach; ?>
+										</ul>
+									</div>
+									<?php endif; ?>
 								</div>
 							</li>
 							<?php endforeach; ?>
@@ -138,8 +160,19 @@
 									</div>
 									<div class="timeline-body">
 										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
-										<p>Updated to <?php echo($row['prjcategory_desc']); ?> <?php echo (!empty($row['prjsubcategory_desc']) ? ' - '.$row['prjsubcategory_desc'] :''); ?></p>
+										<p><?php echo nl2br($row['details']); ?></p>
 									</div>
+
+									<?php if(!empty($row['files'])): ?>
+									<div class="attached-files">
+										<p style="padding-top:5px;border-bottom: 1px solid #ccc;">Attached files</p>
+										<ul>
+											<?php foreach ($row['files'] as $file):?>
+											<li><a href="<?php echo base_url('project/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
+											<?php endforeach; ?>
+										</ul>
+									</div>
+									<?php endif; ?>
 								</div>
 							</li>
 							<?php endforeach; ?>
@@ -170,9 +203,19 @@
 									</div>
 									<div class="timeline-body">
 										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
-										<p>Updated to <?php echo($row['prjstage_desc']); ?></p>
-										<p><?php echo nl2br($row['remarks']); ?></p>
+										<p><?php echo nl2br($row['details']); ?></p>
 									</div>
+
+									<?php if(!empty($row['files'])): ?>
+									<div class="attached-files">
+										<p style="padding-top:5px;border-bottom: 1px solid #ccc;">Attached files</p>
+										<ul>
+											<?php foreach ($row['files'] as $file):?>
+											<li><a href="<?php echo base_url('project/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
+											<?php endforeach; ?>
+										</ul>
+									</div>
+									<?php endif; ?>
 								</div>
 							</li>
 							<?php endforeach; ?>
@@ -203,9 +246,19 @@
 									</div>
 									<div class="timeline-body">
 										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
-										<p>Updated to <?php echo($row['prjstatus_desc']); ?></p>
-										<p><?php echo nl2br($row['remarks']); ?></p>
+										<p><?php echo nl2br($row['details']); ?></p>
 									</div>
+
+									<?php if(!empty($row['files'])): ?>
+									<div class="attached-files">
+										<p style="padding-top:5px;border-bottom: 1px solid #ccc;">Attached files</p>
+										<ul>
+											<?php foreach ($row['files'] as $file):?>
+											<li><a href="<?php echo base_url('project/getfile/'.$file['hashname']); ?>"><?php echo $file['filename']; ?></a></li>
+											<?php endforeach; ?>
+										</ul>
+									</div>
+									<?php endif; ?>
 								</div>
 							</li>
 							<?php endforeach; ?>
@@ -215,36 +268,117 @@
 				</div>
 			</div>
 			<div class="tab-pane fade" id="specification">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<i class="fa fa-comments"></i> Project Details
+				<div class="tab-content">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+			  <li class="active"><a href="#specs" role="tab" data-toggle="tab">Paint Specification</a></li>
+			  <li><a href="#history" role="tab" data-toggle="tab">History</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  	<div class="tab-pane active" id="specs">
+					<div style =" margin-top:15px;">
+						<div class="panel panel-default">
+							<?php if(!empty($specs)): ?>
+							<div class="panel-body">
+								<ul class="timeline">
+									<?php foreach ($specs as $spec):?>
+									<li class="timeline-inverted">
+										<div class="timeline-badge">
+											<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$spec['details']['avatar']); ?>">
+										</div>
+										<div class="timeline-panel">
+											<div class="timeline-heading">
+												<p>
+													<strong class="bdo-name"><?php echo strtoupper($spec['details']['ulast_name'].', '.$spec['details']['ufirst_name'].' '.$spec['details']['umiddle_name']); ?></strong>
+												</p>
+												
+											</div>
+											<div class="timeline-body">
+												<em><?php echo strtoupper($spec['details']['last_name'].', '.$spec['details']['first_name'].' '.$spec['details']['middle_name']); ?> ( <?php echo $spec['details']['grouptype_desc']; ?>)</em>
+												<div class="table-responsive">
+												<table class="table table-hover">
+													<thead>
+														<tr>
+															<th>Type</th>
+															<th>Details</th>
+															<th>Area<i>(SqM)</i></th>
+															<th>Paint Requirement<i>(Ltrs.)</i></th>
+															<th>Painting Cost<i>(Php)</i></th>
+														</tr>
+													</thead>
+													<tbody>
+													<?php foreach ($spec['specs'] as $row):?>
+														<tr>
+															<td>
+																<?php echo $row['painttype']; ?><br>
+															</td>
+															<td>
+																<?php echo nl2br($row['details']); ?><br>
+															</td>
+															<td>
+																<?php echo number_format($row['area'],2); ?><br>
+															</td>
+															<td>
+																<?php echo number_format($row['paint'],2); ?><br>
+															</td>
+															<td>
+																<?php echo number_format($row['cost'],2); ?><br>
+															</td>
+
+														</tr>
+													<?php endforeach; ?>
+													</tbody>
+												</table>
+											</div>
+											</div>
+										</div>
+									</li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+							<?php endif; ?>
+						</div>
 					</div>
-					<?php if(!empty($details)): ?>
-					<div class="panel-body">
-						<ul class="timeline">
-							<?php foreach ($details as $row):?>
-							<li class="timeline-inverted">
-								<div class="timeline-badge">
-									<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$row['avatar']); ?>">
-								</div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<p>
-											<strong><?php echo strtoupper($row['ulast_name'].', '.$row['ufirst_name'].' '.$row['umiddle_name']); ?></strong>
-										</p>
-										<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($row['created_at']),'m/d/y H:i:s'); ?></small>
-									</div>
-									<div class="timeline-body">
-										<em><?php echo strtoupper($row['last_name'].', '.$row['first_name'].' '.$row['middle_name']); ?> ( <?php echo $row['grouptype_desc']; ?>)</em>
-										<p><?php echo nl2br($row['details']); ?></p>
-									</div>
-								</div>
-							</li>
-							<?php endforeach; ?>
-						</ul>
+			  	</div>
+			  	<div class="tab-pane" id="history">
+				  	<div style =" margin-top:15px;">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<i class="fa fa-comments"></i> History
+							</div>
+							<?php if(!empty($logs)): ?>
+							<div class="panel-body">
+								<ul class="timeline">
+									<?php foreach ($logs as $log):?>
+									<li class="timeline-inverted">
+										<div class="timeline-badge">
+											<img class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="<?php echo base_url('uploads/thumbnail/'.$log['avatar']); ?>">
+										</div>
+										<div class="timeline-panel">
+											<div class="timeline-heading">
+												<p>
+													<strong class="bdo-name"><?php echo strtoupper($log['ulast_name'].', '.$log['ufirst_name'].' '.$log['umiddle_name']); ?></strong>
+												</p>
+												<p><small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo date_format(date_create($log['created_at']),'m/d/y H:i:s'); ?></small>
+											</div>
+											<div class="timeline-body">
+												<em><?php echo strtoupper($log['last_name'].', '.$log['first_name'].' '.$log['middle_name']); ?> ( <?php echo $log['grouptype_desc']; ?>)</em>
+												<p><?php echo $log['remarks']; ?></p>
+												<?php echo $log['details']; ?>
+											</div>
+										</div>
+									</li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+							<?php endif; ?>
+						</div>
 					</div>
-					<?php endif; ?>
-				</div>
+			  	</div>
+			</div>
+		</div>
 			</div>
 		</div>
 	</div>

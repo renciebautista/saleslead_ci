@@ -169,6 +169,7 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 	    $database_salt = $store_database_salt ? $this->generate_token($this->auth->auth_security['database_salt_length']) : FALSE;
 		
 		$hash_password = $this->generate_hash_token($password, $database_salt, TRUE);
+		
 		$activation_token = sha1($this->generate_token(20));
 		$suspend_account = ($this->auth->auth_settings['suspend_new_accounts']) ? 1 : 0;
 		
@@ -442,15 +443,14 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 	public function update_custom_user_data($table = FALSE, $row_id = FALSE, $custom_data = FALSE)
 	{
 		if (! is_array($custom_data) || empty($this->auth->database_config['custom']))
-		{
+		{	
 			return FALSE;
 		}
 
 		// Loop through user custom data table(s)
 		foreach ($this->auth->database_config['custom'] as $custom_table => $table_data)
-		{
+		{	
 			$identifier_id = FALSE;
-
 			// Get tables primary key, if not submitted, try to match the rows secondard key column.
 			if ($row_id && $table_data['table'] == $table)
 			{
@@ -1832,7 +1832,7 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 
 		return TRUE;
 	}	
-
+	
 	/**
 	 * update_session_identifier
 	 * Updates a users current session identifier if they update the database record of their identity (i.e. Change their email).
@@ -2335,10 +2335,10 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 		set_cookie($ci_session);	
 	}
 
-
-
 	public function update_login_sessions($user_id,$group_id)
 	{
+		
+
 		$privilege_sources = $this->auth->auth_settings['privilege_sources'];
 		$privileges = array();
 
@@ -2390,12 +2390,13 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 
 		// Set user privileges to session.
 		$this->auth->session_data[$this->auth->session_name['privileges']] = $privileges;
-		// debug($this->auth->session_data);
-		// ###+++++++++++++++++++++++++++++++++###
-		// debug($this->auth->session_name);
-		$this->session->set_userdata(array($this->auth->session_name['name'] => $this->auth->session_data));
+		
+		###+++++++++++++++++++++++++++++++++###
+				
+		$this->session->set_userdata(array($this->auth->session_name['names'] => $this->auth->session_data));
+
+		return TRUE;
 	}
-	
 }
 
 /* End of file flexi_auth_model.php */

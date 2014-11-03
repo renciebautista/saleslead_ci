@@ -72,10 +72,6 @@ class Auth_model extends CI_Model {
 		}
 	}
 
-	// public function update_login_sessions($user_id){
-		
-	// }
-
 }
 
 /* End of file auth_model.php */
