@@ -18,7 +18,12 @@ class Dashboard extends MY_Controller {
 		$this->data['for_assigning'] = $this->Project_model->forassigning_count();
 
 		$requesttypes = $this->Request_approver_model->my_for_approval($this->_user_id,1);
-		$this->data['request_approval'] = $this->Requests_model->for_approval_count($requesttypes);
+		if(!empty($requesttypes)){
+			$this->data['request_approval'] = $this->Requests_model->for_approval_count($requesttypes);
+		}else{
+			$this->data['request_approval'] = array();
+		}
+		
 		
 		$this->layout->view('dashboard/index',$this->data);
 		$priveleges = $this->session->userdata['flexi_auth']['privileges'];
