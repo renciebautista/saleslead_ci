@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('Auth_model');
+$autoload['model'] = array('Auth_model','requesttype/Request_approver_model');
 
 
 /* End of file autoload.php */

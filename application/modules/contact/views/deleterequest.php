@@ -49,32 +49,3 @@
 </div>
 <!-- /.row -->
 
-<script type="text/delayscript">
-$(document).ready(function(){
-	$("#requesttype_id").chosen({allow_single_deselect: true});
-	$("#date_needed").mask("99/99/9999");
-	$('#amount').maskMoney();
-
-	$('#datetimepicker5').datetimepicker({
-		pickTime: false
-	});
-
-	$(".form-validate").validate({
-		ignore: null,
-		errorElement: 'span',
-		rules: {
-			requesttype_id:{
-				is_natural_no_zero: true
-			},
-			// request_type: "required",
-			date_needed: "required",
-			particular: "required",
-			remarks: "required",
-			amount: "required"
-		},
-		errorPlacement: function(error,element){
-			error.insertAfter(element.siblings("label"));
-		}
-	});
-});
-</script>

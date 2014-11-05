@@ -25,35 +25,30 @@
 					<?}?>
 				</select>
 			</div>
-			<!-- <div class="form-group">
-				<label for="others">Others</label>
-				<?php //echo form_error('others'); ?>
-				<input id="others" class="form-control" type="text" value="" name="others" placeholder="Others">
-			</div> -->
 			<div class="form-group">
 				<label for="date_needed">Date Needed</label>
 				<div class='input-group date' id='datetimepicker5'>
 					<span class="input-group-addon">
 						<span class="fa fa-calendar"></span>
 					</span>
-					<input type='text' class="form-control" name="date_needed" id="date_needed" placeholder="MM/DD/YYYY" data-date-format="MM/DD/YYYY"/>
+					<input type='text' value="<?php echo set_value('date_needed'); ?>" class="form-control" name="date_needed" id="date_needed" placeholder="MM/DD/YYYY" data-date-format="MM/DD/YYYY"/>
 					
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="particular">Particulars / Description</label>
 				<?php echo form_error('particular'); ?>
-				<textarea id="particular" name="particular" class="form-control" rows="5" placeholder="Particulars / Description"></textarea>
+				<textarea id="particular" name="particular" class="form-control" rows="5" placeholder="Particulars / Description"><?php echo set_value('particular'); ?></textarea>
 			</div>
 			<div class="form-group">
 				<label for="remarks">Remarks / Instruction</label>
 				<?php echo form_error('remarks'); ?>
-				<textarea id="remarks" name="remarks" class="form-control" rows="5" placeholder="Remarks / Instruction"></textarea>
+				<textarea id="remarks" name="remarks" class="form-control" rows="5" placeholder="Remarks / Instruction"><?php echo set_value('remarks'); ?></textarea>
 			</div>
 			<div class="form-group">
 				<label for="amount">Amount</label>
 				<?php echo form_error('others'); ?>
-				<input id="amount" class="form-control" type="text" value="" name="amount" placeholder="Amount">
+				<input id="amount" class="form-control" type="text" value="<?php echo set_value('amount'); ?>" name="amount" placeholder="Amount">
 			</div>
 			<input class="btn btn-success" type="submit" value="Submit">
 			<a class="btn btn-default" href="<?php echo base_url('contact/request/'.$project['project_contact_id']); ?>">Back</a>
@@ -84,7 +79,6 @@ $(document).ready(function(){
 			date_needed: "required",
 			particular: "required",
 			remarks: "required",
-			amount: "required"
 		},
 		errorPlacement: function(error,element){
 			error.insertAfter(element.siblings("label"));

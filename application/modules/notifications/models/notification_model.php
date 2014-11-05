@@ -86,6 +86,27 @@ class Notification_model extends MY_Model {
 		return $this->db->get($this->_table)->result_array();
 	}
 
+
+	public function delete_all($user_id){
+		$this->db->select('notifications.id');
+		$this->db->join('project_contacts','project_contacts.id = notifications.project_contact_id');
+		$this->db->join('projects','projects.id = project_contacts.project_id');
+		$this->db->join('contacts','contacts.id = project_contacts.contact_id');
+		$this->db->join('grouptypes','grouptypes.id = project_contacts.type_id');
+		$this->db->where('contacts.created_by',$user_id);
+		$this->db->where('notifications.type',2);
+		$records = $this->db->get($this->_table)->result_array();
+		$data = array();
+		if(!empty($records)){
+			foreach ($records as $row) {
+				$data[] = $row['id'];
+			}
+
+			$this->db->where_in('id', $data);
+			$this->db->delete($this->_table);
+		}
+	}
+
 }
 
 /* End of file notification_model.php */

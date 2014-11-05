@@ -7,6 +7,7 @@ class Dashboard extends MY_Controller {
 		$this->load->model('project/Project_model');
 		$this->load->model('project/Project_contact_model');
 		$this->load->model('notifications/Notification_model');
+		$this->load->model('request/Requests_model');
 	}
 
 	public function index(){
@@ -15,6 +16,10 @@ class Dashboard extends MY_Controller {
 		$this->data['project_comments'] = $this->Notification_model->project_comments($this->_user_id);
 		$this->data['joined_projects'] = $this->Notification_model->joined_projects($this->_user_id);
 		$this->data['for_assigning'] = $this->Project_model->forassigning_count();
+
+		$requesttypes = $this->Request_approver_model->my_for_approval($this->_user_id,1);
+		$this->data['request_approval'] = $this->Requests_model->for_approval_count($requesttypes);
+		
 		$this->layout->view('dashboard/index',$this->data);
 		$priveleges = $this->session->userdata['flexi_auth']['privileges'];
 	}
@@ -40,7 +45,11 @@ class Dashboard extends MY_Controller {
 			// $this->flash_message->set('message','alert alert-success','Painting specification successfully updated!');
 			redirect('dashboard/joinedcontacts');
 		}
-		
+	}
+
+	public function clearnotifications(){
+		$this->Notification_model->delete_all($this->_user_id);
+		redirect('dashboard/joinedcontacts');
 	}
 
 }

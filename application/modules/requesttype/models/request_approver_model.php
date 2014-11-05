@@ -31,11 +31,29 @@ class Request_approver_model extends MY_Model {
 				$data[] = $row['user_id'];
 			}
 		}
-
-
 		return $data;
 	}
 
+	public function my_for_approval($user_id,$type){
+		$this->db->select('request_type_id');
+		$this->db->where('user_id',$user_id);
+		$this->db->where('type',$type);
+		$records = $this->db->get($this->_table)->result_array();
+		$data = array();
+		if(!empty($records)){
+			foreach ($records as $row) {
+				$data[] = $row['request_type_id'];
+			}
+		}
+		return $data;
+	}
+
+	public function valid_approver($user_id,$request_type_id,$type){
+		$this->db->where('user_id',$user_id);
+		$this->db->where('request_type_id',$request_type_id);
+		$this->db->where('type',$type);
+		return (boolean)$this->db->get($this->_table)->row_array();
+	}
 }
 
 /* End of file request_approver_model.php */

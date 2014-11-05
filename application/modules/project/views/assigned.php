@@ -49,7 +49,7 @@
 							<?php if(!$project['assigned_viewed']): ?>
 							<strong><?php echo $project['project_name']; ?></strong>
 							<?php else: ?>
-							<?php echo $project['project_name']; ?>
+							<strong><?php echo $project['project_name']; ?></strong>
 							<?php endif; ?>
 							<br>
 							<i>	<?php echo ucwords(strtolower($project['lot'].' '.$project['street'].' '.$project['brgy'].', '.$project['city'].' '.$project['province'])); ?></i><br>

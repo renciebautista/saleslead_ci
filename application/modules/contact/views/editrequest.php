@@ -25,11 +25,6 @@
 					<?}?>
 				</select>
 			</div>
-			<!-- <div class="form-group">
-				<label for="others">Others</label>
-				<?php //echo form_error('others'); ?>
-				<input id="others" class="form-control" type="text" value="" name="others" placeholder="Others">
-			</div> -->
 			<div class="form-group">
 				<label for="date_needed">Date Needed</label>
 				<div class='input-group date' id='datetimepicker5'>
@@ -53,7 +48,7 @@
 			<div class="form-group">
 				<label for="amount">Amount</label>
 				<?php echo form_error('amount'); ?>
-				<input value="<?php echo set_value('amount', number_format($request['amount'],2)); ?>" id="amount" class="form-control" type="text" value="" name="amount" placeholder="Amount">
+				<input value="<?php echo set_value('amount', number_format($request['amount'],2)); ?>" id="amount" class="form-control" type="text"  name="amount" placeholder="Amount">
 			</div>
 			<input class="btn btn-success" type="submit" value="Update">
 			<a class="btn btn-default" href="<?php echo base_url('contact/request/'.$project['project_contact_id']); ?>">Back</a>
@@ -80,11 +75,9 @@ $(document).ready(function(){
 			requesttype_id:{
 				is_natural_no_zero: true
 			},
-			// others: "required",
 			date_needed: "required",
 			particular: "required",
 			remarks: "required",
-			amount: "required"
 		},
 		errorPlacement: function(error,element){
 			error.insertAfter(element.siblings("label"));

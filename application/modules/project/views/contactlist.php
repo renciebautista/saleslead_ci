@@ -90,8 +90,8 @@
 								</a>
 								<ul class="dropdown-menu dropdown-menu-right" role="menu" style="left: auto;">
 									<li><a href="#">All Status</a></li>
-								  	<li><a href="#">Approved</a></li>
-								  	<li><a href="#">Denied</a></li>
+									<li><a href="#">APPROVED</a></li>
+									<li><a href="#">DENIED</a></li>
 								</ul>
 							</div>
 						</div>
@@ -125,8 +125,8 @@
 													<?php echo $contact['company']; ?><br>
 													<i>	<?php echo ucwords(strtolower($contact['address'])); ?></i><br>
 												</td>
-												<td style="width:130px;text-align: center;">
-													<?php echo $contact['pc_status']; ?>
+												<td  style="width:130px;text-align: center;">
+													<p class="join-status"><?php echo $contact['pc_status']; ?></p>
 												</td>
 											</tr>
 										<?php endforeach; ?>
@@ -149,21 +149,23 @@
 <script type="text/delayscript">
 
 $(".dropdown-menu li a").click(function(){
-    var filter_text = $(this).text();
-    $("#filter-menu:first-child").html(filter_text+' <span class="caret"></span>');
+	var filter_text = $(this).text();
+	$("#filter-menu:first-child").html(filter_text+' <span class="caret"></span>');
 
-    $(".table tbody tr").each(function () {
-        if(filter_text != "All Status"){
-            if ($(this).find('.join-status').text() == filter_text) {
-                $(this).removeClass("hidden");
-            } else {
-                $(this).addClass("hidden"); 
-            }
-        }else{
-            $(this).removeClass("hidden");
-        }
-        
-    });
+	$(".table tbody tr").each(function () {
+		if(filter_text != "All Status"){
+			// console.log($(this).find('.join-status').text());
+
+			if ($(this).find('.join-status').text() == filter_text) {
+				$(this).removeClass("hidden");
+			} else {
+				$(this).addClass("hidden"); 
+			}
+		}else{
+			$(this).removeClass("hidden");
+		}
+		
+	});
 });
 </script>
 

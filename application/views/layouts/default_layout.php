@@ -108,6 +108,8 @@
 
 						<?php $this->load->view('menu/projects'); ?>
 
+						<?php $this->load->view('menu/request'); ?>
+
 						<?php $this->load->view('menu/contacts'); ?>
 
 						<?php $this->load->view('menu/reports'); ?>

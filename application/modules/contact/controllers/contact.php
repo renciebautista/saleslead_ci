@@ -10,7 +10,7 @@ class Contact extends MY_Controller {
 		$this->load->model('Paintspecification_model');
 		$this->load->model('Paintspecification_log');
 		$this->load->model('Projectfile_model');
-		$this->load->model('Requests_model');
+		$this->load->model('request/Requests_model');
 		$this->load->model('grouptype/Grouptype_model');
 		$this->load->model('company/Company_model');
 		$this->load->model('city/City_model');
@@ -1064,6 +1064,18 @@ class Contact extends MY_Controller {
 	}
 
 	public function request($project_contact_id = null){
+		if (!$this->flexi_auth->is_privileged('CONTACT MAINTENANCE')){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->is_my_project_contact($project_contact_id,$this->_user_id) || (is_null($project_contact_id))){
+			redirect('contact/access_denied');
+		}
+
+		if(!$this->Project_contact_model->allowed_to_update($project_contact_id,$this->_user_id)){
+			redirect('contact/access_denied');
+		}
+		
 		$project_contact = $this->Project_contact_model->get($project_contact_id);
 		$this->data['contact'] = $this->Contact_model->details($project_contact['contact_id']);
 
@@ -1092,7 +1104,7 @@ class Contact extends MY_Controller {
 		$this->form_validation->set_rules('date_needed', 'Date Needed', 'trim|required');
 		$this->form_validation->set_rules('particular', 'Particular', 'trim|required');
 		$this->form_validation->set_rules('remarks', 'Remarks', 'trim|required');
-		$this->form_validation->set_rules('amount', 'Amount   ', 'trim|required');
+		$this->form_validation->set_rules('amount', 'Amount   ', 'trim');
 
 		$this->form_validation->set_message('required', 'This field is required.');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
