@@ -53,9 +53,9 @@
 							<?php echo form_error('city_id'); ?>
 							<select class="form-control" data-placeholder="SELECT TOWN / CITY" id="city_id" name="city_id" class="medium" >
 								<option value="0"></option>
-								<?php foreach($cities as $city){?>
+								<?php foreach($cities as $city):?>
 									<option value="<?php echo $city['id'];?>" <?php echo set_select('city_id',$city['id'],($city['id'] == $company['city_id']) ? TRUE:FALSE); ?> ><?php echo strtoupper($city['city'].' - '.$city['province']);?></option>
-								<?}?>
+								<?php endforeach;?>
 							</select>
 						</div>
 					</div>

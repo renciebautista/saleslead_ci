@@ -42,9 +42,9 @@
 			<?php echo form_error('department_id'); ?>
 			<select class="form-control" data-placeholder="SELECT DEPARTMENT" id="department_id" name="department_id" class="medium" >
 				<option value="0"></option>
-				<?php foreach($departments as $department){?>
+				<?php foreach($departments as $department):?>
 					<option value="<?php echo $department['id'];?>" <?php echo set_select('department_id',$department['id']); ?> ><?php echo $department['department'];?></option>
-				<?}?>
+				<?php endforeach;?>
 			</select>
 		</div>
 		<div class="form-group">
@@ -52,9 +52,9 @@
 			<?php echo form_error('role_id'); ?>
 			<select class="form-control" data-placeholder="SELECT ROLE" id="role_id" name="role_id" class="medium" >
 				<option value="0"></option>
-				<?php foreach($roles as $role){?>
+				<?php foreach($roles as $role):?>
 					<option value="<?php echo $role['ugrp_id'];?>" <?php echo set_select('role_id',$role['ugrp_id']); ?> ><?php echo $role['ugrp_name'];?></option>
-				<?}?>
+				<?php endforeach;?>
 			</select>
 		</div>
 

@@ -48,9 +48,9 @@
 									<?php echo form_error('prjstage_id'); ?>
 									<select class="form-control" data-placeholder="SELECT STAGE" id="prjstage_id" name="prjstage_id" class="medium" >
 										<option value="0">SELECT STAGE</option>
-										<?php foreach($stages as $stage){?>
+										<?php foreach($stages as $stage):?>
 											<option value="<?php echo $stage['id'];?>" <?php echo set_select('prjstage_id',$stage['id']); ?> ><?php echo strtoupper($stage['prjstage_desc']);?></option>
-										<?}?>
+										<?php endforeach;?>
 									</select>
 								</div>
 						  	</div>

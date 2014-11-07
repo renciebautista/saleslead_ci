@@ -404,9 +404,9 @@
 							<?php echo form_error('assigned_to'); ?>
 							<select class="form-control" data-placeholder="ASSIGN TO" id="assigned_to" name="assigned_to" class="medium" >
 								<option value="0"></option>
-								<?php foreach($users as $user){?>
+								<?php foreach($users as $user):?>
 									<option value="<?php echo $user['id'];?>" <?php echo set_select('assigned_to',$user['id']); ?> ><?php echo strtoupper($user['last_name'].', '.$user['first_name'].' '.$user['middle_name']);?></option>
-								<?}?>
+								<?php endforeach;?>
 							</select>
 						</div>
 						<input class="btn btn-success" type="submit" value="Submit">

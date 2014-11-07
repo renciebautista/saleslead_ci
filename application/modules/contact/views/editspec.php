@@ -16,9 +16,9 @@
 				<?php echo form_error('type'); ?>
 				<select class="form-control" data-placeholder="SELECT TYPE" id="type" name="type" class="medium" >
 					<option value="0"></option>
-					<?php foreach($types as $type){?>
+					<?php foreach($types as $type):?>
 						<option value="<?php echo $type['id'];?>" <?php echo set_select('type',$type['id'],($type['id'] == $specs['painttype_id']) ? TRUE:FALSE); ?> ><?php echo $type['painttype'];?></option>
-					<?}?>
+					<?php endforeach;?>
 				</select>
 			</div>
 

@@ -40,9 +40,9 @@
 			<?php echo form_error('type_id'); ?>
 			<select class="form-control" data-placeholder="ASSIGN TO" id="type_id" name="type_id" class="medium" >
 				<option value="0"></option>
-				<?php foreach($types as $type){?>
+				<?php foreach($types as $type):?>
 					<option value="<?php echo $type['id'];?>" <?php echo set_select('type_id',$type['id']); ?> ><?php echo strtoupper($type['grouptype_desc']);?></option>
-				<?}?>
+				<?php endforeach;?>
 			</select>
 		</div>
 

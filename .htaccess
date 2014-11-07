@@ -11,7 +11,7 @@
 	RewriteBase /
 
 	## Enable php short tags
-	php_flag short_open_tag on
+	## php_flag short_open_tag on
 
 	## Disable the server signature
 	ServerSignature Off

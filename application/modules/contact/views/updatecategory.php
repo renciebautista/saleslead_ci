@@ -48,9 +48,9 @@
 									<?php echo form_error('prjcat_id'); ?>
 									<select class="form-control" data-placeholder="SELECT CATEGORY" id="prjcat_id" name="prjcat_id" class="medium" >
 										<option value="0">SELECT CATEGORY</option>
-										<?php foreach($categories as $category){?>
+										<?php foreach($categories as $category):?>
 											<option value="<?php echo $category['id'];?>" <?php echo set_select('prjcat_id',$category['id']); ?> ><?php echo strtoupper($category['prjcategory_desc']);?></option>
-										<?}?>
+										<?php endforeach;?>
 									</select>
 								</div>
 						  	</div>

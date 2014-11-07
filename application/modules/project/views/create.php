@@ -51,9 +51,9 @@
 						<?php echo form_error('city_id'); ?>
 						<select class="form-control" data-placeholder="SELECT TOWN / CITY" id="city_id" name="city_id" class="medium" >
 							<option value="0"></option>
-							<?php foreach($cities as $city){?>
+							<?php foreach($cities as $city):?>
 								<option value="<?php echo $city['id'];?>" <?php echo set_select('city_id',$city['id']); ?> ><?php echo strtoupper($city['city'].' - '.$city['province']);?></option>
-							<?}?>
+							<?php endforeach;?>
 						</select>
 					</div>
 				</div>
@@ -66,9 +66,9 @@
 						<?php echo form_error('type_id'); ?>
 						<select class="form-control" data-placeholder="SELECT CONTACT TYPE" id="type_id" name="type_id" class="medium" >
 							<option value="0"></option>
-							<?php foreach($types as $type){?>
+							<?php foreach($types as $type):?>
 								<option value="<?php echo $type['id'];?>" <?php echo set_select('type_id',$type['id']); ?> ><?php echo strtoupper($type['grouptype_desc']);?></option>
-							<?}?>
+							<?php endforeach;?>
 						</select>
 					</div>
 				</div>

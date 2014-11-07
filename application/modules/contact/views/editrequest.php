@@ -20,9 +20,9 @@
 				<?php echo form_error('requesttype_id'); ?>
 				<select class="form-control" data-placeholder="SELECT REQUEST TYPE" id="requesttype_id" name="requesttype_id" class="medium" >
 					<option value="0"></option>
-					<?php foreach($requesttypes as $row){?>
+					<?php foreach($requesttypes as $row):?>
 						<option value="<?php echo $row['id'];?>" <?php echo set_select('requesttype_id',$row['id'],($row['id'] == $request['requesttype_id']) ? TRUE:FALSE); ?> ><?php echo $row['requesttype'];?></option>
-					<?}?>
+					<?php endforeach;?>
 				</select>
 			</div>
 			<div class="form-group">

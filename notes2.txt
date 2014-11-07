@@ -1,0 +1,36 @@
+version 1
+add status database
+update project database	
+update project_contacts database
+add project_category_histories table
+add project_classificaton_histories table
+add remarks field in prjstages table
+add project_stage_histories table
+add remarks field in prjstatuses table
+add project_status_histories table
+add avatar field in user details
+add updated_at on project_contacts table
+add painttypes table
+add paintspecifications table
+add paintspecification_logs table
+
+version 2
+add to module 
+	REQUEST TYPE MAINTENANCE
+	CALL REPORT
+add tables
+	requests
+	requesttypes
+	request_approvers
+	request_status
+
+TRUNCATE `paintspecifications`;
+TRUNCATE `projectfiles`;
+TRUNCATE `projects`;
+TRUNCATE `project_contacts`;
+TRUNCATE `project_details`;
+TRUNCATE `requests`;
+
+add approval_remarks field on request table
+
+version 3
