@@ -3,6 +3,8 @@ deploy.yml
 deploy.rb
 notes.txt
 revision
+saleslead.sql
+notes2.txt
 .htaccess
 /uploads
 /uploads/files/*.*
